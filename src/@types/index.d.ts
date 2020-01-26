@@ -16,6 +16,13 @@ declare namespace Zendesk {
     }[]
   }
 
+  interface SearchResult {
+    count?: number
+    next_page?: string
+    prev_page?: string
+    results: ((User & { result_type: 'user' }) & (Ticket & { result_type: 'ticket' }))[]
+  }
+
   interface Ticket {
     id?: number
     url?: string
@@ -78,6 +85,4 @@ declare namespace Zendesk {
       job_status: Zendesk.JobStatus
     }
   }
-
-  // TODO: searches
 }
