@@ -12,3 +12,19 @@ class DynamicPropsError extends Error {
 export class Authentication extends DynamicPropsError {
   error: string
 }
+
+export class Client extends DynamicPropsError {
+  error: string
+  details: {
+    value: { type: string; description: string }[]
+  }
+  description: string
+}
+
+export class Permission extends DynamicPropsError {
+  error: string
+}
+
+export class RateLimit extends DynamicPropsError {
+  error: string
+}

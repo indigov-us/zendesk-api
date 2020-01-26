@@ -38,8 +38,14 @@ export default (
 
     // check for errors
     switch (res.status) {
+      case 400:
+        throw new Errors.Client(body)
       case 401:
         throw new Errors.Authentication(body)
+      case 403:
+        throw new Errors.Permission(body)
+      case 429:
+        throw new Errors.RateLimit(body)
     }
 
     // rate limit headers can be helpful in optimizing usage

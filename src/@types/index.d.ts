@@ -9,6 +9,10 @@ declare namespace Zendesk {
     interface Users extends _ {
       users: User[]
     }
+
+    interface Tickets extends _ {
+      tickets: Ticket[]
+    }
   }
 
   interface User {
@@ -44,4 +48,30 @@ declare namespace Zendesk {
       bulk_mailer_campaign_ids?: string
     }
   }
+
+  interface Ticket {
+    id?: number
+    url?: string
+    external_id?: string
+    created_at?: string
+    updated_at?: string
+    type?: string
+    subject?: string
+    raw_subject?: string
+    description?: string
+    priority?: string
+    status?: 'new' | 'open' | 'pending' | 'hold' | 'solved' | 'closed'
+    requester_id?: number
+    submitter_id?: number
+    assignee_id?: number
+    organization_id?: number
+    group_id?: number
+    is_public?: boolean
+    tags?: string[]
+    custom_fields?: { id: number; value: any }[]
+    fields?: { id: number; value: any }[]
+    ticket_form_id?: number
+  }
+
+  // TODO: searches, jobs
 }
