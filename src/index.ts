@@ -1,14 +1,21 @@
 import btoa from 'btoa-lite'
 import fetch from 'isomorphic-unfetch'
 
-export default ({ subdomain, email, token }: { subdomain: string; email: string; token: string }) => {
+import * as Errors from './errors'
+
+export default (
+  { subdomain, email, token }: { subdomain: string; email: string; token: string },
+  opts?: { log?: boolean }
+) => {
   const authHeaderValue = `Basic ${btoa(`${email}/token:${token}`)}`
 
-  return async (path: string, init?: fetch.IsomorphicRequest) => {
+  return async <BodyType>(path: string, init?: RequestInit) => {
     const url = `https://${subdomain}.zendesk.com/api/v2${path}`
     const method = init ? init.method || 'GET' : 'GET'
 
-    console.log(`[${method}] ${url} ${init ? init.body : ''}`)
+    if (opts?.log) {
+      console.log(`[${method}] ${url} ${init ? init.body : ''}`)
+    }
 
     const res = await fetch(url, {
       headers: {
@@ -19,10 +26,21 @@ export default ({ subdomain, email, token }: { subdomain: string; email: string;
     })
 
     // localize the response headers for processing
-    const [contentTypeHeader, rateLimitHeader, rateLimitRemainingHeader, retryAfterHeader] = ['content-type', 'x-rate-limit', 'x-rate-limit-remaining', 'retry-after'].map(h => res.headers.get(h))
+    const [contentTypeHeader, rateLimitHeader, rateLimitRemainingHeader, retryAfterHeader] = [
+      'content-type',
+      'x-rate-limit',
+      'x-rate-limit-remaining',
+      'retry-after',
+    ].map(h => res.headers.get(h))
 
     // response body will almost always be JSON unless zendesk has downtime
     const body = await (contentTypeHeader?.includes('application/json') ? res.json() : res.text())
+
+    // check for errors
+    switch (res.status) {
+      case 401:
+        throw new Errors.Authentication(body)
+    }
 
     // rate limit headers can be helpful in optimizing usage
     const rateLimit = rateLimitHeader ? parseInt(rateLimitHeader, 10) : null
@@ -32,10 +50,13 @@ export default ({ subdomain, email, token }: { subdomain: string; email: string;
     const retryAfter = retryAfterHeader ? parseInt(retryAfterHeader, 10) : null
 
     return {
-      body,
+      body: body as BodyType,
       rateLimit,
       rateLimitRemaining,
       retryAfter,
     }
   }
 }
+
+// also export all the errors for convenience
+export { Errors }
