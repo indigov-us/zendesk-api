@@ -1,4 +1,4 @@
-import { zendeskAPI } from './helpers'
+import { zendeskAPI } from './_helpers'
 
 test('get a user', async () => {
   const res = await zendeskAPI<Zendesk.SingleResults.User>('/users/397525155434')

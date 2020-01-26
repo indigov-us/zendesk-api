@@ -1,11 +1,19 @@
 declare namespace Zendesk {
-  interface User {
-    id?: number
-    email?: string
-    external_id?: string
-    name: string
-    tags?: string[]
-    user_fields?: { [key: string]: any }
+  interface JobStatus {
+    id?: string
+    url?: string
+    total?: number
+    progress?: number
+    status?: 'queued' | 'working' | 'failed' | 'completed' | 'killed'
+    message?: string
+    results?: {
+      id?: number
+      action?: 'update'
+      success?: boolean
+      status?: 'Updated'
+      index?: number
+      errors?: string
+    }[]
   }
 
   interface Ticket {
@@ -32,6 +40,15 @@ declare namespace Zendesk {
     ticket_form_id?: number
   }
 
+  interface User {
+    id?: number
+    email?: string
+    external_id?: string
+    name: string
+    tags?: string[]
+    user_fields?: { [key: string]: any }
+  }
+
   namespace PaginatedResults {
     interface _ {
       count: number
@@ -39,24 +56,28 @@ declare namespace Zendesk {
       previous_page: string
     }
 
-    interface Users extends _ {
-      users: Zendesk.User[]
-    }
-
     interface Tickets extends _ {
       tickets: Zendesk.Ticket[]
+    }
+
+    interface Users extends _ {
+      users: Zendesk.User[]
     }
   }
 
   namespace SingleResults {
+    interface Ticket {
+      ticket: Zendesk.Ticket
+    }
+
     interface User {
       user: Zendesk.User
     }
 
-    interface Ticket {
-      ticket: Zendesk.Ticket
+    interface JobStatus {
+      job_status: Zendesk.JobStatus
     }
   }
 
-  // TODO: searches, jobs
+  // TODO: searches
 }

@@ -1,4 +1,4 @@
-import { zendeskAPI } from './helpers'
+import { zendeskAPI } from './_helpers'
 import initZendeskAPI, { Errors } from '../'
 
 test('throw authentication error', async () => {
@@ -12,13 +12,13 @@ test('throw authentication error', async () => {
 })
 
 test('throw unprocessable error', async () => {
-  const input = {
-    bad: 'input',
-  }
-
   await expect(
     zendeskAPI('/users', {
-      body: JSON.stringify({ user: input }),
+      body: JSON.stringify({
+        user: {
+          bad: 'input',
+        },
+      }),
       method: 'POST',
     })
   ).rejects.toThrowError(Errors.Unprocessable)
