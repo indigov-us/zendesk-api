@@ -14,3 +14,12 @@ class DynamicPropsError extends Error {
 class Authentication extends DynamicPropsError {
 }
 exports.Authentication = Authentication;
+class Unprocessable extends DynamicPropsError {
+}
+exports.Unprocessable = Unprocessable;
+class Permission extends DynamicPropsError {
+}
+exports.Permission = Permission;
+class RateLimit extends DynamicPropsError {
+}
+exports.RateLimit = RateLimit;

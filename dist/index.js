@@ -40,6 +40,12 @@ exports.default = ({ subdomain, email, token }, opts) => {
         switch (res.status) {
             case 401:
                 throw new Errors.Authentication(body);
+            case 403:
+                throw new Errors.Permission(body);
+            case 422:
+                throw new Errors.Unprocessable(body);
+            case 429:
+                throw new Errors.RateLimit(body);
         }
         // rate limit headers can be helpful in optimizing usage
         const rateLimit = rateLimitHeader ? parseInt(rateLimitHeader, 10) : null;
