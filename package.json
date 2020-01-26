@@ -1,13 +1,13 @@
 {
-  "name": "zendesk-api",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "@indigov/zendesk-api",
+  "version": "0.0.1",
+  "description": "The official Indigov wrapper for the Zendesk API",
+  "main": "dist/index.js",
   "scripts": {
     "test": "jest",
     "build": "tsc"
   },
-  "author": "",
+  "author": "@e10jc",
   "license": "ISC",
   "devDependencies": {
     "@types/btoa-lite": "^1.0.0",
