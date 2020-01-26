@@ -13,10 +13,10 @@ export class Authentication extends DynamicPropsError {
   error: string
 }
 
-export class Client extends DynamicPropsError {
+export class Unprocessable extends DynamicPropsError {
   error: string
   details: {
-    value: { type: string; description: string }[]
+    [key: string]: { error: string; description: string }[]
   }
   description: string
 }
