@@ -1,5 +1,5 @@
-declare namespace Zendesk {
-  interface JobStatus {
+namespace Zendesk {
+  export interface JobStatus {
     id?: string
     url?: string
     total?: number
@@ -16,14 +16,14 @@ declare namespace Zendesk {
     }[]
   }
 
-  interface SearchResult {
+  export interface SearchResult {
     count?: number
     next_page?: string
     prev_page?: string
     results: ((User & { result_type: 'user' }) & (Ticket & { result_type: 'ticket' }))[]
   }
 
-  interface Ticket {
+  export interface Ticket {
     id?: number
     url?: string
     external_id?: string
@@ -47,7 +47,7 @@ declare namespace Zendesk {
     ticket_form_id?: number
   }
 
-  interface User {
+  export interface User {
     id?: number
     email?: string
     external_id?: string
@@ -56,33 +56,35 @@ declare namespace Zendesk {
     user_fields?: { [key: string]: any }
   }
 
-  namespace PaginatedResults {
+  export namespace PaginatedResults {
     interface _ {
       count: number
       next_page: string
       previous_page: string
     }
 
-    interface Tickets extends _ {
+    export interface Tickets extends _ {
       tickets: Zendesk.Ticket[]
     }
 
-    interface Users extends _ {
+    export interface Users extends _ {
       users: Zendesk.User[]
     }
   }
 
-  namespace SingleResults {
-    interface Ticket {
+  export namespace SingleResults {
+    export interface Ticket {
       ticket: Zendesk.Ticket
     }
 
-    interface User {
+    export interface User {
       user: Zendesk.User
     }
 
-    interface JobStatus {
+    export interface JobStatus {
       job_status: Zendesk.JobStatus
     }
   }
 }
+
+export = Zendesk

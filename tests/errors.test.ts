@@ -1,5 +1,5 @@
 import { zendeskAPI } from './_helpers'
-import initZendeskAPI, { Errors } from '../'
+import initZendeskAPI, { Errors, Zendesk } from '../src'
 
 test('throw authentication error', async () => {
   const badAPI = initZendeskAPI({

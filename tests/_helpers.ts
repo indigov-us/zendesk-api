@@ -1,4 +1,4 @@
-import initZendeskAPI from '../'
+import initZendeskAPI from '../src'
 
 export const zendeskAPI = initZendeskAPI({
   subdomain: process.env.SUBDOMAIN as string,

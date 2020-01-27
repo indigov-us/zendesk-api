@@ -1,4 +1,5 @@
 import { zendeskAPI } from './_helpers'
+import { Zendesk } from '../src'
 
 test('get a page of users', async () => {
   const res = await zendeskAPI<Zendesk.PaginatedResults.Users>('/users')

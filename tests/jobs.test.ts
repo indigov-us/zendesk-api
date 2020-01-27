@@ -1,4 +1,5 @@
 import { zendeskAPI } from './_helpers'
+import { Zendesk } from '../src'
 
 test('create a job and check on the status until it is finished', async () => {
   const createJobRes = await zendeskAPI<Zendesk.SingleResults.JobStatus>('/users/create_many.json', {

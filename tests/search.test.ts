@@ -1,4 +1,5 @@
 import { zendeskAPI } from './_helpers'
+import { Zendesk } from '../src'
 
 test('search users', async () => {
   const res = await zendeskAPI<Zendesk.SearchResult>(`/search.json?query=${encodeURIComponent('test type:user')}`)
