@@ -5,7 +5,7 @@ The goal of this repo is to be a super-simple, strongly-typed interface to the Z
 ## Usage
 
 ```
-import initZendeskAPI, { Errors } from '@indigov/zendesk-api'
+import initZendeskAPI, { Errors, Zendesk } from '@indigov/zendesk-api'
 
 const zendeskAPI = initZendeskAPI({
   subdomain: 'whatever',
