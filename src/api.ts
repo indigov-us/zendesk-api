@@ -10,7 +10,7 @@ export default (
   const authHeaderValue = `Basic ${btoa(`${email}/token:${token}`)}`
 
   return async <BodyType>(path: string, init?: RequestInit) => {
-    const url = `https://${subdomain}.zendesk.com/api/v2${path}`
+    const url = path.startsWith('http') ? path : `https://${subdomain}.zendesk.com/api/v2${path}`
     const method = init ? init.method || 'GET' : 'GET'
 
     if (opts?.log) {

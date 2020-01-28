@@ -17,7 +17,7 @@ exports.default = ({ subdomain, email, token }, opts) => {
     const authHeaderValue = `Basic ${btoa_lite_1.default(`${email}/token:${token}`)}`;
     return async (path, init) => {
         var _a, _b;
-        const url = `https://${subdomain}.zendesk.com/api/v2${path}`;
+        const url = path.startsWith('http') ? path : `https://${subdomain}.zendesk.com/api/v2${path}`;
         const method = init ? init.method || 'GET' : 'GET';
         if ((_a = opts) === null || _a === void 0 ? void 0 : _a.log) {
             console.log(`[${method}] ${url} ${init ? init.body : ''}`);
