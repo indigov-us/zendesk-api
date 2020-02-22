@@ -15,4 +15,4 @@ test('create a job and check on the status until it is finished', async () => {
     isCompleted = jobStatusRes.body.job_status.status === 'completed'
     await new Promise(resolve => setTimeout(resolve, 100))
   }
-})
+}, 10000)

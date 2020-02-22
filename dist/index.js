@@ -10,6 +10,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+require("isomorphic-unfetch");
 const api_1 = __importDefault(require("./api"));
 const Errors = __importStar(require("./errors"));
 exports.Errors = Errors;

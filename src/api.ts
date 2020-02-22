@@ -1,5 +1,4 @@
 import btoa from 'btoa-lite'
-import fetch from 'isomorphic-unfetch'
 
 import * as Errors from './errors'
 

@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -11,18 +20,17 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const btoa_lite_1 = __importDefault(require("btoa-lite"));
-const isomorphic_unfetch_1 = __importDefault(require("isomorphic-unfetch"));
 const Errors = __importStar(require("./errors"));
 exports.default = ({ subdomain, email, token }, opts) => {
     const authHeaderValue = `Basic ${btoa_lite_1.default(`${email}/token:${token}`)}`;
-    return async (path, init) => {
+    return (path, init) => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b;
         const url = path.startsWith('http') ? path : `https://${subdomain}.zendesk.com/api/v2${path}`;
         const method = init ? init.method || 'GET' : 'GET';
         if ((_a = opts) === null || _a === void 0 ? void 0 : _a.log) {
             console.log(`[${method}] ${url} ${init ? init.body : ''}`);
         }
-        const res = await isomorphic_unfetch_1.default(url, Object.assign({ headers: {
+        const res = yield fetch(url, Object.assign({ headers: {
                 Authorization: authHeaderValue,
                 'Content-Type': 'application/json',
             } }, init));
@@ -34,7 +42,7 @@ exports.default = ({ subdomain, email, token }, opts) => {
             'retry-after',
         ].map(h => res.headers.get(h));
         // response body will almost always be JSON unless zendesk has downtime
-        const body = await (((_b = contentTypeHeader) === null || _b === void 0 ? void 0 : _b.includes('application/json')) ? res.json() : res.text());
+        const body = yield (((_b = contentTypeHeader) === null || _b === void 0 ? void 0 : _b.includes('application/json')) ? res.json() : res.text());
         // check for errors
         switch (res.status) {
             case 401:
@@ -57,5 +65,5 @@ exports.default = ({ subdomain, email, token }, opts) => {
             rateLimitRemaining,
             retryAfter,
         };
-    };
+    });
 };
