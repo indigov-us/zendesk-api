@@ -27,5 +27,10 @@ try {
   if (e instanceOf Errors.Authentication) {
     // e.error = "Couldn't authenticate you"
   }
+  // rate-limit errors can be acted up on easily
+  if (e instanceof Errors.RateLimit) {
+    await new Promise(resolve => setTimeout(resolve, 1000 * 60))
+    // now resume where you left off
+  }
 }
 ```
