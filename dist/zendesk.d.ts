@@ -19,7 +19,7 @@ declare namespace Zendesk {
         count?: number;
         next_page?: string;
         prev_page?: string;
-        results: ((User & {
+        results?: ((User & {
             result_type: 'user';
         }) & (Ticket & {
             result_type: 'ticket';
@@ -58,7 +58,7 @@ declare namespace Zendesk {
         id?: number;
         email?: string;
         external_id?: string;
-        name: string;
+        name?: string;
         tags?: string[];
         user_fields?: {
             [key: string]: any;
@@ -66,27 +66,27 @@ declare namespace Zendesk {
     }
     namespace PaginatedResults {
         interface _ {
-            count: number;
-            next_page: string;
-            previous_page: string;
+            count?: number;
+            next_page?: string;
+            previous_page?: string;
         }
         export interface Tickets extends _ {
-            tickets: Zendesk.Ticket[];
+            tickets?: Zendesk.Ticket[];
         }
         export interface Users extends _ {
-            users: Zendesk.User[];
+            users?: Zendesk.User[];
         }
         export {};
     }
     namespace SingleResults {
         interface Ticket {
-            ticket: Zendesk.Ticket;
+            ticket?: Zendesk.Ticket;
         }
         interface User {
-            user: Zendesk.User;
+            user?: Zendesk.User;
         }
         interface JobStatus {
-            job_status: Zendesk.JobStatus;
+            job_status?: Zendesk.JobStatus;
         }
     }
 }
