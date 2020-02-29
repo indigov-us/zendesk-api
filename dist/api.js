@@ -23,7 +23,7 @@ const btoa_lite_1 = __importDefault(require("btoa-lite"));
 const Errors = __importStar(require("./errors"));
 exports.default = ({ subdomain, email, token }, opts) => {
     const authHeaderValue = `Basic ${btoa_lite_1.default(`${email}/token:${token}`)}`;
-    return (path, init) => __awaiter(void 0, void 0, void 0, function* () {
+    return ((path, init) => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b;
         const url = path.startsWith('http') ? path : `https://${subdomain}.zendesk.com/api/v2${path}`;
         const method = init ? init.method || 'GET' : 'GET';
@@ -65,5 +65,5 @@ exports.default = ({ subdomain, email, token }, opts) => {
             rateLimitRemaining,
             retryAfter,
         };
-    });
+    }));
 };

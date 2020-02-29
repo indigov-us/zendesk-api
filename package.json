@@ -1,6 +1,6 @@
 {
   "name": "@indigov/zendesk-api",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "The official Indigov wrapper for the Zendesk API",
   "main": "dist/index.js",
   "repository": "github:indigov-us/zendesk-api",

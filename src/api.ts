@@ -2,13 +2,29 @@ import btoa from 'btoa-lite'
 
 import * as Errors from './errors'
 
-export default (
-  { subdomain, email, token }: { subdomain: string; email: string; token: string },
-  opts?: { log?: boolean }
-) => {
+export interface AuthProps {
+  subdomain: string
+  email: string
+  token: string
+}
+
+export interface ConstructorOpts {
+  log?: boolean
+}
+
+export interface Result<BodyType> {
+  body: BodyType
+  rateLimit: number | null
+  rateLimitRemaining: number | null
+  retryAfter: number | null
+}
+
+export type FetchMethod = <BodyType>(path: string, init?: RequestInit) => Promise<Result<BodyType>>
+
+export default ({ subdomain, email, token }: AuthProps, opts?: ConstructorOpts) => {
   const authHeaderValue = `Basic ${btoa(`${email}/token:${token}`)}`
 
-  return async <BodyType>(path: string, init?: RequestInit) => {
+  return <FetchMethod>(async <BodyType>(path: string, init?: RequestInit): Promise<Result<BodyType>> => {
     const url = path.startsWith('http') ? path : `https://${subdomain}.zendesk.com/api/v2${path}`
     const method = init ? init.method || 'GET' : 'GET'
 
@@ -60,5 +76,5 @@ export default (
       rateLimitRemaining,
       retryAfter,
     }
-  }
+  })
 }
