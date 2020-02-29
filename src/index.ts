@@ -1,8 +1,8 @@
 import 'isomorphic-unfetch'
 
-import API from './api'
+import * as Client from './client'
 import * as Errors from './errors'
 import Zendesk from './zendesk'
 
-export default API
-export { API, Errors, Zendesk }
+export default Client.createClient
+export { Client, Errors, Zendesk }

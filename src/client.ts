@@ -21,7 +21,7 @@ export interface Result<BodyType> {
 
 export type FetchMethod = <BodyType>(path: string, init?: RequestInit) => Promise<Result<BodyType>>
 
-export default ({ subdomain, email, token }: AuthProps, opts?: ConstructorOpts) => {
+export const createClient = ({ subdomain, email, token }: AuthProps, opts?: ConstructorOpts) => {
   const authHeaderValue = `Basic ${btoa(`${email}/token:${token}`)}`
 
   return <FetchMethod>(async <BodyType>(path: string, init?: RequestInit): Promise<Result<BodyType>> => {

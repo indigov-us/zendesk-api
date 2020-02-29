@@ -1,6 +1,7 @@
 import 'isomorphic-unfetch';
-import API from './api';
+import * as Client from './client';
 import * as Errors from './errors';
 import Zendesk from './zendesk';
-export default API;
-export { API, Errors, Zendesk };
+declare const _default: ({ subdomain, email, token }: Client.AuthProps, opts?: Client.ConstructorOpts | undefined) => Client.FetchMethod;
+export default _default;
+export { Client, Errors, Zendesk };
