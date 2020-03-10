@@ -1,25 +1,25 @@
 declare namespace Zendesk {
     interface JobStatus {
-        id?: string;
-        url?: string;
-        total?: number;
-        progress?: number;
-        status?: 'queued' | 'working' | 'failed' | 'completed' | 'killed';
-        message?: string;
-        results?: {
-            id?: number;
+        id: string;
+        url: string;
+        total: number;
+        progress: number;
+        status: 'queued' | 'working' | 'failed' | 'completed' | 'killed';
+        message: string;
+        results: {
+            id: number;
             action?: 'update';
             success?: boolean;
             status?: 'Updated';
-            index?: number;
+            index: number;
             errors?: string;
         }[];
     }
     interface SearchResult {
-        count?: number;
-        next_page?: string;
-        prev_page?: string;
-        results?: ((User & {
+        count: number;
+        next_page: string;
+        prev_page: string;
+        results: ((User & {
             result_type: 'user';
         }) & (Ticket & {
             result_type: 'ticket';
@@ -66,27 +66,27 @@ declare namespace Zendesk {
     }
     namespace PaginatedResults {
         interface _ {
-            count?: number;
-            next_page?: string;
-            previous_page?: string;
+            count: number;
+            next_page: string;
+            previous_page: string;
         }
         export interface Tickets extends _ {
-            tickets?: Zendesk.Ticket[];
+            tickets: Zendesk.Ticket[];
         }
         export interface Users extends _ {
-            users?: Zendesk.User[];
+            users: Zendesk.User[];
         }
         export {};
     }
     namespace SingleResults {
         interface Ticket {
-            ticket?: Zendesk.Ticket;
+            ticket: Zendesk.Ticket;
         }
         interface User {
-            user?: Zendesk.User;
+            user: Zendesk.User;
         }
         interface JobStatus {
-            job_status?: Zendesk.JobStatus;
+            job_status: Zendesk.JobStatus;
         }
     }
 }

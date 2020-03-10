@@ -1,26 +1,26 @@
 namespace Zendesk {
   export interface JobStatus {
-    id?: string
-    url?: string
-    total?: number
-    progress?: number
-    status?: 'queued' | 'working' | 'failed' | 'completed' | 'killed'
-    message?: string
-    results?: {
-      id?: number
+    id: string
+    url: string
+    total: number
+    progress: number
+    status: 'queued' | 'working' | 'failed' | 'completed' | 'killed'
+    message: string
+    results: {
+      id: number
       action?: 'update'
       success?: boolean
       status?: 'Updated'
-      index?: number
+      index: number
       errors?: string
     }[]
   }
 
   export interface SearchResult {
-    count?: number
-    next_page?: string
-    prev_page?: string
-    results?: ((User & { result_type: 'user' }) & (Ticket & { result_type: 'ticket' }))[]
+    count: number
+    next_page: string
+    prev_page: string
+    results: ((User & { result_type: 'user' }) & (Ticket & { result_type: 'ticket' }))[]
   }
 
   export interface Ticket {
@@ -58,31 +58,31 @@ namespace Zendesk {
 
   export namespace PaginatedResults {
     interface _ {
-      count?: number
-      next_page?: string
-      previous_page?: string
+      count: number
+      next_page: string
+      previous_page: string
     }
 
     export interface Tickets extends _ {
-      tickets?: Zendesk.Ticket[]
+      tickets: Zendesk.Ticket[]
     }
 
     export interface Users extends _ {
-      users?: Zendesk.User[]
+      users: Zendesk.User[]
     }
   }
 
   export namespace SingleResults {
     export interface Ticket {
-      ticket?: Zendesk.Ticket
+      ticket: Zendesk.Ticket
     }
 
     export interface User {
-      user?: Zendesk.User
+      user: Zendesk.User
     }
 
     export interface JobStatus {
-      job_status?: Zendesk.JobStatus
+      job_status: Zendesk.JobStatus
     }
   }
 }
