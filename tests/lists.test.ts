@@ -11,6 +11,11 @@ test('get a page of tickets', async () => {
   expect(res.body.tickets.length).toBeGreaterThan(0)
 })
 
+test('get a page of ticket fields', async () => {
+  const res = await zendeskAPI<Zendesk.PaginatedResults.TicketFields>('/ticket_fields')
+  expect(res.body.ticket_fields.length).toBeGreaterThan(0)
+})
+
 test('get a page of ticket forms', async () => {
   const res = await zendeskAPI<Zendesk.PaginatedResults.TicketForms>('/ticket_forms')
   expect(res.body.ticket_forms.length).toBeGreaterThan(0)

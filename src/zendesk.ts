@@ -47,6 +47,14 @@ namespace Zendesk {
     ticket_form_id?: number
   }
 
+  export interface TicketField {
+    id?: number
+    title?: string
+    description?: string
+    position?: number
+    active?: boolean
+  }
+
   export interface TicketForm {
     id?: number
     name?: string
@@ -76,6 +84,10 @@ namespace Zendesk {
       tickets: Zendesk.Ticket[]
     }
 
+    export interface TicketFields extends _ {
+      ticket_fields: Zendesk.TicketField[]
+    }
+
     export interface TicketForms extends _ {
       ticket_forms: Zendesk.TicketForm[]
     }
@@ -88,6 +100,10 @@ namespace Zendesk {
   export namespace SingleResults {
     export interface Ticket {
       ticket: Zendesk.Ticket
+    }
+
+    export interface TicketField {
+      ticket_field: Zendesk.TicketField
     }
 
     export interface TicketForm {
