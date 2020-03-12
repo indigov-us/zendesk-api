@@ -52,6 +52,7 @@ namespace Zendesk {
     email?: string
     external_id?: string
     name?: string
+    phone?: string
     tags?: string[]
     user_fields?: { [key: string]: any }
   }
