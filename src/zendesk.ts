@@ -118,6 +118,23 @@ namespace Zendesk {
       job_status: Zendesk.JobStatus
     }
   }
+
+  export namespace IncrementalResults {
+    interface _ {
+      count: number
+      end_of_stream: boolean
+      end_time: number
+      next_page: string
+    }
+
+    export interface Users extends _ {
+      users: User[]
+    }
+
+    export interface Tickets extends _ {
+      tickets: Ticket[]
+    }
+  }
 }
 
 export = Zendesk
