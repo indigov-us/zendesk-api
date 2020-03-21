@@ -6,10 +6,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
     result["default"] = mod;
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 require("isomorphic-unfetch");
 const Client = __importStar(require("./client"));
 exports.Client = Client;
 const Errors = __importStar(require("./errors"));
 exports.Errors = Errors;
+const job_completion_1 = __importDefault(require("./job-completion"));
+exports.jobCompletion = job_completion_1.default;
 exports.default = Client.createClient;

@@ -5,9 +5,9 @@ The goal of this repo is to be a super-simple, strongly-typed interface to the Z
 ## Usage
 
 ```
-import initZendeskAPI, { Errors, Zendesk } from '@indigov/zendesk-api'
+import createClient, { Errors, Zendesk, jobCompletion } from '@indigov/zendesk-api'
 
-const zendeskAPI = initZendeskAPI({
+const api = createClient({
   subdomain: 'whatever',
   email: 'what@ever.com',
   token: 'token',
@@ -33,4 +33,15 @@ try {
     // now resume where you left off
   }
 }
+
+// you can utilize a helper function to wait for jobs to complete
+const jobRes = await jobCompletion({
+  api,
+  onProgress: async (progress: number) => {
+    // do something with the progress number
+  },
+})('/users/create_many.json', {
+  body: JSON.stringify({users: [{name: 'A user', email: 'email@email.com'}]}),
+  method: 'POST',
+})
 ```
