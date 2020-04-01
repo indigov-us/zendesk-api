@@ -79,6 +79,39 @@ declare namespace Zendesk {
             [key: string]: any;
         };
     }
+    namespace Sunshine {
+        interface ObjectType<Schema> {
+            key?: string;
+            schema?: Schema;
+            end_users_can_read?: boolean;
+            created_at?: string;
+            updated_at?: string;
+        }
+        interface ObjectRecord<Attributes> {
+            type?: string;
+            id?: string;
+            external_id?: string;
+            attributes?: Attributes;
+            created_at?: string;
+            updated_at?: string;
+        }
+        interface RelationshipType {
+            key?: string;
+            source?: string;
+            target?: string | string[];
+            end_users_can_read?: boolean;
+            created_at?: string;
+            updated_at?: string;
+        }
+        interface RelationshipRecord {
+            id?: string;
+            relationship_type?: string;
+            source?: string;
+            target?: string | string[];
+            created_at?: string;
+            updated_at?: string;
+        }
+    }
     namespace PaginatedResults {
         interface _ {
             count: number;
@@ -96,6 +129,20 @@ declare namespace Zendesk {
         }
         export interface Users extends _ {
             users: Zendesk.User[];
+        }
+        export namespace Sunshine {
+            interface ObjectTypes {
+                data: Zendesk.Sunshine.ObjectType<any>[];
+            }
+            interface ObjectRecords<Attributes> {
+                data: Zendesk.Sunshine.ObjectRecord<Attributes>[];
+            }
+            interface RelationshipTypes {
+                data: Zendesk.Sunshine.RelationshipType[];
+            }
+            interface RelationshipRecords {
+                data: Zendesk.Sunshine.RelationshipRecord[];
+            }
         }
         export {};
     }

@@ -25,7 +25,12 @@ exports.createClient = ({ subdomain, email, token }, opts) => {
     const authHeaderValue = `Basic ${btoa_lite_1.default(`${email}/token:${token}`)}`;
     return ((path, init) => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b;
-        const url = path.startsWith('http') ? path : `https://${subdomain}.zendesk.com/api/v2${path}`;
+        const url = (() => {
+            if (path.startsWith('http'))
+                return path;
+            const pathPrefix = path.startsWith('/sunshine') ? '' : '/v2';
+            return `https://${subdomain}.zendesk.com/api${pathPrefix}${path}`;
+        })();
         const method = init ? init.method || 'GET' : 'GET';
         if ((_a = opts) === null || _a === void 0 ? void 0 : _a.log) {
             console.log(`[${method}] ${url} ${init ? init.body : ''}`);

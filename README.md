@@ -34,6 +34,9 @@ try {
   }
 }
 
+// you can fetch things from sunshine
+const sunshineRes = await api<Zendesk.PaginatedResults.Sunshine.ObjectTypes>('/sunshine/objects/types')
+
 // you can utilize a helper function to wait for jobs to complete
 const jobRes = await jobCompletion({
   api,
