@@ -25,7 +25,12 @@ export const createClient = ({ subdomain, email, token }: AuthProps, opts?: Cons
   const authHeaderValue = `Basic ${btoa(`${email}/token:${token}`)}`
 
   return <FetchMethod>(async <BodyType>(path: string, init?: RequestInit): Promise<Result<BodyType>> => {
-    const url = path.startsWith('http') ? path : `https://${subdomain}.zendesk.com/api/v2${path}`
+    const url = (() => {
+      if (path.startsWith('http')) return path
+      const pathPrefix = path.startsWith('/sunshine') ? '' : '/v2'
+      return `https://${subdomain}.zendesk.com/api${pathPrefix}${path}`
+    })()
+
     const method = init ? init.method || 'GET' : 'GET'
 
     if (opts?.log) {

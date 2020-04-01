@@ -73,6 +73,16 @@ namespace Zendesk {
     user_fields?: { [key: string]: any }
   }
 
+  export namespace Sunshine {
+    export interface ObjectType<Schema> {
+      key?: string
+      schema?: Schema
+      end_users_can_read?: boolean
+      created_at?: string
+      updated_at?: string
+    }
+  }
+
   export namespace PaginatedResults {
     interface _ {
       count: number
@@ -94,6 +104,12 @@ namespace Zendesk {
 
     export interface Users extends _ {
       users: Zendesk.User[]
+    }
+
+    export namespace Sunshine {
+      export interface ObjectTypes {
+        data: Zendesk.Sunshine.ObjectType<any>[] // TODO: accept an array of schemas?
+      }
     }
   }
 
