@@ -81,6 +81,33 @@ namespace Zendesk {
       created_at?: string
       updated_at?: string
     }
+
+    export interface ObjectRecord<Attributes> {
+      type?: string
+      id?: string
+      external_id?: string
+      attributes?: Attributes
+      created_at?: string
+      updated_at?: string
+    }
+
+    export interface RelationshipType {
+      key?: string
+      source?: string
+      target?: string | string[]
+      end_users_can_read?: boolean
+      created_at?: string
+      updated_at?: string
+    }
+
+    export interface RelationshipRecord {
+      id?: string
+      relationship_type?: string
+      source?: string
+      target?: string | string[]
+      created_at?: string
+      updated_at?: string
+    }
   }
 
   export namespace PaginatedResults {
@@ -109,6 +136,18 @@ namespace Zendesk {
     export namespace Sunshine {
       export interface ObjectTypes {
         data: Zendesk.Sunshine.ObjectType<any>[] // TODO: accept an array of schemas?
+      }
+
+      export interface ObjectRecords<Attributes> {
+        data: Zendesk.Sunshine.ObjectRecord<Attributes>[]
+      }
+
+      export interface RelationshipTypes {
+        data: Zendesk.Sunshine.RelationshipType[]
+      }
+
+      export interface RelationshipRecords {
+        data: Zendesk.Sunshine.RelationshipRecord[]
       }
     }
   }
