@@ -60,7 +60,49 @@ namespace Zendesk {
     name?: string
     position?: number
     active?: boolean
-    ticket_field_ids: number[]
+    ticket_field_ids?: number[]
+  }
+
+  export interface Comment {
+    id?: number
+    type?: 'Comment' | 'VoiceComment'
+    author_id?: number
+    body?: string
+    html_body?: string
+    plain_body?: string
+    public?: boolean
+    attachments?: Attachment[]
+    audit_id?: number
+    via?: {
+      channel?: string
+      source?: {
+        to?: object
+        from?: object
+        rel?: string
+      }
+    }
+    created_at?: string
+    metadata?: {
+      system?: object
+      custom?: object
+    }
+  }
+
+  export interface Attachment {
+    id?: number
+    file_name?: string
+    content_url?: string
+    content_type?: string
+    size?: number
+    thumbnails?: Photo[]
+  }
+
+  export interface Photo {
+    id?: number
+    file_name?: string
+    content_url?: string
+    content_type?: string
+    size?: number
   }
 
   export interface User {
@@ -167,6 +209,10 @@ namespace Zendesk {
 
     export interface User {
       user: Zendesk.User
+    }
+
+    export interface Comments {
+      comments: Zendesk.Comment[]
     }
 
     export interface JobStatus {
