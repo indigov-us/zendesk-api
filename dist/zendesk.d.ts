@@ -54,6 +54,18 @@ declare namespace Zendesk {
         }[];
         ticket_form_id?: number;
     }
+    interface Metadata {
+        system?: object;
+        custom?: object;
+    }
+    interface Via {
+        channel?: string;
+        source?: {
+            to?: object;
+            from?: object;
+            rel?: string;
+        };
+    }
     interface TicketField {
         id?: number;
         title?: string;
@@ -66,7 +78,45 @@ declare namespace Zendesk {
         name?: string;
         position?: number;
         active?: boolean;
-        ticket_field_ids: number[];
+        ticket_field_ids?: number[];
+    }
+    interface TicketAudit {
+        id?: number;
+        ticket_id?: number;
+        created_at?: string;
+        author_id?: number;
+        metadata?: Metadata;
+        via?: Via;
+        events?: object[];
+    }
+    interface Comment {
+        id?: number;
+        type?: 'Comment' | 'VoiceComment';
+        author_id?: number;
+        body?: string;
+        html_body?: string;
+        plain_body?: string;
+        public?: boolean;
+        attachments?: Attachment[];
+        audit_id?: number;
+        via?: Via;
+        created_at?: string;
+        metadata?: Metadata;
+    }
+    interface Attachment {
+        id?: number;
+        file_name?: string;
+        content_url?: string;
+        content_type?: string;
+        size?: number;
+        thumbnails?: Photo[];
+    }
+    interface Photo {
+        id?: number;
+        file_name?: string;
+        content_url?: string;
+        content_type?: string;
+        size?: number;
     }
     interface User {
         id?: number;
@@ -118,6 +168,12 @@ declare namespace Zendesk {
             next_page: string;
             previous_page: string;
         }
+        interface Cursor {
+            after_url: string;
+            before_url: string;
+            after_cursor: string;
+            before_cursor: string;
+        }
         export interface Tickets extends _ {
             tickets: Zendesk.Ticket[];
         }
@@ -126,6 +182,9 @@ declare namespace Zendesk {
         }
         export interface TicketForms extends _ {
             ticket_forms: Zendesk.TicketForm[];
+        }
+        export interface TicketAudits extends Cursor {
+            audits: Zendesk.TicketAudit[];
         }
         export interface Users extends _ {
             users: Zendesk.User[];
@@ -158,6 +217,9 @@ declare namespace Zendesk {
         }
         interface User {
             user: Zendesk.User;
+        }
+        interface Comments {
+            comments: Zendesk.Comment[];
         }
         interface JobStatus {
             job_status: Zendesk.JobStatus;

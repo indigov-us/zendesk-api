@@ -47,6 +47,20 @@ namespace Zendesk {
     ticket_form_id?: number
   }
 
+  export interface Metadata {
+    system?: object
+    custom?: object
+  }
+
+  export interface Via {
+    channel?: string
+    source?: {
+      to?: object
+      from?: object
+      rel?: string
+    }
+  }
+
   export interface TicketField {
     id?: number
     title?: string
@@ -63,6 +77,16 @@ namespace Zendesk {
     ticket_field_ids?: number[]
   }
 
+  export interface TicketAudit {
+    id?: number
+    ticket_id?: number
+    created_at?: string
+    author_id?: number
+    metadata?: Metadata
+    via?: Via
+    events?: object[]
+  }
+
   export interface Comment {
     id?: number
     type?: 'Comment' | 'VoiceComment'
@@ -73,19 +97,9 @@ namespace Zendesk {
     public?: boolean
     attachments?: Attachment[]
     audit_id?: number
-    via?: {
-      channel?: string
-      source?: {
-        to?: object
-        from?: object
-        rel?: string
-      }
-    }
+    via?: Via
     created_at?: string
-    metadata?: {
-      system?: object
-      custom?: object
-    }
+    metadata?: Metadata
   }
 
   export interface Attachment {
@@ -159,6 +173,13 @@ namespace Zendesk {
       previous_page: string
     }
 
+    interface Cursor {
+      after_url: string
+      before_url: string
+      after_cursor: string
+      before_cursor: string
+    }
+
     export interface Tickets extends _ {
       tickets: Zendesk.Ticket[]
     }
@@ -169,6 +190,10 @@ namespace Zendesk {
 
     export interface TicketForms extends _ {
       ticket_forms: Zendesk.TicketForm[]
+    }
+
+    export interface TicketAudits extends Cursor {
+      audits: Zendesk.TicketAudit[]
     }
 
     export interface Users extends _ {
