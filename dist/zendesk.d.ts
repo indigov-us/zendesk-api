@@ -215,6 +215,9 @@ declare namespace Zendesk {
         interface TicketForm {
             ticket_form: Zendesk.TicketForm;
         }
+        interface TicketAudit {
+            audit: Zendesk.TicketAudit;
+        }
         interface User {
             user: Zendesk.User;
         }

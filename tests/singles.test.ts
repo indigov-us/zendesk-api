@@ -20,3 +20,8 @@ test('get a ticket form', async () => {
   const res = await zendeskAPI<Zendesk.SingleResults.TicketForm>('/ticket_forms/360002286493')
   expect(res.body.ticket_form.id).toBeTruthy()
 })
+
+test('get a ticket audit', async () => {
+  const res = await zendeskAPI<Zendesk.SingleResults.TicketAudit>('/tickets/1/audits/940080446574')
+  expect(res.body.audit.id).toBeTruthy()
+})

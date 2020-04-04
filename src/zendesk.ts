@@ -232,6 +232,10 @@ namespace Zendesk {
       ticket_form: Zendesk.TicketForm
     }
 
+    export interface TicketAudit {
+      audit: Zendesk.TicketAudit
+    }
+
     export interface User {
       user: Zendesk.User
     }
