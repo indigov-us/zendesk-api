@@ -21,8 +21,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const btoa_lite_1 = __importDefault(require("btoa-lite"));
 const Errors = __importStar(require("./errors"));
-exports.createClient = ({ subdomain, email, token }, opts) => {
-    const authHeaderValue = `Basic ${btoa_lite_1.default(`${email}/token:${token}`)}`;
+exports.createClient = ({ subdomain, email, token, base64Token }, opts) => {
+    const authHeaderValue = `Basic ${base64Token || btoa_lite_1.default(`${email}/token:${token}`)}`;
     return ((path, init) => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b;
         const url = (() => {
@@ -45,7 +45,7 @@ exports.createClient = ({ subdomain, email, token }, opts) => {
             'x-rate-limit',
             'x-rate-limit-remaining',
             'retry-after',
-        ].map(h => res.headers.get(h));
+        ].map((h) => res.headers.get(h));
         // response body will almost always be JSON unless zendesk has downtime
         const body = yield (((_b = contentTypeHeader) === null || _b === void 0 ? void 0 : _b.includes('application/json')) ? res.json() : res.text());
         // check for errors

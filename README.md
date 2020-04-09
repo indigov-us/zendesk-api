@@ -13,6 +13,13 @@ const api = createClient({
   token: 'token',
 })
 
+-or-
+
+const api = createClient({
+  subdomain: 'whatever',
+  base64Token: btoa('what@ever.com/email:token'),
+})
+
 try {
   // tell the API what to expect in the result body
   const result = await api<Zendesk.PaginatedResults.Users>('/users')

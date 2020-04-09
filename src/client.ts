@@ -4,8 +4,9 @@ import * as Errors from './errors'
 
 export interface AuthProps {
   subdomain: string
-  email: string
-  token: string
+  email?: string
+  token?: string
+  base64Token?: string
 }
 
 export interface ConstructorOpts {
@@ -21,8 +22,8 @@ export interface Result<BodyType> {
 
 export type FetchMethod = <BodyType>(path: string, init?: RequestInit) => Promise<Result<BodyType>>
 
-export const createClient = ({ subdomain, email, token }: AuthProps, opts?: ConstructorOpts) => {
-  const authHeaderValue = `Basic ${btoa(`${email}/token:${token}`)}`
+export const createClient = ({ subdomain, email, token, base64Token }: AuthProps, opts?: ConstructorOpts) => {
+  const authHeaderValue = `Basic ${base64Token || btoa(`${email}/token:${token}`)}`
 
   return <FetchMethod>(async <BodyType>(path: string, init?: RequestInit): Promise<Result<BodyType>> => {
     const url = (() => {
@@ -51,7 +52,7 @@ export const createClient = ({ subdomain, email, token }: AuthProps, opts?: Cons
       'x-rate-limit',
       'x-rate-limit-remaining',
       'retry-after',
-    ].map(h => res.headers.get(h))
+    ].map((h) => res.headers.get(h))
 
     // response body will almost always be JSON unless zendesk has downtime
     const body = await (contentTypeHeader?.includes('application/json') ? res.json() : res.text())
