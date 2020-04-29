@@ -111,6 +111,20 @@ namespace Zendesk {
     thumbnails?: Photo[]
   }
 
+  export interface Identity {
+    url?: string
+    id?: number
+    user_id?: number
+    type?: 'email' | 'twitter' | 'facebook' | 'google' | 'phone_number' | 'agent_fowarding' | 'sdk'
+    value?: string
+    verified?: boolean
+    primary?: boolean
+    created_at?: string
+    updated_at?: string
+    undeliverable_count?: number
+    deliverable_state?: string
+  }
+
   export interface Photo {
     id?: number
     file_name?: string
@@ -196,6 +210,10 @@ namespace Zendesk {
       audits: Zendesk.TicketAudit[]
     }
 
+    export interface Identities extends _ {
+      identities: Zendesk.Identity[]
+    }
+
     export interface Users extends _ {
       users: Zendesk.User[]
     }
@@ -234,6 +252,10 @@ namespace Zendesk {
 
     export interface TicketAudit {
       audit: Zendesk.TicketAudit
+    }
+
+    export interface Identity {
+      identity: Zendesk.Identity
     }
 
     export interface User {

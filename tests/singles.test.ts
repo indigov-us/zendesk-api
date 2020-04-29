@@ -25,3 +25,8 @@ test('get a ticket audit', async () => {
   const res = await zendeskAPI<Zendesk.SingleResults.TicketAudit>('/tickets/1/audits/940080446574')
   expect(res.body.audit.id).toBeTruthy()
 })
+
+test('get an identity', async () => {
+  const res = await zendeskAPI<Zendesk.SingleResults.Identity>('/users/397525155434/identities/374738834714')
+  expect(res.body.identity.id).toBeTruthy()
+})

@@ -25,3 +25,8 @@ test('get a page of ticket forms', async () => {
   const res = await zendeskAPI<Zendesk.PaginatedResults.TicketForms>('/ticket_forms')
   expect(res.body.ticket_forms.length).toBeGreaterThan(0)
 })
+
+test('gets identities', async () => {
+  const res = await zendeskAPI<Zendesk.PaginatedResults.Identities>('/users/397525155434/identities/')
+  expect(res.body.identities.length).toBeGreaterThan(0)
+})
