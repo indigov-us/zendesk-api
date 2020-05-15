@@ -30,3 +30,8 @@ test('gets identities', async () => {
   const res = await zendeskAPI<Zendesk.PaginatedResults.Identities>('/users/397525155434/identities/')
   expect(res.body.identities.length).toBeGreaterThan(0)
 })
+
+test('get a page of user fields', async () => {
+  const res = await zendeskAPI<Zendesk.PaginatedResults.UserFields>('/user_fields')
+  expect(res.body.user_fields.length).toBeGreaterThan(0)
+})

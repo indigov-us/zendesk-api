@@ -150,6 +150,31 @@ namespace Zendesk {
     user_fields?: { [key: string]: any }
   }
 
+  export interface UserField {
+    url?: string
+    id?: number
+    type?: string
+    key?: string
+    title?: string
+    description?: string
+    raw_title?: string
+    raw_description?: string
+    position?: number
+    active?: boolean
+    system?: boolean
+    regexp_for_validation?: string
+    created_at?: string
+    updated_at?: string
+    custom_field_options?: {
+      id?: number
+      name?: string
+      position?: number
+      raw_name?: string
+      url?: string
+      value?: string
+    }[]
+  }
+
   export namespace Sunshine {
     export interface ObjectType<Schema> {
       key?: string
@@ -225,6 +250,10 @@ namespace Zendesk {
       users: Zendesk.User[]
     }
 
+    export interface UserFields extends _ {
+      user_fields: Zendesk.UserField[]
+    }
+
     export namespace Sunshine {
       export interface ObjectTypes {
         data: Zendesk.Sunshine.ObjectType<any>[] // TODO: accept an array of schemas?
@@ -267,6 +296,10 @@ namespace Zendesk {
 
     export interface User {
       user: Zendesk.User
+    }
+
+    export interface UserField {
+      user_field: Zendesk.UserField
     }
 
     export interface Comments {

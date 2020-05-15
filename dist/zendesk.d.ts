@@ -72,6 +72,13 @@ declare namespace Zendesk {
         description?: string;
         position?: number;
         active?: boolean;
+        custom_field_options?: {
+            id?: number;
+            name?: string;
+            raw_name?: string;
+            value?: string;
+            default?: boolean;
+        }[];
     }
     interface TicketForm {
         id?: number;
@@ -142,6 +149,30 @@ declare namespace Zendesk {
             [key: string]: any;
         };
     }
+    interface UserField {
+        url?: string;
+        id?: number;
+        type?: string;
+        key?: string;
+        title?: string;
+        description?: string;
+        raw_title?: string;
+        raw_description?: string;
+        position?: number;
+        active?: boolean;
+        system?: boolean;
+        regexp_for_validation?: string;
+        created_at?: string;
+        updated_at?: string;
+        custom_field_options?: {
+            id?: number;
+            name?: string;
+            position?: number;
+            raw_name?: string;
+            url?: string;
+            value?: string;
+        }[];
+    }
     namespace Sunshine {
         interface ObjectType<Schema> {
             key?: string;
@@ -205,6 +236,9 @@ declare namespace Zendesk {
         export interface Users extends _ {
             users: Zendesk.User[];
         }
+        export interface UserFields extends _ {
+            user_fields: Zendesk.UserField[];
+        }
         export namespace Sunshine {
             interface ObjectTypes {
                 data: Zendesk.Sunshine.ObjectType<any>[];
@@ -239,6 +273,9 @@ declare namespace Zendesk {
         }
         interface User {
             user: Zendesk.User;
+        }
+        interface UserField {
+            user_field: Zendesk.UserField;
         }
         interface Comments {
             comments: Zendesk.Comment[];
