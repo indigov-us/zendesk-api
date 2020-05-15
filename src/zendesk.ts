@@ -309,6 +309,17 @@ namespace Zendesk {
     export interface JobStatus {
       job_status: Zendesk.JobStatus
     }
+
+    export interface Attachment {
+      attachment: Attachment
+    }
+
+    export interface Upload {
+      upload: {
+        token: string
+        attachment: Attachment
+      }
+    }
   }
 
   export namespace IncrementalResults {

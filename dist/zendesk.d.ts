@@ -283,6 +283,15 @@ declare namespace Zendesk {
         interface JobStatus {
             job_status: Zendesk.JobStatus;
         }
+        interface Attachment {
+            attachment: Attachment;
+        }
+        interface Upload {
+            upload: {
+                token: string;
+                attachment: Attachment;
+            };
+        }
     }
     namespace IncrementalResults {
         interface _ {
