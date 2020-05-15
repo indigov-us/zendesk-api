@@ -67,6 +67,13 @@ namespace Zendesk {
     description?: string
     position?: number
     active?: boolean
+    custom_field_options?: {
+      id?: number
+      name?: string
+      raw_name?: string
+      value?: string
+      default?: boolean
+    }[]
   }
 
   export interface TicketForm {
