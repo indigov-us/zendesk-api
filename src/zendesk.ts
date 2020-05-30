@@ -148,6 +148,8 @@ namespace Zendesk {
     phone?: string
     tags?: string[]
     user_fields?: { [key: string]: any }
+    created_at?: string
+    updated_at?: string
   }
 
   export interface UserField {

@@ -148,6 +148,8 @@ declare namespace Zendesk {
         user_fields?: {
             [key: string]: any;
         };
+        created_at?: string;
+        updated_at?: string;
     }
     interface UserField {
         url?: string;
