@@ -35,3 +35,8 @@ test('get an identity', async () => {
   const res = await zendeskAPI<Zendesk.SingleResults.Identity>('/users/397525155434/identities/374738834714')
   expect(res.body.identity.id).toBeTruthy()
 })
+
+test('get a target', async () => {
+  const res = await zendeskAPI<Zendesk.SingleResults.Target>('/targets/360002132533')
+  expect(res.body.target.id).toBeTruthy()
+})
