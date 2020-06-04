@@ -138,6 +138,19 @@ declare namespace Zendesk {
         content_type?: string;
         size?: number;
     }
+    interface Target {
+        url?: string;
+        id?: number;
+        created_at?: string;
+        type?: string;
+        title?: string;
+        active?: boolean;
+        method?: string;
+        username?: string;
+        content_type?: string;
+        password?: string;
+        target_url?: string;
+    }
     interface User {
         id?: number;
         email?: string;
@@ -235,6 +248,9 @@ declare namespace Zendesk {
         export interface Identities extends _ {
             identities: Zendesk.Identity[];
         }
+        export interface Targets extends _ {
+            targets: Zendesk.Target[];
+        }
         export interface Users extends _ {
             users: Zendesk.User[];
         }
@@ -272,6 +288,9 @@ declare namespace Zendesk {
         }
         interface Identity {
             identity: Zendesk.Identity;
+        }
+        interface Target {
+            target: Zendesk.Target;
         }
         interface User {
             user: Zendesk.User;
