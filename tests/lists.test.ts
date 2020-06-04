@@ -40,3 +40,8 @@ test('get a page of targets', async () => {
   const res = await zendeskAPI<Zendesk.PaginatedResults.Targets>('/targets')
   expect(res.body.targets.length).toBeGreaterThan(0)
 })
+
+test('get a page of triggers', async () => {
+  const res = await zendeskAPI<Zendesk.PaginatedResults.Triggers>('/triggers')
+  expect(res.body.triggers.length).toBeGreaterThan(0)
+})

@@ -40,3 +40,8 @@ test('get a target', async () => {
   const res = await zendeskAPI<Zendesk.SingleResults.Target>('/targets/360002132533')
   expect(res.body.target.id).toBeTruthy()
 })
+
+test('get a trigger', async () => {
+  const res = await zendeskAPI<Zendesk.SingleResults.Trigger>('/triggers/360161597834')
+  expect(res.body.trigger.id).toBeTruthy()
+})
