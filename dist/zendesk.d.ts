@@ -151,6 +151,33 @@ declare namespace Zendesk {
         password?: string;
         target_url?: string;
     }
+    interface Trigger {
+        url?: string;
+        id?: number;
+        title?: string;
+        active?: boolean;
+        updated_at?: string;
+        created_at?: string;
+        actions?: {
+            field?: string;
+            value?: string;
+        }[];
+        conditions?: {
+            all?: {
+                field?: string;
+                operator?: string;
+                value?: string;
+            }[];
+            any?: {
+                field?: string;
+                operator?: string;
+                value?: string;
+            }[];
+        };
+        description?: string;
+        position?: number;
+        raw_title?: string;
+    }
     interface User {
         id?: number;
         email?: string;
@@ -251,6 +278,9 @@ declare namespace Zendesk {
         export interface Targets extends _ {
             targets: Zendesk.Target[];
         }
+        export interface Triggers extends _ {
+            triggers: Zendesk.Trigger[];
+        }
         export interface Users extends _ {
             users: Zendesk.User[];
         }
@@ -291,6 +321,9 @@ declare namespace Zendesk {
         }
         interface Target {
             target: Zendesk.Target;
+        }
+        interface Trigger {
+            trigger: Zendesk.Trigger;
         }
         interface User {
             user: Zendesk.User;
