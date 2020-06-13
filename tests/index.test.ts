@@ -1,4 +1,4 @@
-import createClient, { Client, Errors, Zendesk } from '../src'
+import createClient, { createOrUpdateManyUsers, jobCompletion, Client, Errors, Zendesk } from '../src'
 
 // this file exists to make the index file is exporting properly
 
