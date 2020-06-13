@@ -9,9 +9,11 @@ declare namespace Zendesk {
         results: {
             id: number;
             action?: 'update';
+            details?: string;
             success?: boolean;
-            status?: 'Updated';
+            status?: 'Updated' | 'Failed';
             index: number;
+            error?: string;
             errors?: string;
         }[];
     }
