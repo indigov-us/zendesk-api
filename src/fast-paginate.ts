@@ -1,3 +1,4 @@
+import {RequestInit} from 'node-fetch'
 import PQueue from 'p-queue'
 
 import { FetchMethod, Result } from './client'

@@ -1,3 +1,4 @@
+import { RequestInit } from 'node-fetch';
 export interface AuthProps {
     subdomain: string;
     email?: string;

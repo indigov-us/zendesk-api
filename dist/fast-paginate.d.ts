@@ -1,3 +1,4 @@
+import { RequestInit } from 'node-fetch';
 import { FetchMethod, Result } from './client';
 declare const _default: <BodyType>({ api, concurrency, onPage, startPage, }: {
     api: FetchMethod;

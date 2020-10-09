@@ -5,8 +5,10 @@
     "module": "commonjs",
     "outDir": "dist",
     "strict": true,
-    "target": "es6",
+    "target": "ES2019",
+    "lib": ["ES2019"],
     "strictPropertyInitialization": false
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules/**/*"]
 }

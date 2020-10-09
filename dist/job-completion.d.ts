@@ -1,3 +1,4 @@
+import { RequestInit } from 'node-fetch';
 import { FetchMethod } from './client';
 import Zendesk from './zendesk';
 declare const _default: ({ api, onJobStatus, onProgress, }: {

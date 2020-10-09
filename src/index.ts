@@ -1,5 +1,3 @@
-import 'isomorphic-unfetch'
-
 import * as Client from './client'
 import * as Errors from './errors'
 import createOrUpdateManyUsers from './create-or-update-many-users'

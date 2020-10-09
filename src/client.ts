@@ -1,4 +1,5 @@
 import btoa from 'btoa-lite'
+import fetch, {RequestInit} from 'node-fetch'
 
 import * as Errors from './errors'
 
