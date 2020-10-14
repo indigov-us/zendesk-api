@@ -7,6 +7,8 @@ it('fetches pages of resources concurrently', async () => {
 
   await fastPaginate<Zendesk.PaginatedResults.Tickets>({
     api: zendeskAPI,
+    concurrency: 10,
+    retryRateLimitErrors: true,
     onPage: async (ticketsRes) => {
       for (const ticket of ticketsRes.body.tickets) tickets.push(ticket)
       return tickets.length <= 1000

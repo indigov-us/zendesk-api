@@ -1,7 +1,8 @@
-import {RequestInit} from 'node-fetch'
+import { RequestInit } from 'node-fetch'
 import PQueue from 'p-queue'
 
 import { FetchMethod, Result } from './client'
+import { RateLimit } from './errors'
 
 const defaultConcurrency = 5
 
@@ -9,10 +10,12 @@ export default <BodyType>({
   api,
   concurrency,
   onPage,
+  retryRateLimitErrors,
   startPage,
 }: {
   api: FetchMethod
   concurrency?: number
+  retryRateLimitErrors?: boolean
   onPage: (res: Result<BodyType>) => Promise<boolean>
   startPage?: number
 }) => async (path: string, init?: RequestInit) => {
@@ -34,7 +37,18 @@ export default <BodyType>({
         if (!keepLooping) return
 
         const pathWithPage = path.includes('?') ? `${path}&page=${currentPage}` : `${path}?page=${currentPage}`
-        const res = await api<BodyType>(pathWithPage, init)
+
+        let res: Result<BodyType> | undefined
+        while (!res) {
+          try {
+            res = await api<BodyType>(pathWithPage, init)
+          } catch (e) {
+            // if we were rate-limited and we should retry, do so
+            if (retryRateLimitErrors && e instanceof RateLimit) {
+              await new Promise((resolve) => setTimeout(resolve, 1000))
+            } else throw e
+          }
+        }
 
         // return false in onPage to stop looping
         keepLooping = await onPage(res)
