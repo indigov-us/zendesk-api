@@ -1,4 +1,4 @@
-import {RequestInit} from 'node-fetch'
+import { RequestInit } from 'node-fetch'
 
 import { FetchMethod } from './client'
 import Zendesk from './zendesk'

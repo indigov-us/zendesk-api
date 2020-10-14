@@ -3,7 +3,7 @@ import { Zendesk } from '../src'
 
 test('create a job and check on the status until it is finished', async () => {
   const createJobRes = await zendeskAPI<Zendesk.SingleResults.JobStatus>('/users/create_many.json', {
-    body: JSON.stringify({ users: [...Array(50)].map(_ => ({})) }),
+    body: JSON.stringify({ users: [...Array(50)].map((_) => ({})) }),
     method: 'POST',
   })
 
@@ -13,6 +13,6 @@ test('create a job and check on the status until it is finished', async () => {
   while (!isCompleted) {
     const jobStatusRes = await zendeskAPI<Zendesk.SingleResults.JobStatus>(`/job_statuses/${jobId}.json`)
     isCompleted = jobStatusRes.body.job_status.status === 'completed'
-    await new Promise(resolve => setTimeout(resolve, 100))
+    await new Promise((resolve) => setTimeout(resolve, 100))
   }
 }, 10000)
