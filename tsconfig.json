@@ -7,7 +7,8 @@
     "strict": true,
     "target": "ES2019",
     "lib": ["ES2019"],
-    "strictPropertyInitialization": false
+    "strictPropertyInitialization": false,
+    "sourceMap": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules/**/*"]

@@ -21,3 +21,4 @@ exports.fastPaginate = fast_paginate_1.default;
 const job_completion_1 = __importDefault(require("./job-completion"));
 exports.jobCompletion = job_completion_1.default;
 exports.default = Client.createClient;
+//# sourceMappingURL=index.js.map

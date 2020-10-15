@@ -16,3 +16,4 @@ exports.default = ({ api, onJobStatus, onProgress, }) => async (path, init) => {
     }
     return jobRes;
 };
+//# sourceMappingURL=job-completion.js.map

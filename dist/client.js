@@ -67,3 +67,4 @@ exports.createClient = ({ subdomain, email, token, base64Token }, opts) => {
         };
     });
 };
+//# sourceMappingURL=client.js.map

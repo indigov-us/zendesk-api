@@ -44,3 +44,4 @@ exports.default = ({ api, concurrency, onPage, retryRateLimitErrors, startPage, 
     }
     await pQueue.onIdle();
 };
+//# sourceMappingURL=fast-paginate.js.map

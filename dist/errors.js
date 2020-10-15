@@ -23,3 +23,4 @@ exports.Permission = Permission;
 class RateLimit extends DynamicPropsError {
 }
 exports.RateLimit = RateLimit;
+//# sourceMappingURL=errors.js.map
