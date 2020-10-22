@@ -1,12 +1,13 @@
 {
   "name": "@indigov/zendesk-api",
-  "version": "0.0.32",
+  "version": "0.0.33",
   "description": "The official Indigov wrapper for the Zendesk API",
   "main": "dist/index.js",
   "repository": "github:indigov-us/zendesk-api",
   "scripts": {
     "test": "jest --verbose",
-    "build": "tsc"
+    "build": "tsc",
+    "prepare": "tsc"
   },
   "author": "@e10jc",
   "license": "ISC",

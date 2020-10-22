@@ -29,6 +29,7 @@ exports.createClient = ({ subdomain, email, token, base64Token }, opts) => {
         }
         const res = await node_fetch_1.default(url, {
             headers: {
+                Accept: 'application/json',
                 Authorization: authHeaderValue,
                 'Content-Type': 'application/json',
             },

@@ -41,6 +41,7 @@ export const createClient = ({ subdomain, email, token, base64Token }: AuthProps
 
     const res = await fetch(url, {
       headers: {
+        Accept: 'application/json',
         Authorization: authHeaderValue,
         'Content-Type': 'application/json',
       },
