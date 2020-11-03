@@ -174,19 +174,19 @@ namespace Zendesk {
   }
 
   export interface Action {
-    field: string
-    value: string | boolean | string[]
+    field?: string
+    value?: string | boolean | string[]
   }
 
   export interface Macro {
-    id: number,
-    actions: Action[],
-    title: string,
-    description: string
+    id?: number
+    actions?: Action[]
+    title?: string
+    description?: string
   }
 
   export interface Group {
-    name: string
+    name?: string
   }
 
   export interface User {
