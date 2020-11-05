@@ -180,6 +180,19 @@ declare namespace Zendesk {
         position?: number;
         raw_title?: string;
     }
+    interface Action {
+        field?: string;
+        value?: string | boolean | string[];
+    }
+    interface Macro {
+        id?: number;
+        actions?: Action[];
+        title?: string;
+        description?: string;
+    }
+    interface Group {
+        name?: string;
+    }
     interface User {
         id?: number;
         email?: string;
@@ -288,6 +301,12 @@ declare namespace Zendesk {
         }
         export interface UserFields extends _ {
             user_fields: Zendesk.UserField[];
+        }
+        export interface Macros extends _ {
+            macros: Zendesk.Macro[];
+        }
+        export interface Groups extends _ {
+            groups: Zendesk.Group[];
         }
         export namespace Sunshine {
             interface ObjectTypes {

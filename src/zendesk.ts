@@ -173,6 +173,22 @@ namespace Zendesk {
     raw_title?: string
   }
 
+  export interface Action {
+    field?: string
+    value?: string | boolean | string[]
+  }
+
+  export interface Macro {
+    id?: number
+    actions?: Action[]
+    title?: string
+    description?: string
+  }
+
+  export interface Group {
+    name?: string
+  }
+
   export interface User {
     id?: number
     email?: string
@@ -295,6 +311,14 @@ namespace Zendesk {
 
     export interface UserFields extends _ {
       user_fields: Zendesk.UserField[]
+    }
+
+    export interface Macros extends _ {
+      macros: Zendesk.Macro[]
+    }
+
+    export interface Groups extends _ {
+      groups: Zendesk.Group[]
     }
 
     export namespace Sunshine {
