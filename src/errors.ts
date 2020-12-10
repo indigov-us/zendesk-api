@@ -13,6 +13,10 @@ export class Authentication extends DynamicPropsError {
   error: string
 }
 
+export class NotFound extends DynamicPropsError {
+  error: string
+}
+
 export class Unprocessable extends DynamicPropsError {
   error: string
   details: {

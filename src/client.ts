@@ -65,6 +65,8 @@ export const createClient = ({ subdomain, email, token, base64Token }: AuthProps
         throw new Errors.Authentication(body)
       case 403:
         throw new Errors.Permission(body)
+      case 404:
+        throw new Errors.NotFound(body)
       case 422:
         throw new Errors.Unprocessable(body)
       case 429:
