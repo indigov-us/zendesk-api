@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const errors_1 = require("./errors");
-exports.default = async (req, { maxNumAttempts, retryDelay = 1000, }) => {
+exports.default = async (req, { maxNumAttempts, retryDelay = 1000, } = {}) => {
     let numAttempts = 0;
     let res;
     while (!res) {

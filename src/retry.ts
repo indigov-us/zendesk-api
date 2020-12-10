@@ -11,7 +11,7 @@ export default async <ResultType>(
     maxNumAttempts?: number
     /** How long to wait before retrying? (in milliseconds) */
     retryDelay?: number
-  }
+  } = {}
 ) => {
   let numAttempts = 0
   let res: Result<ResultType> | undefined
