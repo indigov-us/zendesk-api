@@ -57,9 +57,14 @@ const jobRes = await jobCompletion({
 
 // retry wrapper method (for rate-limit errors):
 // simply wrap the method in "retry" and move the generic outside to it
-// example:
+//
 // before
 const users = await api<Zendesk.PaginatedResults.Users>('/users')
 // after
 const users = await retry<Zendesk.PaginatedResults.Users>(api('/users'))
+
+// you can also invoke the same logic in other helper methods:
+await fastPaginate({ retryRateLimitErrors: true })
+await createOrUpdateManyUsers({ retryRateLimitErrors: true })
+await jobCompletion({ retryRateLimitErrors: true })('/thejob')
 ```

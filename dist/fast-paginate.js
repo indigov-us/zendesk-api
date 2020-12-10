@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const p_queue_1 = __importDefault(require("p-queue"));
-const errors_1 = require("./errors");
+const retry_1 = __importDefault(require("./retry"));
 const defaultConcurrency = 5;
 exports.default = ({ api, concurrency, onPage, retryRateLimitErrors, startPage, }) => async (path, init) => {
     const concurrencyWithFallback = concurrency || defaultConcurrency;
@@ -22,20 +22,10 @@ exports.default = ({ api, concurrency, onPage, retryRateLimitErrors, startPage, 
                 if (!keepLooping)
                     return;
                 const pathWithPage = path.includes('?') ? `${path}&page=${currentPage}` : `${path}?page=${currentPage}`;
-                let res;
-                while (!res) {
-                    try {
-                        res = await api(pathWithPage, init);
-                    }
-                    catch (e) {
-                        // if we were rate-limited and we should retry, do so
-                        if (retryRateLimitErrors && e instanceof errors_1.RateLimit) {
-                            await new Promise((resolve) => setTimeout(resolve, 1000));
-                        }
-                        else
-                            throw e;
-                    }
-                }
+                const res = await retry_1.default(api(pathWithPage, init), {
+                    // retrying 1 time is the same as not retrying at all
+                    maxNumAttempts: retryRateLimitErrors ? undefined : 1,
+                });
                 // return false in onPage to stop looping
                 keepLooping = await onPage(res);
             });

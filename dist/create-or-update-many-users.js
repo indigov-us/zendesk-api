@@ -6,9 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const job_completion_1 = __importDefault(require("./job-completion"));
 // if not specific, what default name should we give users?
 const defaultNameFallback = 'Friend';
-exports.default = ({ api }) => async ({ users, defaultName, }) => {
+exports.default = ({ api }) => async ({ users, defaultName, retryRateLimitErrors, }) => {
     // attempt to create or update the users
-    const createOrUpdateRes = await job_completion_1.default({ api })('/users/create_or_update_many', {
+    const createOrUpdateRes = await job_completion_1.default({ api, retryRateLimitErrors })('/users/create_or_update_many', {
         body: JSON.stringify({ users }),
         method: 'POST',
     });
@@ -18,7 +18,7 @@ exports.default = ({ api }) => async ({ users, defaultName, }) => {
     // retry the failures using the create_many endpoint and a default name
     if (failures.length) {
         const name = defaultName || defaultNameFallback;
-        await job_completion_1.default({ api })('/users/create_many', {
+        await job_completion_1.default({ api, retryRateLimitErrors })('/users/create_many', {
             body: JSON.stringify({ users: failures.map((u) => ({ ...u, name })) }),
             method: 'POST',
         });
