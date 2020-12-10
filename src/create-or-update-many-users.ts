@@ -5,14 +5,12 @@ import Zendesk from './zendesk'
 // if not specific, what default name should we give users?
 const defaultNameFallback = 'Friend'
 
-export default ({ api }: { api: FetchMethod }) => async ({
+export default ({ api, retryRateLimitErrors }: { api: FetchMethod; retryRateLimitErrors?: boolean }) => async ({
   users,
   defaultName,
-  retryRateLimitErrors,
 }: {
   users: Zendesk.User[]
   defaultName?: string
-  retryRateLimitErrors?: boolean
 }): Promise<boolean> => {
   // attempt to create or update the users
   const createOrUpdateRes = await jobCompletion({ api, retryRateLimitErrors })('/users/create_or_update_many', {
