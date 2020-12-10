@@ -20,5 +20,7 @@ const fast_paginate_1 = __importDefault(require("./fast-paginate"));
 exports.fastPaginate = fast_paginate_1.default;
 const job_completion_1 = __importDefault(require("./job-completion"));
 exports.jobCompletion = job_completion_1.default;
+const retry_1 = __importDefault(require("./retry"));
+exports.retry = retry_1.default;
 exports.default = Client.createClient;
 //# sourceMappingURL=index.js.map

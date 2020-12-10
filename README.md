@@ -5,7 +5,7 @@ The goal of this repo is to be a super-simple, strongly-typed interface to the Z
 ## Usage
 
 ```
-import createClient, { Errors, Zendesk, jobCompletion } from '@indigov/zendesk-api'
+import createClient, { Errors, Zendesk, jobCompletion, retry } from '@indigov/zendesk-api'
 
 const api = createClient({
   subdomain: 'whatever',
@@ -54,4 +54,12 @@ const jobRes = await jobCompletion({
   body: JSON.stringify({users: [{name: 'A user', email: 'email@email.com'}]}),
   method: 'POST',
 })
+
+// retry wrapper method (for rate-limit errors):
+// simply wrap the method in "retry" and move the generic outside to it
+// example:
+// before
+const users = await api<Zendesk.PaginatedResults.Users>('/users')
+// after
+const users = await retry<Zendesk.PaginatedResults.Users>(api('/users'))
 ```

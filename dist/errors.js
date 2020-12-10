@@ -14,6 +14,9 @@ class DynamicPropsError extends Error {
 class Authentication extends DynamicPropsError {
 }
 exports.Authentication = Authentication;
+class NotFound extends DynamicPropsError {
+}
+exports.NotFound = NotFound;
 class Unprocessable extends DynamicPropsError {
 }
 exports.Unprocessable = Unprocessable;

@@ -4,6 +4,9 @@ declare class DynamicPropsError extends Error {
 export declare class Authentication extends DynamicPropsError {
     error: string;
 }
+export declare class NotFound extends DynamicPropsError {
+    error: string;
+}
 export declare class Unprocessable extends DynamicPropsError {
     error: string;
     details: {
