@@ -8,12 +8,14 @@ const defaultNameFallback = 'Friend'
 export default ({ api }: { api: FetchMethod }) => async ({
   users,
   defaultName,
+  retryRateLimitErrors,
 }: {
   users: Zendesk.User[]
   defaultName?: string
+  retryRateLimitErrors?: boolean
 }): Promise<boolean> => {
   // attempt to create or update the users
-  const createOrUpdateRes = await jobCompletion({ api })('/users/create_or_update_many', {
+  const createOrUpdateRes = await jobCompletion({ api, retryRateLimitErrors })('/users/create_or_update_many', {
     body: JSON.stringify({ users }),
     method: 'POST',
   })
@@ -25,7 +27,7 @@ export default ({ api }: { api: FetchMethod }) => async ({
   // retry the failures using the create_many endpoint and a default name
   if (failures.length) {
     const name = defaultName || defaultNameFallback
-    await jobCompletion({ api })('/users/create_many', {
+    await jobCompletion({ api, retryRateLimitErrors })('/users/create_many', {
       body: JSON.stringify({ users: failures.map((u) => ({ ...u, name })) }),
       method: 'POST',
     })
