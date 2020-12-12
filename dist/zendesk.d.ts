@@ -230,6 +230,143 @@ declare namespace Zendesk {
             value?: string;
         }[];
     }
+    interface App {
+        id?: number;
+        name?: string;
+        state?: string;
+        version?: string;
+        framework_version?: string;
+        parameters: {
+            id?: number;
+            app_id?: number;
+            name?: string;
+            kind?: string;
+            required?: boolean;
+            position?: number;
+            created_at?: string;
+            updated_at?: string;
+            default_value?: string | number | boolean | null;
+            secure?: boolean;
+        }[];
+        plans: {
+            id?: number;
+            app_id?: number;
+            plan_type?: string;
+            stripe_plan_id?: number | null;
+            created_at?: string;
+            updated_at?: string;
+            amount?: number;
+            deleted_at?: string;
+            active?: boolean;
+            hidden?: boolean;
+            cost_type?: string;
+            cost_id?: number;
+            service_identifier?: string;
+            trial_days?: number;
+            name?: string;
+            description?: string;
+            vat_reversible?: boolean;
+        }[];
+        rating: {
+            total_count?: number;
+            average?: number;
+            count: {
+                '1': number;
+                '2': number;
+                '3': number;
+                '4': number;
+                '5': number;
+            };
+        };
+        single_install?: boolean;
+        default_locale?: string;
+        feature_color?: string;
+        google_analytics_code?: string;
+        remote_installation_url?: string;
+        products?: string[];
+        categories: {
+            id: number;
+            name: string;
+        }[];
+        collections: [];
+        stripe_publishable_key?: string;
+        created_at?: string;
+        updated_at?: string;
+        terms_conditions_url?: string;
+        app_organization: {
+            country_code?: string;
+            stripe_account_id?: string;
+        };
+        locations?: number[];
+        owner_id?: number;
+        author_name?: string;
+        author_email?: string;
+        author_url?: string;
+        short_description?: string;
+        long_description?: string;
+        installation_instructions?: string;
+        raw_long_description?: string;
+        raw_installation_instructions?: string;
+        visibility?: string;
+        promoted?: boolean;
+        featured?: boolean;
+        paid?: boolean;
+        deprecated?: boolean;
+        obsolete?: boolean;
+        installable?: boolean;
+        marketing_only?: boolean;
+        small_icon?: string;
+        large_icon?: string;
+        screenshots?: string[];
+    }
+    interface AppInstallation {
+        id?: number;
+        app_id?: number;
+        product?: string;
+        settings: {
+            name?: string;
+            title?: string;
+        };
+        settings_objects: {
+            name?: string;
+            value?: string;
+        }[];
+        enabled?: boolean;
+        updated?: string;
+        updated_at?: string;
+        created_at?: string;
+        role_restrictions?: string;
+        recurring_payment?: boolean;
+        collapsible?: boolean;
+        plan_information: {
+            name?: string;
+        };
+        paid?: boolean;
+        has_unpaid_subscription?: boolean;
+        has_incomplete_subscription?: boolean;
+        stripe_publishable_key?: string;
+        stripe_account?: string;
+        group_restrictions?: string[];
+    }
+    interface AppRequirement {
+        account_id?: number;
+        created_at?: string;
+        identifier?: string;
+        requirement_id?: number;
+        requirement_type?: string;
+        updated_at?: string;
+    }
+    interface AppJobStatus {
+        app_id?: number;
+        app_url?: string;
+        id?: string;
+        message?: string;
+        progress?: number;
+        retry_in?: number;
+        status?: 'queued' | 'working' | 'failed' | 'completed' | 'killed';
+        total?: number;
+        url?: string;
+    }
     namespace Sunshine {
         interface ObjectType<Schema> {
             key?: string;
@@ -358,6 +495,12 @@ declare namespace Zendesk {
         interface JobStatus {
             job_status: Zendesk.JobStatus;
         }
+        interface JobId {
+            job_id: string;
+        }
+        interface Id {
+            id: number;
+        }
         interface Attachment {
             attachment: Attachment;
         }
@@ -366,6 +509,15 @@ declare namespace Zendesk {
                 token: string;
                 attachment: Attachment;
             };
+        }
+        interface Apps {
+            apps: Zendesk.App[];
+        }
+        interface AppInstallations {
+            installations: Zendesk.AppInstallation[];
+        }
+        interface AppRequirements {
+            requirements: Zendesk.AppRequirement[];
         }
     }
     namespace IncrementalResults {

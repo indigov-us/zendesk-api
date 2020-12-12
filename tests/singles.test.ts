@@ -45,3 +45,18 @@ test('get a trigger', async () => {
   const res = await zendeskAPI<Zendesk.SingleResults.Trigger>('/triggers/360182340594')
   expect(res.body.trigger.id).toBeTruthy()
 })
+
+test('get a list of apps', async () => {
+  const res = await zendeskAPI<Zendesk.SingleResults.Apps>('/apps')
+  expect(res.body.apps.length).toBeGreaterThan(0)
+}, 10000)
+
+test('get a list of app installations', async () => {
+  const res = await zendeskAPI<Zendesk.SingleResults.AppInstallations>('/apps/installations')
+  expect(res.body.installations.length).toBeGreaterThan(0)
+}, 10000)
+
+test('get a list of app requirements', async () => {
+  const res = await zendeskAPI<Zendesk.SingleResults.AppRequirements>('/apps/installations/360005102231/requirements')
+  expect(res.body.requirements.length).toBeGreaterThan(0)
+}, 10000)
