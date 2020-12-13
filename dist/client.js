@@ -10,11 +10,35 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const aws_sdk_1 = require("aws-sdk");
 const btoa_lite_1 = __importDefault(require("btoa-lite"));
 const node_fetch_1 = __importDefault(require("node-fetch"));
 const Errors = __importStar(require("./errors"));
-exports.createClient = ({ subdomain, email, token, base64Token }, opts) => {
-    const authHeaderValue = `Basic ${base64Token || btoa_lite_1.default(`${email}/token:${token}`)}`;
+exports.createClient = ({ subdomain, email, token, base64Token, getAwsParameterStoreName }, opts) => {
+    // auth needs to be a base64 value
+    // it can be supplied directly, or it can be generated from email+token,
+    // or email+token can be retrieved from parameter store
+    const authHeaderValue = (async () => {
+        var _a, _b;
+        let auth = '';
+        // if creds were explicitly provided, use them
+        if (base64Token)
+            auth = base64Token;
+        // if email and token were provided, use them
+        else if (email && token)
+            auth = btoa_lite_1.default(`${email}/token:${token}`);
+        // if a function to fetch email+token from AWS was provided, try that
+        else if (getAwsParameterStoreName) {
+            const parameterName = getAwsParameterStoreName(subdomain);
+            const ssm = new aws_sdk_1.SSM();
+            const { Parameter } = await ssm.getParameter({ Name: parameterName }).promise();
+            const [token, email] = ((_b = (_a = Parameter) === null || _a === void 0 ? void 0 : _a.Value) === null || _b === void 0 ? void 0 : _b.split(',')) || [];
+            auth = btoa_lite_1.default(`${email}/token:${token}`);
+        }
+        if (!auth)
+            throw new Error('Unable to generate auth value');
+        return `Basic ${auth}`;
+    })();
     return (async (path, init) => {
         var _a, _b;
         const url = (() => {
@@ -30,7 +54,7 @@ exports.createClient = ({ subdomain, email, token, base64Token }, opts) => {
         const res = await node_fetch_1.default(url, {
             headers: {
                 Accept: 'application/json',
-                Authorization: authHeaderValue,
+                Authorization: await authHeaderValue,
                 'Content-Type': 'application/json',
             },
             ...init,

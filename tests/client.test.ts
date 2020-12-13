@@ -18,3 +18,12 @@ test('auths with base64 tokens', async () => {
   const res = await client<Zendesk.PaginatedResults.Tickets>('/tickets.json')
   expect(res.body.tickets.length).toBeGreaterThanOrEqual(1)
 })
+
+test('auths with AWS parameter store', async () => {
+  const client = createClient({
+    subdomain: process.env.SUBDOMAIN as string,
+    getAwsParameterStoreName: (subdomain) => `/ZendeskAPITokens/dev/${subdomain}`,
+  })
+  const res = await client<Zendesk.PaginatedResults.Tickets>('/tickets.json')
+  expect(res.body.tickets.length).toBeGreaterThanOrEqual(1)
+}, 10000)

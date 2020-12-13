@@ -5,6 +5,6 @@ import fastPaginate from './fast-paginate';
 import jobCompletion from './job-completion';
 import retry from './retry';
 import Zendesk from './zendesk';
-declare const _default: ({ subdomain, email, token, base64Token }: Client.AuthProps, opts?: Client.ConstructorOpts | undefined) => Client.FetchMethod;
+declare const _default: ({ subdomain, email, token, base64Token, getAwsParameterStoreName }: Client.AuthProps, opts?: Client.ConstructorOpts | undefined) => Client.FetchMethod;
 export default _default;
 export { Client, Errors, Zendesk, createOrUpdateManyUsers, fastPaginate, jobCompletion, retry };

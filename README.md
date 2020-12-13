@@ -20,6 +20,14 @@ const api = createClient({
   base64Token: btoa('what@ever.com/email:token'),
 })
 
+-or-
+
+// if using AWS Parameter Store, make sure AWS creds + region are available
+const api = createClient({
+  subdomain: 'whatever',
+  getAwsParameterStoreName: (subdomain) => `/tokens/${subdomain}`
+})
+
 try {
   // tell the API what to expect in the result body
   const result = await api<Zendesk.PaginatedResults.Users>('/users')

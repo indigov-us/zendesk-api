@@ -1,6 +1,6 @@
 {
   "name": "@indigov/zendesk-api",
-  "version": "0.0.39",
+  "version": "0.0.40",
   "description": "The official Indigov wrapper for the Zendesk API",
   "main": "dist/index.js",
   "repository": "github:indigov-us/zendesk-api",
@@ -23,6 +23,7 @@
     "typescript": "^3.7.5"
   },
   "dependencies": {
+    "aws-sdk": "^2.809.0",
     "btoa-lite": "^1.0.0",
     "node-fetch": "^2.6.1",
     "p-queue": "^6.4.0"

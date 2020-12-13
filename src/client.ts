@@ -1,3 +1,4 @@
+import { SSM } from 'aws-sdk'
 import btoa from 'btoa-lite'
 import fetch, { RequestInit } from 'node-fetch'
 
@@ -8,6 +9,7 @@ export interface AuthProps {
   email?: string
   token?: string
   base64Token?: string
+  getAwsParameterStoreName?: (subdomain: string) => string
 }
 
 export interface ConstructorOpts {
@@ -23,8 +25,32 @@ export interface Result<BodyType> {
 
 export type FetchMethod = <BodyType>(path: string, init?: RequestInit) => Promise<Result<BodyType>>
 
-export const createClient = ({ subdomain, email, token, base64Token }: AuthProps, opts?: ConstructorOpts) => {
-  const authHeaderValue = `Basic ${base64Token || btoa(`${email}/token:${token}`)}`
+export const createClient = (
+  { subdomain, email, token, base64Token, getAwsParameterStoreName }: AuthProps,
+  opts?: ConstructorOpts
+) => {
+  // auth needs to be a base64 value
+  // it can be supplied directly, or it can be generated from email+token,
+  // or email+token can be retrieved from parameter store
+  const authHeaderValue = (async () => {
+    let auth = ''
+
+    // if creds were explicitly provided, use them
+    if (base64Token) auth = base64Token
+    // if email and token were provided, use them
+    else if (email && token) auth = btoa(`${email}/token:${token}`)
+    // if a function to fetch email+token from AWS was provided, try that
+    else if (getAwsParameterStoreName) {
+      const parameterName = getAwsParameterStoreName(subdomain)
+      const ssm = new SSM()
+      const { Parameter } = await ssm.getParameter({ Name: parameterName }).promise()
+      const [token, email] = Parameter?.Value?.split(',') || []
+      auth = btoa(`${email}/token:${token}`)
+    }
+
+    if (!auth) throw new Error('Unable to generate auth value')
+    return `Basic ${auth}`
+  })()
 
   return <FetchMethod>(async <BodyType>(path: string, init?: RequestInit): Promise<Result<BodyType>> => {
     const url = (() => {
@@ -42,7 +68,7 @@ export const createClient = ({ subdomain, email, token, base64Token }: AuthProps
     const res = await fetch(url, {
       headers: {
         Accept: 'application/json',
-        Authorization: authHeaderValue,
+        Authorization: await authHeaderValue,
         'Content-Type': 'application/json',
       },
       ...init,
