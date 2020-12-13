@@ -1,4 +1,6 @@
 import btoa from 'btoa-lite'
+import FormData from 'form-data'
+import { createReadStream } from 'fs'
 
 import { zendeskAPI } from './_helpers'
 import createClient, { Zendesk } from '../src'
@@ -26,4 +28,14 @@ test('auths with AWS parameter store', async () => {
   })
   const res = await client<Zendesk.PaginatedResults.Tickets>('/tickets.json')
   expect(res.body.tickets.length).toBeGreaterThanOrEqual(1)
+}, 10000)
+
+test('returns parseable JSON when uploading form data', async () => {
+  const body = new FormData()
+  body.append('uploaded_data', createReadStream(__dirname + '/app.zip'))
+  const res = await zendeskAPI<Zendesk.SingleResults.Id>('/apps/uploads.json', {
+    method: 'POST',
+    body,
+  })
+  expect(res.body.id).toBeTruthy()
 }, 10000)

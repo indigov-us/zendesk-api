@@ -12,6 +12,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const aws_sdk_1 = require("aws-sdk");
 const btoa_lite_1 = __importDefault(require("btoa-lite"));
+const form_data_1 = __importDefault(require("form-data"));
 const node_fetch_1 = __importDefault(require("node-fetch"));
 const Errors = __importStar(require("./errors"));
 exports.createClient = ({ subdomain, email, token, base64Token, getAwsParameterStoreName }, opts) => {
@@ -40,7 +41,7 @@ exports.createClient = ({ subdomain, email, token, base64Token, getAwsParameterS
         return `Basic ${auth}`;
     })();
     return (async (path, init) => {
-        var _a, _b;
+        var _a, _b, _c;
         const url = (() => {
             if (path.startsWith('http'))
                 return path;
@@ -51,14 +52,16 @@ exports.createClient = ({ subdomain, email, token, base64Token, getAwsParameterS
         if ((_a = opts) === null || _a === void 0 ? void 0 : _a.log) {
             console.log(`[${method}] ${url} ${init ? init.body : ''}`);
         }
-        const res = await node_fetch_1.default(url, {
-            headers: {
+        const headers = {
+            // all requests should have Authorization header
+            Authorization: await authHeaderValue,
+            // only add JSON headers if the request is not uploading form data
+            ...(!(((_b = init) === null || _b === void 0 ? void 0 : _b.body) instanceof form_data_1.default) && {
                 Accept: 'application/json',
-                Authorization: await authHeaderValue,
                 'Content-Type': 'application/json',
-            },
-            ...init,
-        });
+            }),
+        };
+        const res = await node_fetch_1.default(url, { headers, ...init });
         // localize the response headers for processing
         const [contentTypeHeader, rateLimitHeader, rateLimitRemainingHeader, retryAfterHeader] = [
             'content-type',
@@ -67,7 +70,7 @@ exports.createClient = ({ subdomain, email, token, base64Token, getAwsParameterS
             'retry-after',
         ].map((h) => res.headers.get(h));
         // response body will almost always be JSON unless zendesk has downtime
-        const body = await (((_b = contentTypeHeader) === null || _b === void 0 ? void 0 : _b.includes('application/json')) ? res.json() : res.text());
+        const body = await (((_c = contentTypeHeader) === null || _c === void 0 ? void 0 : _c.includes('application/json')) ? res.json() : res.text());
         // check for errors
         switch (res.status) {
             case 401:

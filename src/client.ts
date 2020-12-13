@@ -1,5 +1,6 @@
 import { SSM } from 'aws-sdk'
 import btoa from 'btoa-lite'
+import FormData from 'form-data'
 import fetch, { RequestInit } from 'node-fetch'
 
 import * as Errors from './errors'
@@ -65,14 +66,17 @@ export const createClient = (
       console.log(`[${method}] ${url} ${init ? init.body : ''}`)
     }
 
-    const res = await fetch(url, {
-      headers: {
+    const headers = {
+      // all requests should have Authorization header
+      Authorization: await authHeaderValue,
+      // only add JSON headers if the request is not uploading form data
+      ...(!(init?.body instanceof FormData) && {
         Accept: 'application/json',
-        Authorization: await authHeaderValue,
         'Content-Type': 'application/json',
-      },
-      ...init,
-    })
+      }),
+    }
+
+    const res = await fetch(url, { headers, ...init })
 
     // localize the response headers for processing
     const [contentTypeHeader, rateLimitHeader, rateLimitRemainingHeader, retryAfterHeader] = [
