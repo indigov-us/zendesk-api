@@ -192,6 +192,13 @@ declare namespace Zendesk {
     }
     interface Group {
         name?: string;
+        id?: number;
+        url?: string;
+        deleted?: boolean;
+        description?: string;
+        default?: boolean;
+        created_at?: string;
+        updated_at?: string;
     }
     interface User {
         id?: number;

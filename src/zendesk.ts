@@ -187,6 +187,13 @@ namespace Zendesk {
 
   export interface Group {
     name?: string
+    id?: number
+    url?: string
+    deleted?: boolean
+    description?: string
+    default?: boolean
+    created_at?: string
+    updated_at?: string
   }
 
   export interface User {
