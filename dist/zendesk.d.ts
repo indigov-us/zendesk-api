@@ -213,6 +213,15 @@ declare namespace Zendesk {
         created_at?: string;
         updated_at?: string;
     }
+    interface CustomRole {
+        id?: number;
+        name?: string;
+        description?: string;
+        role_type?: number;
+        created_at?: string;
+        updated_at?: string;
+        configuration?: Record<string, string | boolean>;
+    }
     interface UserField {
         url?: string;
         id?: number;

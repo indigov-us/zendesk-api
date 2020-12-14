@@ -208,6 +208,16 @@ namespace Zendesk {
     updated_at?: string
   }
 
+  export interface CustomRole {
+    id?: number
+    name?: string
+    description?: string
+    role_type?: number
+    created_at?: string
+    updated_at?: string
+    configuration?: Record<string, string | boolean>
+  }
+
   export interface UserField {
     url?: string
     id?: number
