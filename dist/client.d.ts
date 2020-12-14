@@ -15,5 +15,7 @@ export interface Result<BodyType> {
     rateLimitRemaining: number | null;
     retryAfter: number | null;
 }
-export declare type FetchMethod = <BodyType>(path: string, init?: RequestInit) => Promise<Result<BodyType>>;
-export declare const createClient: ({ subdomain, email, token, base64Token, getAwsParameterStoreName }: AuthProps, opts?: ConstructorOpts | undefined) => FetchMethod;
+export declare type FetchMethod = (<BodyType>(path: string, init?: RequestInit) => Promise<Result<BodyType>>) & {
+    getBase64Token?: Promise<string>;
+};
+export declare const createClient: (args: AuthProps, opts?: ConstructorOpts | undefined) => FetchMethod;

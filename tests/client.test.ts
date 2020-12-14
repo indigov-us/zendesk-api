@@ -39,3 +39,7 @@ test('returns parseable JSON when uploading form data', async () => {
   })
   expect(res.body.id).toBeTruthy()
 }, 10000)
+
+test('allow access to underlying base64Token', async () => {
+  expect(await zendeskAPI.getBase64Token).toBeTruthy()
+})

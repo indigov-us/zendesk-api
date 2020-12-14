@@ -24,36 +24,34 @@ export interface Result<BodyType> {
   retryAfter: number | null
 }
 
-export type FetchMethod = <BodyType>(path: string, init?: RequestInit) => Promise<Result<BodyType>>
+export type FetchMethod = (<BodyType>(path: string, init?: RequestInit) => Promise<Result<BodyType>>) & {
+  getBase64Token?: Promise<string>
+}
 
-export const createClient = (
-  { subdomain, email, token, base64Token, getAwsParameterStoreName }: AuthProps,
-  opts?: ConstructorOpts
-) => {
+export const createClient = (args: AuthProps, opts?: ConstructorOpts) => {
+  const { subdomain } = args
+
   // auth needs to be a base64 value
   // it can be supplied directly, or it can be generated from email+token,
   // or email+token can be retrieved from parameter store
-  const authHeaderValue = (async () => {
-    let auth = ''
-
+  const getBase64Token = (async () => {
     // if creds were explicitly provided, use them
-    if (base64Token) auth = base64Token
+    if (args.base64Token) return args.base64Token
     // if email and token were provided, use them
-    else if (email && token) auth = btoa(`${email}/token:${token}`)
+    else if (args.email && args.token) return btoa(`${args.email}/token:${args.token}`)
     // if a function to fetch email+token from AWS was provided, try that
-    else if (getAwsParameterStoreName) {
-      const parameterName = getAwsParameterStoreName(subdomain)
+    else if (args.getAwsParameterStoreName) {
+      const parameterName = args.getAwsParameterStoreName(subdomain)
       const ssm = new SSM()
       const { Parameter } = await ssm.getParameter({ Name: parameterName }).promise()
       const [token, email] = Parameter?.Value?.split(',') || []
-      auth = btoa(`${email}/token:${token}`)
+      return btoa(`${email}/token:${token}`)
     }
-
-    if (!auth) throw new Error('Unable to generate auth value')
-    return `Basic ${auth}`
+    // if we are here, there is a problem
+    throw new Error('Unable to generate base64 token')
   })()
 
-  return <FetchMethod>(async <BodyType>(path: string, init?: RequestInit): Promise<Result<BodyType>> => {
+  const fetchMethod: FetchMethod = async <BodyType>(path: string, init?: RequestInit): Promise<Result<BodyType>> => {
     const url = (() => {
       if (path.startsWith('http')) return path
       const pathPrefix = path.startsWith('/sunshine') ? '' : '/v2'
@@ -68,7 +66,7 @@ export const createClient = (
 
     const headers = {
       // all requests should have Authorization header
-      Authorization: await authHeaderValue,
+      Authorization: `Basic ${await getBase64Token}`,
       // only add JSON headers if the request is not uploading form data
       ...(!(init?.body instanceof FormData) && {
         Accept: 'application/json',
@@ -116,5 +114,13 @@ export const createClient = (
       rateLimitRemaining,
       retryAfter,
     }
+  }
+
+  Object.defineProperties(fetchMethod, {
+    getBase64Token: {
+      value: getBase64Token,
+    },
   })
+
+  return fetchMethod
 }
