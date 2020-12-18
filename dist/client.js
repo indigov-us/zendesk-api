@@ -51,25 +51,30 @@ exports.createClient = (args, opts) => {
         if ((_a = opts) === null || _a === void 0 ? void 0 : _a.log) {
             console.log(`[${method}] ${url} ${init ? init.body : ''}`);
         }
-        const headers = {
-            // all requests should have Authorization header
-            Authorization: `Basic ${await getBase64Token}`,
-            // only add JSON headers if the request is not uploading form data
-            ...(!(((_b = init) === null || _b === void 0 ? void 0 : _b.body) instanceof form_data_1.default) && {
+        const res = await node_fetch_1.default(url, {
+            ...init,
+            headers: {
+                // all requests should have Authorization header
+                Authorization: `Basic ${await getBase64Token}`,
+                // all requests return json
                 Accept: 'application/json',
-                'Content-Type': 'application/json',
-            }),
-        };
-        const res = await node_fetch_1.default(url, { headers, ...init });
+                // only add JSON content-type header if we are not uploading a file
+                // because node-fetch will calculate multipart boundary automatically
+                ...(!(((_b = init) === null || _b === void 0 ? void 0 : _b.body) instanceof form_data_1.default) && {
+                    'Content-Type': 'application/json',
+                }),
+                // allow rest of the headers to override
+                ...(_c = init) === null || _c === void 0 ? void 0 : _c.headers,
+            },
+        });
         // localize the response headers for processing
-        const [contentTypeHeader, rateLimitHeader, rateLimitRemainingHeader, retryAfterHeader] = [
-            'content-type',
+        const [rateLimitHeader, rateLimitRemainingHeader, retryAfterHeader] = [
             'x-rate-limit',
             'x-rate-limit-remaining',
             'retry-after',
         ].map((h) => res.headers.get(h));
         // response body will almost always be JSON unless zendesk has downtime
-        const body = await (((_c = contentTypeHeader) === null || _c === void 0 ? void 0 : _c.includes('application/json')) ? res.json() : res.text());
+        const body = await res.json();
         // check for errors
         switch (res.status) {
             case 401:

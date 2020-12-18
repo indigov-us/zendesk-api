@@ -1,6 +1,6 @@
 import btoa from 'btoa-lite'
 import FormData from 'form-data'
-import { createReadStream } from 'fs'
+import { createReadStream, readFileSync } from 'fs'
 
 import { zendeskAPI } from './_helpers'
 import createClient, { Zendesk } from '../src'
@@ -38,6 +38,17 @@ test('returns parseable JSON when uploading form data', async () => {
     body,
   })
   expect(res.body.id).toBeTruthy()
+}, 10000)
+
+test('returns parseable JSON when uploading binary data', async () => {
+  const res = await zendeskAPI<Zendesk.SingleResults.Upload>('/uploads.json?filename=test.zip', {
+    method: 'POST',
+    body: readFileSync(__dirname + '/app.zip'),
+    headers: {
+      'Content-Type': 'application/binary',
+    },
+  })
+  expect(res.body.upload.token).toBeTruthy()
 }, 10000)
 
 test('allow access to underlying base64Token', async () => {
