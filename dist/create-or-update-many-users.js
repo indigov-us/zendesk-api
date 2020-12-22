@@ -18,7 +18,8 @@ exports.default = ({ api, retryRateLimitErrors }) => async ({ users, defaultName
     // retry the failures using the create_many endpoint and a default name
     if (failures.length) {
         const name = defaultName || defaultNameFallback;
-        await job_completion_1.default({ api, retryRateLimitErrors })('/users/create_many', {
+        // we are reusing users/create_or_update_many because users/create_many is not enabled by default for some reason.
+        await job_completion_1.default({ api, retryRateLimitErrors })('/users/create_or_update_many', {
             body: JSON.stringify({ users: failures.map((u) => ({ ...u, name })) }),
             method: 'POST',
         });
