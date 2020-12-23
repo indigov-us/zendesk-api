@@ -88,21 +88,21 @@ export const createClient = (args: AuthProps, opts?: ConstructorOpts) => {
       'retry-after',
     ].map((h) => res.headers.get(h))
 
-    // response body will almost always be JSON unless zendesk has downtime
-    const body = await res.json()
+    // if there is an error, res.text will not be parseable JSON
+    const rawBody = await res.text()
 
     // check for errors
     switch (res.status) {
       case 401:
-        throw new Errors.Authentication(body)
+        throw new Errors.Authentication(rawBody)
       case 403:
-        throw new Errors.Permission(body)
+        throw new Errors.Permission(rawBody)
       case 404:
-        throw new Errors.NotFound(body)
+        throw new Errors.NotFound(rawBody)
       case 422:
-        throw new Errors.Unprocessable(body)
+        throw new Errors.Unprocessable(rawBody)
       case 429:
-        throw new Errors.RateLimit(body)
+        throw new Errors.RateLimit(rawBody)
     }
 
     // rate limit headers can be helpful in optimizing usage
@@ -113,7 +113,7 @@ export const createClient = (args: AuthProps, opts?: ConstructorOpts) => {
     const retryAfter = retryAfterHeader ? parseInt(retryAfterHeader, 10) : null
 
     return {
-      body: body as BodyType,
+      body: JSON.parse(rawBody),
       rateLimit,
       rateLimitRemaining,
       retryAfter,
