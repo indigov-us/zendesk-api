@@ -45,3 +45,20 @@ test('get a page of triggers', async () => {
   const res = await zendeskAPI<Zendesk.PaginatedResults.Triggers>('/triggers')
   expect(res.body.triggers.length).toBeGreaterThan(0)
 })
+
+test('get a page of views', async () => {
+  const res = await zendeskAPI<Zendesk.PaginatedResults.Views>('/views')
+  expect(res.body.views.length).toBeGreaterThan(0)
+})
+
+test('get a page of side conversations', async () => {
+  const res = await zendeskAPI<Zendesk.PaginatedResults.SideConversations>('/tickets/1/side_conversations')
+  expect(res.body.side_conversations.length).toBeGreaterThan(0)
+})
+
+test('get a page of side conversation events', async () => {
+  const res = await zendeskAPI<Zendesk.PaginatedResults.SideConversationEvents>(
+    '/tickets/1/side_conversations/2d990f9c-5a78-11eb-9d17-f9b4d1fb8f7b/events'
+  )
+  expect(res.body.events.length).toBeGreaterThan(0)
+})
