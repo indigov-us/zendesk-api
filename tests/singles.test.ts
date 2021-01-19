@@ -55,3 +55,15 @@ test('get a list of app installations', async () => {
   const installationsRes = await zendeskAPI<Zendesk.SingleResults.AppInstallations>('/apps/installations')
   expect(installationsRes.body.installations.length).toBeGreaterThan(0)
 }, 20000)
+
+test('get a view', async () => {
+  const res = await zendeskAPI<Zendesk.SingleResults.View>('/views/360187511734')
+  expect(res.body.view).toBeTruthy()
+}, 20000)
+
+test('get a side conversation', async () => {
+  const res = await zendeskAPI<Zendesk.SingleResults.SideConversation>(
+    '/tickets/1/side_conversations/2d990f9c-5a78-11eb-9d17-f9b4d1fb8f7b'
+  )
+  expect(res.body.side_conversation).toBeTruthy()
+}, 20000)

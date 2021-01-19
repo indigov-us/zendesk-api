@@ -383,6 +383,117 @@ declare namespace Zendesk {
         total?: number;
         url?: string;
     }
+    interface View {
+        url?: string;
+        id?: number;
+        title?: string;
+        active?: boolean;
+        updated_at?: string;
+        created_at?: string;
+        position?: number;
+        execution?: {
+            group_by?: string | null;
+            group_order?: string;
+            sort_by?: string;
+            sort_order?: string;
+            group?: string | null;
+            sort?: {
+                id?: string;
+                title?: string;
+                order?: string;
+            };
+            columns?: Array<{
+                id?: string;
+                title?: string;
+            }>;
+            fields?: Array<{
+                id?: string;
+                title?: string;
+            }>;
+            custom_fields?: Array<{
+                id?: string;
+                title?: string;
+            }>;
+        };
+        conditions?: {
+            all: Array<{
+                field: string;
+                operator: string;
+                value: string;
+            }>;
+            any: Array<{
+                field: string;
+                operator: string;
+                value: string;
+            }>;
+        };
+        restriction?: string | null;
+        watchable?: boolean;
+        raw_title?: string;
+    }
+    interface SideConversationAttachment {
+        content_type?: string;
+        content_url?: string;
+        file_name?: string;
+        height?: number;
+        id?: string;
+        inline?: boolean;
+        size?: number;
+        width?: number;
+    }
+    interface SideConversation {
+        created_at?: string;
+        external_ids?: {};
+        id?: string;
+        message_added_at?: string;
+        participants: Array<{
+            email?: string;
+            name?: string;
+            user_id?: number;
+        }>;
+        preview_text?: string;
+        state?: string;
+        state_updated_at?: string;
+        subject?: string;
+        ticket_id?: number;
+        updated_at?: string;
+        url?: string;
+    }
+    interface SideConversationEvent {
+        actor?: {
+            email?: string;
+            name?: string;
+            userId?: number;
+        };
+        created_at?: string;
+        id?: string;
+        message?: {
+            attachments?: SideConversationAttachment[];
+            body?: string;
+            external_ids?: {
+                outboundEmail?: string;
+                ticketAuditId?: string;
+            };
+            from?: {
+                email?: string;
+                name?: string;
+                user_id?: number;
+            };
+            html_body?: string;
+            preview_text?: string;
+            subject?: string | null;
+            to?: Array<{
+                email?: string;
+                name?: string;
+                user_id?: number;
+            }>;
+        };
+        side_conversation_id?: string;
+        ticket_id?: string | null;
+        type?: string;
+        updates?: {};
+        via?: string;
+    }
     namespace Sunshine {
         interface ObjectType<Schema> {
             key?: string;
@@ -461,6 +572,15 @@ declare namespace Zendesk {
         export interface Groups extends _ {
             groups: Zendesk.Group[];
         }
+        export interface Views extends _ {
+            views: Zendesk.View[];
+        }
+        export interface SideConversations extends _ {
+            side_conversations: Zendesk.SideConversation[];
+        }
+        export interface SideConversationEvents extends _ {
+            events: Zendesk.SideConversationEvent[];
+        }
         export namespace Sunshine {
             interface ObjectTypes {
                 data: Zendesk.Sunshine.ObjectType<any>[];
@@ -534,6 +654,12 @@ declare namespace Zendesk {
         }
         interface AppRequirements {
             requirements: Zendesk.AppRequirement[];
+        }
+        interface View {
+            view: Zendesk.View;
+        }
+        interface SideConversation {
+            side_conversation: Zendesk.SideConversation;
         }
     }
     namespace IncrementalResults {
