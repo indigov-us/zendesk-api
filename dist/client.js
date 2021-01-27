@@ -10,7 +10,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const aws_sdk_1 = require("aws-sdk");
+const ssm_1 = __importDefault(require("aws-sdk/clients/ssm"));
 const btoa_lite_1 = __importDefault(require("btoa-lite"));
 const form_data_1 = __importDefault(require("form-data"));
 const node_fetch_1 = __importDefault(require("node-fetch"));
@@ -31,7 +31,7 @@ exports.createClient = (args, opts) => {
         // if a function to fetch email+token from AWS was provided, try that
         else if (args.getAwsParameterStoreName) {
             const parameterName = args.getAwsParameterStoreName(subdomain);
-            const ssm = new aws_sdk_1.SSM();
+            const ssm = new ssm_1.default();
             const { Parameter } = await ssm.getParameter({ Name: parameterName }).promise();
             const [token, email] = ((_b = (_a = Parameter) === null || _a === void 0 ? void 0 : _a.Value) === null || _b === void 0 ? void 0 : _b.split(',')) || [];
             return btoa_lite_1.default(`${email}/token:${token}`);

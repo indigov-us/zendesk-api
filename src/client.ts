@@ -1,4 +1,4 @@
-import { SSM } from 'aws-sdk'
+import SSM from 'aws-sdk/clients/ssm'
 import btoa from 'btoa-lite'
 import FormData from 'form-data'
 import fetch, { RequestInit } from 'node-fetch'
