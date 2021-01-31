@@ -1,5 +1,21 @@
 declare namespace Zendesk {
-    interface JobStatus {
+    export interface TicketConditions {
+        all: Array<{
+            field: string;
+            operator: string;
+            value: string;
+        }>;
+        any: Array<{
+            field: string;
+            operator: string;
+            value: string;
+        }>;
+    }
+    interface TicketAction {
+        field?: string;
+        value?: string;
+    }
+    export interface JobStatus {
         id: string;
         url: string;
         total: number;
@@ -17,7 +33,7 @@ declare namespace Zendesk {
             errors?: string;
         }[];
     }
-    interface SearchResult {
+    export interface SearchResult {
         count: number;
         next_page: string;
         prev_page: string;
@@ -27,7 +43,7 @@ declare namespace Zendesk {
             result_type: 'ticket';
         }))[];
     }
-    interface Ticket {
+    export interface Ticket {
         id?: number;
         url?: string;
         external_id?: string;
@@ -56,11 +72,11 @@ declare namespace Zendesk {
         }[];
         ticket_form_id?: number;
     }
-    interface Metadata {
+    export interface Metadata {
         system?: object;
         custom?: object;
     }
-    interface Via {
+    export interface Via {
         channel?: string;
         source?: {
             to?: object;
@@ -68,7 +84,7 @@ declare namespace Zendesk {
             rel?: string;
         };
     }
-    interface TicketField {
+    export interface TicketField {
         id?: number;
         title?: string;
         description?: string;
@@ -82,14 +98,14 @@ declare namespace Zendesk {
             default?: boolean;
         }[];
     }
-    interface TicketForm {
+    export interface TicketForm {
         id?: number;
         name?: string;
         position?: number;
         active?: boolean;
         ticket_field_ids?: number[];
     }
-    interface TicketAudit {
+    export interface TicketAudit {
         id?: number;
         ticket_id?: number;
         created_at?: string;
@@ -98,7 +114,7 @@ declare namespace Zendesk {
         via?: Via;
         events?: object[];
     }
-    interface Comment {
+    export interface Comment {
         id?: number;
         type?: 'Comment' | 'VoiceComment';
         author_id?: number;
@@ -112,7 +128,7 @@ declare namespace Zendesk {
         created_at?: string;
         metadata?: Metadata;
     }
-    interface Attachment {
+    export interface Attachment {
         id?: number;
         file_name?: string;
         content_url?: string;
@@ -120,7 +136,7 @@ declare namespace Zendesk {
         size?: number;
         thumbnails?: Photo[];
     }
-    interface Identity {
+    export interface Identity {
         url?: string;
         id?: number;
         user_id?: number;
@@ -133,14 +149,14 @@ declare namespace Zendesk {
         undeliverable_count?: number;
         deliverable_state?: string;
     }
-    interface Photo {
+    export interface Photo {
         id?: number;
         file_name?: string;
         content_url?: string;
         content_type?: string;
         size?: number;
     }
-    interface Target {
+    export interface Target {
         url?: string;
         id?: number;
         created_at?: string;
@@ -153,44 +169,30 @@ declare namespace Zendesk {
         password?: string;
         target_url?: string;
     }
-    interface Trigger {
+    export interface Trigger {
         url?: string;
         id?: number;
         title?: string;
         active?: boolean;
         updated_at?: string;
         created_at?: string;
-        actions?: {
-            field?: string;
-            value?: string;
-        }[];
-        conditions?: {
-            all?: {
-                field?: string;
-                operator?: string;
-                value?: string;
-            }[];
-            any?: {
-                field?: string;
-                operator?: string;
-                value?: string;
-            }[];
-        };
+        actions?: TicketAction[];
+        conditions?: TicketConditions;
         description?: string;
         position?: number;
         raw_title?: string;
     }
-    interface Action {
+    export interface Action {
         field?: string;
         value?: string | boolean | string[];
     }
-    interface Macro {
+    export interface Macro {
         id?: number;
         actions?: Action[];
         title?: string;
         description?: string;
     }
-    interface Group {
+    export interface Group {
         name?: string;
         id?: number;
         url?: string;
@@ -200,7 +202,7 @@ declare namespace Zendesk {
         created_at?: string;
         updated_at?: string;
     }
-    interface User {
+    export interface User {
         id?: number;
         email?: string;
         external_id?: string;
@@ -213,7 +215,7 @@ declare namespace Zendesk {
         created_at?: string;
         updated_at?: string;
     }
-    interface CustomRole {
+    export interface CustomRole {
         id?: number;
         name?: string;
         description?: string;
@@ -222,7 +224,7 @@ declare namespace Zendesk {
         updated_at?: string;
         configuration?: Record<string, string | boolean>;
     }
-    interface UserField {
+    export interface UserField {
         url?: string;
         id?: number;
         type?: string;
@@ -246,7 +248,7 @@ declare namespace Zendesk {
             value?: string;
         }[];
     }
-    interface App {
+    export interface App {
         id?: number;
         name?: string;
         state?: string;
@@ -335,7 +337,7 @@ declare namespace Zendesk {
         large_icon?: string;
         screenshots?: string[];
     }
-    interface AppInstallation {
+    export interface AppInstallation {
         id?: number;
         app_id?: number;
         product?: string;
@@ -364,7 +366,7 @@ declare namespace Zendesk {
         stripe_account?: string;
         group_restrictions?: string[];
     }
-    interface AppRequirement {
+    export interface AppRequirement {
         account_id?: number;
         created_at?: string;
         identifier?: string;
@@ -372,7 +374,7 @@ declare namespace Zendesk {
         requirement_type?: string;
         updated_at?: string;
     }
-    interface AppJobStatus {
+    export interface AppJobStatus {
         app_id?: number;
         app_url?: string;
         id?: string;
@@ -383,7 +385,7 @@ declare namespace Zendesk {
         total?: number;
         url?: string;
     }
-    interface View {
+    export interface View {
         url?: string;
         id?: number;
         title?: string;
@@ -415,23 +417,24 @@ declare namespace Zendesk {
                 title?: string;
             }>;
         };
-        conditions?: {
-            all: Array<{
-                field: string;
-                operator: string;
-                value: string;
-            }>;
-            any: Array<{
-                field: string;
-                operator: string;
-                value: string;
-            }>;
-        };
+        conditions?: TicketConditions;
         restriction?: string | null;
         watchable?: boolean;
         raw_title?: string;
     }
-    interface SideConversationAttachment {
+    export interface Automation {
+        url?: string;
+        id?: number;
+        title?: string;
+        active?: boolean;
+        updated_at?: string;
+        created_at?: string;
+        actions?: TicketAction[];
+        conditions?: TicketConditions;
+        position?: number;
+        raw_title?: string;
+    }
+    export interface SideConversationAttachment {
         content_type?: string;
         content_url?: string;
         file_name?: string;
@@ -441,7 +444,7 @@ declare namespace Zendesk {
         size?: number;
         width?: number;
     }
-    interface SideConversation {
+    export interface SideConversation {
         created_at?: string;
         external_ids?: {};
         id?: string;
@@ -459,7 +462,7 @@ declare namespace Zendesk {
         updated_at?: string;
         url?: string;
     }
-    interface SideConversationEvent {
+    export interface SideConversationEvent {
         actor?: {
             email?: string;
             name?: string;
@@ -494,7 +497,7 @@ declare namespace Zendesk {
         updates?: {};
         via?: string;
     }
-    namespace Sunshine {
+    export namespace Sunshine {
         interface ObjectType<Schema> {
             key?: string;
             schema?: Schema;
@@ -527,7 +530,7 @@ declare namespace Zendesk {
             updated_at?: string;
         }
     }
-    namespace PaginatedResults {
+    export namespace PaginatedResults {
         interface _ {
             count: number;
             next_page: string;
@@ -559,6 +562,9 @@ declare namespace Zendesk {
         }
         export interface Triggers extends _ {
             triggers: Zendesk.Trigger[];
+        }
+        export interface Automations extends _ {
+            automations: Zendesk.Automation[];
         }
         export interface Users extends _ {
             users: Zendesk.User[];
@@ -597,7 +603,7 @@ declare namespace Zendesk {
         }
         export {};
     }
-    namespace SingleResults {
+    export namespace SingleResults {
         interface Ticket {
             ticket: Zendesk.Ticket;
         }
@@ -618,6 +624,9 @@ declare namespace Zendesk {
         }
         interface Trigger {
             trigger: Zendesk.Trigger;
+        }
+        interface Automation {
+            automation: Zendesk.Automation;
         }
         interface User {
             user: Zendesk.User;
@@ -662,7 +671,7 @@ declare namespace Zendesk {
             side_conversation: Zendesk.SideConversation;
         }
     }
-    namespace IncrementalResults {
+    export namespace IncrementalResults {
         interface _ {
             count: number;
             end_of_stream: boolean;
@@ -677,5 +686,6 @@ declare namespace Zendesk {
         }
         export {};
     }
+    export {};
 }
 export = Zendesk;

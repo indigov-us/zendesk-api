@@ -1,4 +1,14 @@
 namespace Zendesk {
+  // TicketConditions and TicketAction are used by triggers, automations, and more
+  export interface TicketConditions {
+    all: Array<{ field: string; operator: string; value: string }>
+    any: Array<{ field: string; operator: string; value: string }>
+  }
+  interface TicketAction {
+    field?: string
+    value?: string
+  }
+
   export interface JobStatus {
     id: string
     url: string
@@ -163,11 +173,8 @@ namespace Zendesk {
     active?: boolean
     updated_at?: string
     created_at?: string
-    actions?: { field?: string; value?: string }[]
-    conditions?: {
-      all?: { field?: string; operator?: string; value?: string }[]
-      any?: { field?: string; operator?: string; value?: string }[]
-    }
+    actions?: TicketAction[]
+    conditions?: TicketConditions
     description?: string
     position?: number
     raw_title?: string
@@ -387,12 +394,22 @@ namespace Zendesk {
       fields?: Array<{ id?: string; title?: string }>
       custom_fields?: Array<{ id?: string; title?: string }>
     }
-    conditions?: {
-      all: Array<{ field: string; operator: string; value: string }>
-      any: Array<{ field: string; operator: string; value: string }>
-    }
+    conditions?: TicketConditions
     restriction?: string | null
     watchable?: boolean
+    raw_title?: string
+  }
+
+  export interface Automation {
+    url?: string
+    id?: number
+    title?: string
+    active?: boolean
+    updated_at?: string
+    created_at?: string
+    actions?: TicketAction[]
+    conditions?: TicketConditions
+    position?: number
     raw_title?: string
   }
 
@@ -541,6 +558,10 @@ namespace Zendesk {
       triggers: Zendesk.Trigger[]
     }
 
+    export interface Automations extends _ {
+      automations: Zendesk.Automation[]
+    }
+
     export interface Users extends _ {
       users: Zendesk.User[]
     }
@@ -615,6 +636,10 @@ namespace Zendesk {
 
     export interface Trigger {
       trigger: Zendesk.Trigger
+    }
+
+    export interface Automation {
+      automation: Zendesk.Automation
     }
 
     export interface User {

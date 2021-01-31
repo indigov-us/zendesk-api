@@ -46,6 +46,11 @@ test('get a trigger', async () => {
   expect(res.body.trigger.id).toBeTruthy()
 })
 
+test('get an automation', async () => {
+  const res = await zendeskAPI<Zendesk.SingleResults.Automation>('/automations/360124001594')
+  expect(res.body.automation.id).toBeTruthy()
+})
+
 test('get a list of apps', async () => {
   const res = await zendeskAPI<Zendesk.SingleResults.Apps>('/apps')
   expect(res.body.apps.length).toBeGreaterThan(0)

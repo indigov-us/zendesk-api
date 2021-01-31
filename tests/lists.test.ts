@@ -62,3 +62,8 @@ test('get a page of side conversation events', async () => {
   )
   expect(res.body.events.length).toBeGreaterThan(0)
 })
+
+test('get a page of automations', async () => {
+  const res = await zendeskAPI<Zendesk.PaginatedResults.Automations>('/automations')
+  expect(res.body.automations.length).toBeGreaterThan(0)
+})
