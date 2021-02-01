@@ -480,6 +480,15 @@ namespace Zendesk {
     via?: string
   }
 
+  export interface Schedule {
+    id?: number
+    name?: string
+    time_zone?: string
+    created_at?: string
+    updated_at?: string
+    intervals?: Array<{ start_time?: number; end_time?: number }>
+  }
+
   export namespace Sunshine {
     export interface ObjectType<Schema> {
       key?: string
@@ -651,6 +660,7 @@ namespace Zendesk {
       user_field: Zendesk.UserField
     }
 
+    /** @deprecated Use ListResults.Comments */
     export interface Comments {
       comments: Zendesk.Comment[]
     }
@@ -680,6 +690,35 @@ namespace Zendesk {
       }
     }
 
+    /** @deprecated Use ListResults.Apps */
+    export interface Apps {
+      apps: Zendesk.App[]
+    }
+
+    /** @deprecated Use ListResults.AppInstallations */
+    export interface AppInstallations {
+      installations: Zendesk.AppInstallation[]
+    }
+
+    /** @deprecated Use ListResults.AppRequirements */
+    export interface AppRequirements {
+      requirements: Zendesk.AppRequirement[]
+    }
+
+    export interface View {
+      view: Zendesk.View
+    }
+
+    export interface SideConversation {
+      side_conversation: Zendesk.SideConversation
+    }
+
+    export interface Schedule {
+      schedule: Zendesk.Schedule
+    }
+  }
+
+  export namespace ListResults {
     export interface Apps {
       apps: Zendesk.App[]
     }
@@ -692,12 +731,12 @@ namespace Zendesk {
       requirements: Zendesk.AppRequirement[]
     }
 
-    export interface View {
-      view: Zendesk.View
+    export interface Schedules {
+      schedules: Zendesk.Schedule[]
     }
 
-    export interface SideConversation {
-      side_conversation: Zendesk.SideConversation
+    export interface Comments {
+      comments: Zendesk.Comment[]
     }
   }
 

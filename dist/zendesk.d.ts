@@ -498,6 +498,17 @@ declare namespace Zendesk {
         updates?: {};
         via?: string;
     }
+    export interface Schedule {
+        id?: number;
+        name?: string;
+        time_zone?: string;
+        created_at?: string;
+        updated_at?: string;
+        intervals?: Array<{
+            start_time?: number;
+            end_time?: number;
+        }>;
+    }
     export namespace Sunshine {
         interface ObjectType<Schema> {
             key?: string;
@@ -635,6 +646,7 @@ declare namespace Zendesk {
         interface UserField {
             user_field: Zendesk.UserField;
         }
+        /** @deprecated Use ListResults.Comments */
         interface Comments {
             comments: Zendesk.Comment[];
         }
@@ -656,6 +668,29 @@ declare namespace Zendesk {
                 attachment: Attachment;
             };
         }
+        /** @deprecated Use ListResults.Apps */
+        interface Apps {
+            apps: Zendesk.App[];
+        }
+        /** @deprecated Use ListResults.AppInstallations */
+        interface AppInstallations {
+            installations: Zendesk.AppInstallation[];
+        }
+        /** @deprecated Use ListResults.AppRequirements */
+        interface AppRequirements {
+            requirements: Zendesk.AppRequirement[];
+        }
+        interface View {
+            view: Zendesk.View;
+        }
+        interface SideConversation {
+            side_conversation: Zendesk.SideConversation;
+        }
+        interface Schedule {
+            schedule: Zendesk.Schedule;
+        }
+    }
+    export namespace ListResults {
         interface Apps {
             apps: Zendesk.App[];
         }
@@ -665,11 +700,11 @@ declare namespace Zendesk {
         interface AppRequirements {
             requirements: Zendesk.AppRequirement[];
         }
-        interface View {
-            view: Zendesk.View;
+        interface Schedules {
+            schedules: Zendesk.Schedule[];
         }
-        interface SideConversation {
-            side_conversation: Zendesk.SideConversation;
+        interface Comments {
+            comments: Zendesk.Comment[];
         }
     }
     export namespace IncrementalResults {
