@@ -240,6 +240,7 @@ namespace Zendesk {
     regexp_for_validation?: string
     created_at?: string
     updated_at?: string
+    tag?: string
     custom_field_options?: {
       id?: number
       name?: string
