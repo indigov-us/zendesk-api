@@ -97,6 +97,7 @@ declare namespace Zendesk {
             value?: string;
             default?: boolean;
         }[];
+        tag?: string;
         type?: 'text' | 'textarea' | 'checkbox' | 'date' | 'integer' | 'decimal' | 'regexp' | 'partialcreditcard' | 'multiselect' | 'tagger';
     }
     export interface TicketForm {

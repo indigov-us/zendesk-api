@@ -86,6 +86,7 @@ namespace Zendesk {
       value?: string
       default?: boolean
     }[]
+    tag?: string
     type?:
       | 'text'
       | 'textarea'
