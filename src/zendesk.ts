@@ -177,6 +177,7 @@ namespace Zendesk {
     password?: string
     target_url?: string
     subject?: string
+    email?: string
   }
 
   export interface Trigger {
