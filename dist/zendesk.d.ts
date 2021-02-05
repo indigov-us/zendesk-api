@@ -1,19 +1,16 @@
 declare namespace Zendesk {
+    export interface TicketCondition {
+        field?: string;
+        operator?: string;
+        value?: string;
+    }
     export interface TicketConditions {
-        all: Array<{
-            field: string;
-            operator: string;
-            value: string;
-        }>;
-        any: Array<{
-            field: string;
-            operator: string;
-            value: string;
-        }>;
+        all?: TicketCondition[];
+        any?: TicketCondition[];
     }
     interface TicketAction {
         field?: string;
-        value?: string;
+        value?: string | string[];
     }
     export interface JobStatus {
         id: string;
