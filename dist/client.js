@@ -74,6 +74,7 @@ exports.createClient = (args, opts) => {
             'retry-after',
         ].map((h) => res.headers.get(h));
         // if there is an error, res.text will not be parseable JSON
+        // rawBody will be empty on status 204
         const rawBody = await res.text();
         // check for errors
         switch (res.status) {
@@ -94,7 +95,7 @@ exports.createClient = (args, opts) => {
         // sometimes zendesk will return a 'Retry-After' header, which is in seconds
         const retryAfter = retryAfterHeader ? parseInt(retryAfterHeader, 10) : null;
         return {
-            body: JSON.parse(rawBody),
+            body: rawBody ? JSON.parse(rawBody) : {},
             rateLimit,
             rateLimitRemaining,
             retryAfter,
