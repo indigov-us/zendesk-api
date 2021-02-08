@@ -232,6 +232,7 @@ namespace Zendesk {
     user_fields?: { [key: string]: any }
     created_at?: string
     updated_at?: string
+    role?: 'end-user' | 'agent' | 'admin'
   }
 
   export interface CustomRole {

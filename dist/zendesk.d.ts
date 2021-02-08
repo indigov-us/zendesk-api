@@ -215,6 +215,7 @@ declare namespace Zendesk {
         };
         created_at?: string;
         updated_at?: string;
+        role?: 'end-user' | 'agent' | 'admin';
     }
     export interface CustomRole {
         id?: number;
