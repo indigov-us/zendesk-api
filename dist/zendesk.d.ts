@@ -103,6 +103,7 @@ declare namespace Zendesk {
         position?: number;
         active?: boolean;
         ticket_field_ids?: number[];
+        default?: boolean;
     }
     export interface TicketAudit {
         id?: number;
