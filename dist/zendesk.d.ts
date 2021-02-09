@@ -192,6 +192,7 @@ declare namespace Zendesk {
         actions?: Action[];
         title?: string;
         description?: string;
+        active?: boolean;
     }
     export interface Group {
         name?: string;
