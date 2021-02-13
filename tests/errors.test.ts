@@ -27,3 +27,18 @@ test('throw unprocessable error', async () => {
     })
   ).rejects.toThrowError(Errors.Unprocessable)
 })
+
+test('throw bad request error', async () => {
+  await expect(
+    zendeskAPI('/ticket_fields', {
+      method: 'POST',
+      body: JSON.stringify({
+        ticket_field: {
+          title: 'blah',
+          type: 'tagger',
+          custom_field_options: [{ name: 'who', value: 'hey', default: 'TRUE' }],
+        },
+      }),
+    })
+  ).rejects.toThrowError(Errors.BadRequestError)
+})

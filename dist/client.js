@@ -73,21 +73,28 @@ exports.createClient = (args, opts) => {
             'x-rate-limit-remaining',
             'retry-after',
         ].map((h) => res.headers.get(h));
-        // if there is an error, res.text will not be parseable JSON
+        // if there is an error, res.text may not be parseable JSON
         // rawBody will be empty on status 204
         const rawBody = await res.text();
-        // check for errors
+        const jsonBody = rawBody ? JSON.parse(rawBody) : {};
+        // check for particular errors
         switch (res.status) {
+            case 400:
+                throw new Errors.BadRequestError(jsonBody);
             case 401:
-                throw new Errors.Authentication(rawBody);
+                throw new Errors.Authentication(jsonBody);
             case 403:
-                throw new Errors.Permission(rawBody);
+                throw new Errors.Permission(jsonBody);
             case 404:
-                throw new Errors.NotFound(rawBody);
+                throw new Errors.NotFound(jsonBody);
             case 422:
-                throw new Errors.Unprocessable(rawBody);
+                throw new Errors.Unprocessable(jsonBody);
             case 429:
-                throw new Errors.RateLimit(rawBody);
+                throw new Errors.RateLimit(jsonBody);
+        }
+        // check for any other error statuses
+        if (res.status >= 400 && res.status < 600) {
+            throw new Error(jsonBody);
         }
         // rate limit headers can be helpful in optimizing usage
         const rateLimit = rateLimitHeader ? parseInt(rateLimitHeader, 10) : null;
@@ -95,7 +102,7 @@ exports.createClient = (args, opts) => {
         // sometimes zendesk will return a 'Retry-After' header, which is in seconds
         const retryAfter = retryAfterHeader ? parseInt(retryAfterHeader, 10) : null;
         return {
-            body: rawBody ? JSON.parse(rawBody) : {},
+            body: jsonBody,
             rateLimit,
             rateLimitRemaining,
             retryAfter,

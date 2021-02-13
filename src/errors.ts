@@ -9,6 +9,10 @@ class DynamicPropsError extends Error {
   }
 }
 
+export class BadRequestError extends DynamicPropsError {
+  error: any
+}
+
 export class Authentication extends DynamicPropsError {
   error: string
 }

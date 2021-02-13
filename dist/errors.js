@@ -11,6 +11,9 @@ class DynamicPropsError extends Error {
         }
     }
 }
+class BadRequestError extends DynamicPropsError {
+}
+exports.BadRequestError = BadRequestError;
 class Authentication extends DynamicPropsError {
 }
 exports.Authentication = Authentication;
