@@ -15,6 +15,7 @@ const btoa_lite_1 = __importDefault(require("btoa-lite"));
 const form_data_1 = __importDefault(require("form-data"));
 const node_fetch_1 = __importDefault(require("node-fetch"));
 const Errors = __importStar(require("./errors"));
+const find_user_by_email_1 = __importDefault(require("./find-user-by-email"));
 exports.createClient = (args, opts) => {
     const { subdomain } = args;
     // auth needs to be a base64 value
@@ -108,7 +109,12 @@ exports.createClient = (args, opts) => {
             retryAfter,
         };
     };
+    // add supplementary functions on top of the main fetchMethod
+    // TODO: move other methods like fastPaginate to below?
     Object.defineProperties(fetchMethod, {
+        findUserByEmail: {
+            value: find_user_by_email_1.default(fetchMethod),
+        },
         getBase64Token: {
             value: getBase64Token,
         },

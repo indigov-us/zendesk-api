@@ -75,4 +75,7 @@ const users = await retry<Zendesk.PaginatedResults.Users>(api('/users'))
 await fastPaginate({ retryRateLimitErrors: true })
 await createOrUpdateManyUsers({ retryRateLimitErrors: true })
 await jobCompletion({ retryRateLimitErrors: true })('/thejob')
+
+// there are helper methods available directly on the function itself
+const user = await api.findUserByEmail('user@domain.com')
 ```

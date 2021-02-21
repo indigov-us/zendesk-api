@@ -5,6 +5,8 @@ import fetch, { RequestInit } from 'node-fetch'
 
 import * as Errors from './errors'
 
+import findUserByEmail from './find-user-by-email'
+
 export interface AuthProps {
   subdomain: string
   email?: string
@@ -25,7 +27,8 @@ export interface Result<BodyType> {
 }
 
 export type FetchMethod = (<BodyType>(path: string, init?: RequestInit) => Promise<Result<BodyType>>) & {
-  getBase64Token?: Promise<string>
+  findUserByEmail: ReturnType<typeof findUserByEmail>
+  getBase64Token: Promise<string>
 }
 
 export const createClient = (args: AuthProps, opts?: ConstructorOpts) => {
@@ -51,7 +54,7 @@ export const createClient = (args: AuthProps, opts?: ConstructorOpts) => {
     throw new Error('Unable to generate base64 token')
   })()
 
-  const fetchMethod: FetchMethod = async <BodyType>(path: string, init?: RequestInit): Promise<Result<BodyType>> => {
+  const fetchMethod = async <BodyType>(path: string, init?: RequestInit): Promise<Result<BodyType>> => {
     const url = (() => {
       if (path.startsWith('http')) return path
       const pathPrefix = path.startsWith('/sunshine') ? '' : '/v2'
@@ -129,11 +132,16 @@ export const createClient = (args: AuthProps, opts?: ConstructorOpts) => {
     }
   }
 
+  // add supplementary functions on top of the main fetchMethod
+  // TODO: move other methods like fastPaginate to below?
   Object.defineProperties(fetchMethod, {
+    findUserByEmail: {
+      value: findUserByEmail(fetchMethod as FetchMethod),
+    },
     getBase64Token: {
       value: getBase64Token,
     },
   })
 
-  return fetchMethod
+  return fetchMethod as FetchMethod
 }
