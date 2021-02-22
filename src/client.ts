@@ -16,6 +16,7 @@ export interface AuthProps {
 
 export interface ConstructorOpts {
   log?: boolean
+  logger?: (message: string) => void
 }
 
 export interface Result<BodyType> {
@@ -63,7 +64,8 @@ export const createClient = (args: AuthProps, opts?: ConstructorOpts) => {
     const method = init ? init.method || 'GET' : 'GET'
 
     if (opts?.log) {
-      console.log(`[${method}] ${url} ${init ? init.body : ''}`)
+      const message = `[${method}] ${url} ${init ? init.body : ''}`
+      opts?.logger ? opts.logger(message) : console.log(message)
     }
 
     const res = await fetch(url, {
