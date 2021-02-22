@@ -25,7 +25,8 @@ const api = createClient({
 // if using AWS Parameter Store, make sure AWS creds + region are available
 const api = createClient({
   subdomain: 'whatever',
-  getAwsParameterStoreName: (subdomain) => `/tokens/${subdomain}`
+  getAwsParameterStoreName: (subdomain) => `/tokens/${subdomain}`,
+  awsRegion: 'us-east-2', // pass this specifically to avoid env usage
 })
 
 try {

@@ -32,7 +32,8 @@ exports.createClient = (args, opts) => {
         // if a function to fetch email+token from AWS was provided, try that
         else if (args.getAwsParameterStoreName) {
             const parameterName = args.getAwsParameterStoreName(subdomain);
-            const ssm = new ssm_1.default();
+            // Use custom AWS region if provided
+            const ssm = new ssm_1.default({ region: args.awsRegion });
             const { Parameter } = await ssm.getParameter({ Name: parameterName }).promise();
             const [token, email] = ((_b = (_a = Parameter) === null || _a === void 0 ? void 0 : _a.Value) === null || _b === void 0 ? void 0 : _b.split(',')) || [];
             return btoa_lite_1.default(`${email}/token:${token}`);
@@ -41,7 +42,7 @@ exports.createClient = (args, opts) => {
         throw new Error('Unable to generate base64 token');
     })();
     const fetchMethod = async (path, init) => {
-        var _a, _b, _c;
+        var _a, _b, _c, _d;
         const url = (() => {
             if (path.startsWith('http'))
                 return path;
@@ -50,7 +51,8 @@ exports.createClient = (args, opts) => {
         })();
         const method = init ? init.method || 'GET' : 'GET';
         if ((_a = opts) === null || _a === void 0 ? void 0 : _a.log) {
-            console.log(`[${method}] ${url} ${init ? init.body : ''}`);
+            const message = `[${method}] ${url} ${init ? init.body : ''}`;
+            ((_b = opts) === null || _b === void 0 ? void 0 : _b.logger) ? opts.logger(message) : console.log(message);
         }
         const res = await node_fetch_1.default(url, {
             ...init,
@@ -61,11 +63,11 @@ exports.createClient = (args, opts) => {
                 Accept: 'application/json',
                 // only add JSON content-type header if we are not uploading a file
                 // because node-fetch will calculate multipart boundary automatically
-                ...(!(((_b = init) === null || _b === void 0 ? void 0 : _b.body) instanceof form_data_1.default) && {
+                ...(!(((_c = init) === null || _c === void 0 ? void 0 : _c.body) instanceof form_data_1.default) && {
                     'Content-Type': 'application/json',
                 }),
                 // allow rest of the headers to override
-                ...(_c = init) === null || _c === void 0 ? void 0 : _c.headers,
+                ...(_d = init) === null || _d === void 0 ? void 0 : _d.headers,
             },
         });
         // localize the response headers for processing

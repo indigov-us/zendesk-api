@@ -6,9 +6,11 @@ export interface AuthProps {
     token?: string;
     base64Token?: string;
     getAwsParameterStoreName?: (subdomain: string) => string;
+    awsRegion?: string;
 }
 export interface ConstructorOpts {
     log?: boolean;
+    logger?: (message: string) => void;
 }
 export interface Result<BodyType> {
     body: BodyType;
