@@ -11,6 +11,7 @@ export interface AuthProps {
   token?: string
   base64Token?: string
   getAwsParameterStoreName?: (subdomain: string) => string
+  awsRegion?: string
 }
 
 export interface ConstructorOpts {
@@ -42,7 +43,8 @@ export const createClient = (args: AuthProps, opts?: ConstructorOpts) => {
     // if a function to fetch email+token from AWS was provided, try that
     else if (args.getAwsParameterStoreName) {
       const parameterName = args.getAwsParameterStoreName(subdomain)
-      const ssm = new SSM()
+      // Use custom AWS region if provided
+      const ssm = args.awsRegion ? new SSM({ region: args.awsRegion }) : new SSM()
       const { Parameter } = await ssm.getParameter({ Name: parameterName }).promise()
       const [token, email] = Parameter?.Value?.split(',') || []
       return btoa(`${email}/token:${token}`)
