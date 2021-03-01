@@ -3,8 +3,10 @@
 class DynamicPropsError extends Error {
   constructor(body: any) {
     super()
-    for (const key of Object.keys(body)) {
-      ;(this as any)[key] = body[key]
+    if (typeof body === 'object') {
+      for (const key of Object.keys(body)) {
+        ;(this as any)[key] = body[key]
+      }
     }
   }
 }
