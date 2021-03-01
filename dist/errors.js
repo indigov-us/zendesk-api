@@ -5,9 +5,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class DynamicPropsError extends Error {
     constructor(body) {
         super();
-        for (const key of Object.keys(body)) {
-            ;
-            this[key] = body[key];
+        if (typeof body === 'object') {
+            for (const key of Object.keys(body)) {
+                ;
+                this[key] = body[key];
+            }
         }
     }
 }

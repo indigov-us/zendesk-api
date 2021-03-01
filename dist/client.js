@@ -42,7 +42,7 @@ exports.createClient = (args, opts) => {
         throw new Error('Unable to generate base64 token');
     })();
     const fetchMethod = async (path, init) => {
-        var _a, _b, _c, _d;
+        var _a, _b, _c, _d, _e;
         const url = (() => {
             if (path.startsWith('http'))
                 return path;
@@ -71,33 +71,33 @@ exports.createClient = (args, opts) => {
             },
         });
         // localize the response headers for processing
-        const [rateLimitHeader, rateLimitRemainingHeader, retryAfterHeader] = [
+        const [rateLimitHeader, rateLimitRemainingHeader, retryAfterHeader, contentType] = [
             'x-rate-limit',
             'x-rate-limit-remaining',
             'retry-after',
+            'content-type',
         ].map((h) => res.headers.get(h));
-        // if there is an error, res.text may not be parseable JSON
-        // rawBody will be empty on status 204
-        const rawBody = await res.text();
-        const jsonBody = rawBody ? JSON.parse(rawBody) : {};
+        // will typically be "application/json; charset=UTF-8"
+        // but can also be raw non-json strings
+        const body = ((_e = contentType) === null || _e === void 0 ? void 0 : _e.includes('application/json')) ? await res.json() : await res.text();
         // check for particular errors
         switch (res.status) {
             case 400:
-                throw new Errors.BadRequestError(jsonBody);
+                throw new Errors.BadRequestError(body);
             case 401:
-                throw new Errors.Authentication(jsonBody);
+                throw new Errors.Authentication(body);
             case 403:
-                throw new Errors.Permission(jsonBody);
+                throw new Errors.Permission(body);
             case 404:
-                throw new Errors.NotFound(jsonBody);
+                throw new Errors.NotFound(body);
             case 422:
-                throw new Errors.Unprocessable(jsonBody);
+                throw new Errors.Unprocessable(body);
             case 429:
-                throw new Errors.RateLimit(jsonBody);
+                throw new Errors.RateLimit(body);
         }
         // check for any other error statuses
         if (res.status >= 400 && res.status < 600) {
-            throw new Error(jsonBody);
+            throw new Error(body);
         }
         // rate limit headers can be helpful in optimizing usage
         const rateLimit = rateLimitHeader ? parseInt(rateLimitHeader, 10) : null;
@@ -105,7 +105,7 @@ exports.createClient = (args, opts) => {
         // sometimes zendesk will return a 'Retry-After' header, which is in seconds
         const retryAfter = retryAfterHeader ? parseInt(retryAfterHeader, 10) : null;
         return {
-            body: jsonBody,
+            body,
             rateLimit,
             rateLimitRemaining,
             retryAfter,
