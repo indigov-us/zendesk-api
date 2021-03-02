@@ -1,5 +1,5 @@
 import { Result } from './client';
-declare const _default: <ResultType>(req: Promise<Result<ResultType>>, { maxNumAttempts, retryDelay, shouldLog, }?: {
+declare const _default: <ResultType>(fn: () => Promise<Result<ResultType>>, { maxNumAttempts, retryDelay, shouldLog, }?: {
     /** How many attempts before finally throwing an error? */
     maxNumAttempts?: number | undefined;
     /** How long to wait before retrying? (in milliseconds) */

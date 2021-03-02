@@ -11,11 +11,11 @@ exports.default = ({ api, onJobStatus, onProgress, retryRateLimitErrors, }) => a
     const retryArgs = {
         maxNumAttempts: retryRateLimitErrors ? undefined : 1,
     };
-    let jobRes = await retry_1.default(api(path, init), retryArgs);
+    let jobRes = await retry_1.default(() => api(path, init), retryArgs);
     let initialProgress = 0;
     while (['queued', 'working'].includes(jobRes.body.job_status.status)) {
         await new Promise((resolve) => setTimeout(resolve, statusUpdateInterval));
-        jobRes = await retry_1.default(api(`/job_statuses/${jobRes.body.job_status.id}.json`), retryArgs);
+        jobRes = await retry_1.default(() => api(`/job_statuses/${jobRes.body.job_status.id}.json`), retryArgs);
         if (onJobStatus)
             onJobStatus(jobRes.body.job_status);
         const progressDelta = jobRes.body.job_status.progress - initialProgress;

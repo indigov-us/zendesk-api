@@ -23,14 +23,14 @@ export default ({
     maxNumAttempts: retryRateLimitErrors ? undefined : 1,
   }
 
-  let jobRes = await retry<Zendesk.SingleResults.JobStatus>(api(path, init), retryArgs)
+  let jobRes = await retry<Zendesk.SingleResults.JobStatus>(() => api(path, init), retryArgs)
   let initialProgress = 0
 
   while (['queued', 'working'].includes(jobRes.body.job_status.status)) {
     await new Promise((resolve) => setTimeout(resolve, statusUpdateInterval))
 
     jobRes = await retry<Zendesk.SingleResults.JobStatus>(
-      api(`/job_statuses/${jobRes.body.job_status.id}.json`),
+      () => api(`/job_statuses/${jobRes.body.job_status.id}.json`),
       retryArgs
     )
 

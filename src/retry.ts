@@ -2,7 +2,7 @@ import { Result } from './client'
 import { RateLimit } from './errors'
 
 export default async <ResultType>(
-  req: Promise<Result<ResultType>>,
+  fn: () => Promise<Result<ResultType>>,
   {
     maxNumAttempts,
     retryDelay = 1000,
@@ -23,7 +23,7 @@ export default async <ResultType>(
     try {
       // try the request
       numAttempts++
-      res = await req
+      res = await fn()
     } catch (e) {
       // if it is not a rate limit error, or we have tried enough times, throw it
       if (!(e instanceof RateLimit) || (maxNumAttempts && numAttempts >= maxNumAttempts)) throw e

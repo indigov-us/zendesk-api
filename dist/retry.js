@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const errors_1 = require("./errors");
-exports.default = async (req, { maxNumAttempts, retryDelay = 1000, shouldLog, } = {}) => {
+exports.default = async (fn, { maxNumAttempts, retryDelay = 1000, shouldLog, } = {}) => {
     let numAttempts = 0;
     let res;
     while (!res) {
         try {
             // try the request
             numAttempts++;
-            res = await req;
+            res = await fn();
         }
         catch (e) {
             // if it is not a rate limit error, or we have tried enough times, throw it

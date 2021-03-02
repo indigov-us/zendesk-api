@@ -38,7 +38,7 @@ export default <BodyType>({
 
         const pathWithPage = path.includes('?') ? `${path}&page=${currentPage}` : `${path}?page=${currentPage}`
 
-        const res = await retry<BodyType>(api(pathWithPage, init), {
+        const res = await retry<BodyType>(() => api(pathWithPage, init), {
           // retrying 1 time is the same as not retrying at all
           maxNumAttempts: retryRateLimitErrors ? undefined : 1,
         })
