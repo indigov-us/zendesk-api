@@ -6,11 +6,14 @@ export default async <ResultType>(
   {
     maxNumAttempts,
     retryDelay = 1000,
+    shouldLog,
   }: {
     /** How many attempts before finally throwing an error? */
     maxNumAttempts?: number
     /** How long to wait before retrying? (in milliseconds) */
     retryDelay?: number
+    /** Write a log line on rate limited? */
+    shouldLog?: boolean
   } = {}
 ) => {
   let numAttempts = 0
@@ -25,6 +28,7 @@ export default async <ResultType>(
       // if it is not a rate limit error, or we have tried enough times, throw it
       if (!(e instanceof RateLimit) || (maxNumAttempts && numAttempts >= maxNumAttempts)) throw e
       // otherwise delay and keep looping
+      if (shouldLog) console.log(`Rate limited, retrying in ${retryDelay / 1000}s...`)
       await new Promise((resolve) => setTimeout(resolve, retryDelay))
     }
   }

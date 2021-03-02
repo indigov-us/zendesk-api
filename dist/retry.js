@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const errors_1 = require("./errors");
-exports.default = async (req, { maxNumAttempts, retryDelay = 1000, } = {}) => {
+exports.default = async (req, { maxNumAttempts, retryDelay = 1000, shouldLog, } = {}) => {
     let numAttempts = 0;
     let res;
     while (!res) {
@@ -15,6 +15,8 @@ exports.default = async (req, { maxNumAttempts, retryDelay = 1000, } = {}) => {
             if (!(e instanceof errors_1.RateLimit) || (maxNumAttempts && numAttempts >= maxNumAttempts))
                 throw e;
             // otherwise delay and keep looping
+            if (shouldLog)
+                console.log(`Rate limited, retrying in ${retryDelay / 1000}s...`);
             await new Promise((resolve) => setTimeout(resolve, retryDelay));
         }
     }
