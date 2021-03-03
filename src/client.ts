@@ -96,9 +96,19 @@ export const createClient = (args: AuthProps, opts?: ConstructorOpts) => {
       'content-type',
     ].map((h) => res.headers.get(h))
 
+    let body: string | any = await res.text()
     // will typically be "application/json; charset=UTF-8"
-    // but can also be raw non-json strings
-    const body = contentType?.includes('application/json') ? await res.json() : await res.text()
+    if (contentType?.includes('application/json')) {
+      try {
+        body = JSON.parse(body)
+      } catch (e) {
+        // in practice, zendesk will return invalid JSON even though the header is correct
+        // if this happens, we will just leave the string body as-is
+        if (opts?.log) {
+          opts?.logger ? opts.logger(e) : console.error(e)
+        }
+      }
+    }
 
     // check for particular errors
     switch (res.status) {

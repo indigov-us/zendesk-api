@@ -42,7 +42,7 @@ exports.createClient = (args, opts) => {
         throw new Error('Unable to generate base64 token');
     })();
     const fetchMethod = async (path, init) => {
-        var _a, _b, _c, _d, _e;
+        var _a, _b, _c, _d, _e, _f, _g;
         const url = (() => {
             if (path.startsWith('http'))
                 return path;
@@ -77,9 +77,20 @@ exports.createClient = (args, opts) => {
             'retry-after',
             'content-type',
         ].map((h) => res.headers.get(h));
+        let body = await res.text();
         // will typically be "application/json; charset=UTF-8"
-        // but can also be raw non-json strings
-        const body = ((_e = contentType) === null || _e === void 0 ? void 0 : _e.includes('application/json')) ? await res.json() : await res.text();
+        if ((_e = contentType) === null || _e === void 0 ? void 0 : _e.includes('application/json')) {
+            try {
+                body = JSON.parse(body);
+            }
+            catch (e) {
+                // in practice, zendesk will return invalid JSON even though the header is correct
+                // if this happens, we will just leave the string body as-is
+                if ((_f = opts) === null || _f === void 0 ? void 0 : _f.log) {
+                    ((_g = opts) === null || _g === void 0 ? void 0 : _g.logger) ? opts.logger(e) : console.error(e);
+                }
+            }
+        }
         // check for particular errors
         switch (res.status) {
             case 400:
