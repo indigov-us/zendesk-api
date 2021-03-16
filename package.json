@@ -1,8 +1,9 @@
 {
   "name": "@indigov/zendesk-api",
-  "version": "0.0.68",
+  "version": "0.0.69",
   "description": "The official Indigov wrapper for the Zendesk API",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "repository": "github:indigov-us/zendesk-api",
   "scripts": {
     "test": "jest --verbose",
