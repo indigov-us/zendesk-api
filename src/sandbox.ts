@@ -1,13 +1,18 @@
 import createClient, { Zendesk } from './'
 
 const main = async () => {
-  const api = createClient({
-    subdomain: 'repvanduyne',
-    getAwsParameterStoreName: (subdomain) => `/ZendeskAPITokens/prod/${subdomain}`,
-  })
+  const api = createClient(
+    {
+      subdomain: 'something',
+      getAwsParameterStoreName: (subdomain) => `/ZendeskAPITokens/prod/${subdomain}`,
+    },
+    {
+      log: true,
+    }
+  )
 
   try {
-    const res = await api('/incremental/users.json?start_time=1613972128')
+    const res = await api('/something')
     console.log(res)
   } catch (e) {
     console.error(e)

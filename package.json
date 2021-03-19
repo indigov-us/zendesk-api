@@ -7,7 +7,7 @@
   "repository": "github:indigov-us/zendesk-api",
   "scripts": {
     "test": "jest --verbose",
-    "sandbox": "ts-node src/sandbox.ts",
+    "sandbox": "ts-node -r dotenv/config src/sandbox.ts",
     "build": "tsc",
     "prepare": "tsc"
   },
