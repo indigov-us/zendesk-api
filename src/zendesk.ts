@@ -26,10 +26,11 @@ namespace Zendesk {
       action?: 'update'
       details?: string
       success?: boolean
-      status?: 'Updated' | 'Failed'
+      status?: 'Updated' | 'Failed' | 'Created'
       index: number
       error?: string
       errors?: string
+      external_id?: string
     }[]
   }
 
