@@ -24,10 +24,11 @@ declare namespace Zendesk {
             action?: 'update';
             details?: string;
             success?: boolean;
-            status?: 'Updated' | 'Failed';
+            status?: 'Updated' | 'Failed' | 'Created';
             index: number;
             error?: string;
             errors?: string;
+            external_id?: string;
         }[];
     }
     export interface SearchResult {
@@ -68,6 +69,8 @@ declare namespace Zendesk {
             value: any;
         }[];
         ticket_form_id?: number;
+        email_cc_ids?: string[];
+        collaborator_ids?: string[];
     }
     export interface Metadata {
         system?: object;

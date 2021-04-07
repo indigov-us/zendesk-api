@@ -6,11 +6,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const _1 = __importDefault(require("./"));
 const main = async () => {
     const api = _1.default({
-        subdomain: 'repvanduyne',
+        subdomain: 'something',
         getAwsParameterStoreName: (subdomain) => `/ZendeskAPITokens/prod/${subdomain}`,
+    }, {
+        log: true,
     });
     try {
-        const res = await api('/incremental/users.json?start_time=1613972128');
+        const res = await api('/something');
         console.log(res);
     }
     catch (e) {
