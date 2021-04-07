@@ -63,6 +63,8 @@ namespace Zendesk {
     custom_fields?: { id: number; value: any }[]
     fields?: { id: number; value: any }[]
     ticket_form_id?: number
+    email_cc_ids?: string[]
+    collaborator_ids?: string[]
   }
 
   export interface Metadata {
