@@ -696,9 +696,6 @@ declare namespace Zendesk {
         interface Schedule {
             schedule: Zendesk.Schedule;
         }
-        interface Macro {
-            macro: Zendesk.Macro;
-        }
     }
     export namespace ListResults {
         interface Apps {

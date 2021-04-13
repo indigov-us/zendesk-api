@@ -741,6 +741,9 @@ namespace Zendesk {
     export interface Schedule {
       schedule: Zendesk.Schedule
     }
+    export interface Macro {
+      macro: Zendesk.Macro
+    }
   }
 
   export namespace ListResults {
