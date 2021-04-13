@@ -246,7 +246,7 @@ namespace Zendesk {
     name?: string
     phone?: string
     tags?: string[]
-    user_fields?: { [key: string]: UserField }
+    user_fields?: { [key: string]: string | number | boolean | null }
     created_at?: string
     updated_at?: string
     role?: 'end-user' | 'agent' | 'admin'
@@ -571,16 +571,16 @@ namespace Zendesk {
         }
       }
       export interface ObjectTypes<Schema> extends _ {
-          data: Zendesk.Sunshine.ObjectType<Schema>[];
+        data: Zendesk.Sunshine.ObjectType<Schema>[]
       }
-      export interface ObjectRecords<Attributes> extends _{
-          data: Zendesk.Sunshine.ObjectRecord<Attributes>[];
+      export interface ObjectRecords<Attributes> extends _ {
+        data: Zendesk.Sunshine.ObjectRecord<Attributes>[]
       }
       export interface RelationshipTypes extends _ {
-          data: Zendesk.Sunshine.RelationshipType[];
+        data: Zendesk.Sunshine.RelationshipType[]
       }
       export interface RelationshipRecords extends _ {
-          data: Zendesk.Sunshine.RelationshipRecord[];
+        data: Zendesk.Sunshine.RelationshipRecord[]
       }
     }
   }
@@ -665,7 +665,7 @@ namespace Zendesk {
 
     export namespace Sunshine {
       export interface ObjectTypes<Schema> {
-        data: Zendesk.Sunshine.ObjectType<Schema>[] // TODO: accept an array of schemas?
+        data: Zendesk.Sunshine.ObjectType<Schema>[]
       }
 
       export interface ObjectRecords<Attributes> {
@@ -685,7 +685,7 @@ namespace Zendesk {
   export namespace SingleResults {
     export namespace Sunshine {
       export interface ObjectType<Schema> {
-        data: Zendesk.Sunshine.ObjectType<Schema> // TODO: accept an array of schemas?
+        data: Zendesk.Sunshine.ObjectType<Schema>
       }
 
       export interface ObjectRecord<Attributes> {
