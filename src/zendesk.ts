@@ -60,8 +60,8 @@ namespace Zendesk {
     group_id?: number
     is_public?: boolean
     tags?: string[]
-    custom_fields?: { id: number; value: any }[]
-    fields?: { id: number; value: any }[]
+    custom_fields?: { id: number; value: string | number | boolean | null | string[] }[]
+    fields?: { id: number; value: string | number | boolean | null | string[] }[]
     ticket_form_id?: number
     email_cc_ids?: string[]
     collaborator_ids?: string[]
@@ -246,7 +246,7 @@ namespace Zendesk {
     name?: string
     phone?: string
     tags?: string[]
-    user_fields?: { [key: string]: any }
+    user_fields?: { [key: string]: UserField }
     created_at?: string
     updated_at?: string
     role?: 'end-user' | 'agent' | 'admin'
@@ -570,8 +570,8 @@ namespace Zendesk {
           previous?: string | null
         }
       }
-      export interface ObjectTypes extends _ {
-          data: Zendesk.Sunshine.ObjectType<any>[];
+      export interface ObjectTypes<Schema> extends _ {
+          data: Zendesk.Sunshine.ObjectType<Schema>[];
       }
       export interface ObjectRecords<Attributes> extends _{
           data: Zendesk.Sunshine.ObjectRecord<Attributes>[];
@@ -664,8 +664,8 @@ namespace Zendesk {
     }
 
     export namespace Sunshine {
-      export interface ObjectTypes {
-        data: Zendesk.Sunshine.ObjectType<any>[] // TODO: accept an array of schemas?
+      export interface ObjectTypes<Schema> {
+        data: Zendesk.Sunshine.ObjectType<Schema>[] // TODO: accept an array of schemas?
       }
 
       export interface ObjectRecords<Attributes> {
@@ -683,6 +683,24 @@ namespace Zendesk {
   }
 
   export namespace SingleResults {
+    export namespace Sunshine {
+      export interface ObjectType<Schema> {
+        data: Zendesk.Sunshine.ObjectType<Schema> // TODO: accept an array of schemas?
+      }
+
+      export interface ObjectRecord<Attributes> {
+        data: Zendesk.Sunshine.ObjectRecord<Attributes>
+      }
+
+      export interface RelationshipType {
+        data: Zendesk.Sunshine.RelationshipType
+      }
+
+      export interface RelationshipRecord {
+        data: Zendesk.Sunshine.RelationshipRecord
+      }
+    }
+
     export interface Ticket {
       ticket: Zendesk.Ticket
     }
