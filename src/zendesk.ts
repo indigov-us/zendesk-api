@@ -214,6 +214,8 @@ namespace Zendesk {
     title?: string
     description?: string
     active?: boolean
+    created_at?: string
+    updated_at?: string
   }
 
   export interface Group {
@@ -225,6 +227,16 @@ namespace Zendesk {
     default?: boolean
     created_at?: string
     updated_at?: string
+  }
+
+  export interface GroupMembership {
+    created_at?: string
+    updated_at?: string
+    default?: boolean
+    group_id?: number
+    id?: number
+    url?: string
+    user_id?: number
   }
 
   export interface User {
@@ -550,6 +562,28 @@ namespace Zendesk {
       updated_at?: string
     }
   }
+  export namespace CursorResults {
+    export namespace Sunshine {
+      interface _ {
+        links: {
+          next?: string | null
+          previous?: string | null
+        }
+      }
+      export interface ObjectTypes extends _ {
+          data: Zendesk.Sunshine.ObjectType<any>[];
+      }
+      export interface ObjectRecords<Attributes> extends _{
+          data: Zendesk.Sunshine.ObjectRecord<Attributes>[];
+      }
+      export interface RelationshipTypes extends _ {
+          data: Zendesk.Sunshine.RelationshipType[];
+      }
+      export interface RelationshipRecords extends _ {
+          data: Zendesk.Sunshine.RelationshipRecord[];
+      }
+    }
+  }
 
   export namespace PaginatedResults {
     interface _ {
@@ -611,6 +645,10 @@ namespace Zendesk {
 
     export interface Groups extends _ {
       groups: Zendesk.Group[]
+    }
+
+    export interface GroupMemberships extends _ {
+      group_memberships: Zendesk.GroupMembership[]
     }
 
     export interface Views extends _ {
@@ -679,6 +717,18 @@ namespace Zendesk {
 
     export interface User {
       user: Zendesk.User
+    }
+
+    export interface Macro {
+      macro: Zendesk.Macro
+    }
+
+    export interface Group {
+      group: Zendesk.Group
+    }
+
+    export interface GroupMembership {
+      group_membership: Zendesk.GroupMembership
     }
 
     export interface UserField {
