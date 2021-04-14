@@ -61,7 +61,7 @@ namespace Zendesk {
     is_public?: boolean
     tags?: string[]
     custom_fields?: { id: number; value: unknown }[]
-    fields?: { id: number; value: string | number | boolean | null | string[] }[]
+    fields?: { id: number; value: unknown }[]
     ticket_form_id?: number
     email_cc_ids?: string[]
     collaborator_ids?: string[]
