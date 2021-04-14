@@ -246,7 +246,7 @@ namespace Zendesk {
     name?: string
     phone?: string
     tags?: string[]
-    user_fields?: { [key: string]: string | number | boolean | null }
+    user_fields?: { [key: string]: unknown }
     created_at?: string
     updated_at?: string
     role?: 'end-user' | 'agent' | 'admin'
