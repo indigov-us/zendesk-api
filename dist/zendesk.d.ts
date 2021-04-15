@@ -62,11 +62,11 @@ declare namespace Zendesk {
         tags?: string[];
         custom_fields?: {
             id: number;
-            value: any;
+            value: unknown;
         }[];
         fields?: {
             id: number;
-            value: any;
+            value: unknown;
         }[];
         ticket_form_id?: number;
         email_cc_ids?: string[];
@@ -197,6 +197,8 @@ declare namespace Zendesk {
         title?: string;
         description?: string;
         active?: boolean;
+        created_at?: string;
+        updated_at?: string;
     }
     export interface Group {
         name?: string;
@@ -208,6 +210,15 @@ declare namespace Zendesk {
         created_at?: string;
         updated_at?: string;
     }
+    export interface GroupMembership {
+        created_at?: string;
+        updated_at?: string;
+        default?: boolean;
+        group_id?: number;
+        id?: number;
+        url?: string;
+        user_id?: number;
+    }
     export interface User {
         id?: number;
         email?: string;
@@ -216,7 +227,7 @@ declare namespace Zendesk {
         phone?: string;
         tags?: string[];
         user_fields?: {
-            [key: string]: any;
+            [key: string]: unknown;
         };
         created_at?: string;
         updated_at?: string;
@@ -549,6 +560,29 @@ declare namespace Zendesk {
             updated_at?: string;
         }
     }
+    export namespace CursorResults {
+        namespace Sunshine {
+            interface _ {
+                links: {
+                    next?: string | null;
+                    previous?: string | null;
+                };
+            }
+            export interface ObjectTypes<Schema> extends _ {
+                data: Zendesk.Sunshine.ObjectType<Schema>[];
+            }
+            export interface ObjectRecords<Attributes> extends _ {
+                data: Zendesk.Sunshine.ObjectRecord<Attributes>[];
+            }
+            export interface RelationshipTypes extends _ {
+                data: Zendesk.Sunshine.RelationshipType[];
+            }
+            export interface RelationshipRecords extends _ {
+                data: Zendesk.Sunshine.RelationshipRecord[];
+            }
+            export {};
+        }
+    }
     export namespace PaginatedResults {
         interface _ {
             count: number;
@@ -597,6 +631,9 @@ declare namespace Zendesk {
         export interface Groups extends _ {
             groups: Zendesk.Group[];
         }
+        export interface GroupMemberships extends _ {
+            group_memberships: Zendesk.GroupMembership[];
+        }
         export interface Views extends _ {
             views: Zendesk.View[];
         }
@@ -607,8 +644,8 @@ declare namespace Zendesk {
             events: Zendesk.SideConversationEvent[];
         }
         export namespace Sunshine {
-            interface ObjectTypes {
-                data: Zendesk.Sunshine.ObjectType<any>[];
+            interface ObjectTypes<Schema> {
+                data: Zendesk.Sunshine.ObjectType<Schema>[];
             }
             interface ObjectRecords<Attributes> {
                 data: Zendesk.Sunshine.ObjectRecord<Attributes>[];
@@ -623,6 +660,20 @@ declare namespace Zendesk {
         export {};
     }
     export namespace SingleResults {
+        namespace Sunshine {
+            interface ObjectType<Schema> {
+                data: Zendesk.Sunshine.ObjectType<Schema>;
+            }
+            interface ObjectRecord<Attributes> {
+                data: Zendesk.Sunshine.ObjectRecord<Attributes>;
+            }
+            interface RelationshipType {
+                data: Zendesk.Sunshine.RelationshipType;
+            }
+            interface RelationshipRecord {
+                data: Zendesk.Sunshine.RelationshipRecord;
+            }
+        }
         interface Ticket {
             ticket: Zendesk.Ticket;
         }
@@ -649,6 +700,15 @@ declare namespace Zendesk {
         }
         interface User {
             user: Zendesk.User;
+        }
+        interface Macro {
+            macro: Zendesk.Macro;
+        }
+        interface Group {
+            group: Zendesk.Group;
+        }
+        interface GroupMembership {
+            group_membership: Zendesk.GroupMembership;
         }
         interface UserField {
             user_field: Zendesk.UserField;
