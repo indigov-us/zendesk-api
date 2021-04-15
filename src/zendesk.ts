@@ -60,8 +60,8 @@ namespace Zendesk {
     group_id?: number
     is_public?: boolean
     tags?: string[]
-    custom_fields?: { id: number; value: any }[]
-    fields?: { id: number; value: any }[]
+    custom_fields?: { id: number; value: unknown }[]
+    fields?: { id: number; value: unknown }[]
     ticket_form_id?: number
     email_cc_ids?: string[]
     collaborator_ids?: string[]
@@ -214,6 +214,8 @@ namespace Zendesk {
     title?: string
     description?: string
     active?: boolean
+    created_at?: string
+    updated_at?: string
   }
 
   export interface Group {
@@ -227,6 +229,16 @@ namespace Zendesk {
     updated_at?: string
   }
 
+  export interface GroupMembership {
+    created_at?: string
+    updated_at?: string
+    default?: boolean
+    group_id?: number
+    id?: number
+    url?: string
+    user_id?: number
+  }
+
   export interface User {
     id?: number
     email?: string
@@ -234,7 +246,7 @@ namespace Zendesk {
     name?: string
     phone?: string
     tags?: string[]
-    user_fields?: { [key: string]: any }
+    user_fields?: { [key: string]: unknown }
     created_at?: string
     updated_at?: string
     role?: 'end-user' | 'agent' | 'admin'
@@ -550,6 +562,28 @@ namespace Zendesk {
       updated_at?: string
     }
   }
+  export namespace CursorResults {
+    export namespace Sunshine {
+      interface _ {
+        links: {
+          next?: string | null
+          previous?: string | null
+        }
+      }
+      export interface ObjectTypes<Schema> extends _ {
+        data: Zendesk.Sunshine.ObjectType<Schema>[]
+      }
+      export interface ObjectRecords<Attributes> extends _ {
+        data: Zendesk.Sunshine.ObjectRecord<Attributes>[]
+      }
+      export interface RelationshipTypes extends _ {
+        data: Zendesk.Sunshine.RelationshipType[]
+      }
+      export interface RelationshipRecords extends _ {
+        data: Zendesk.Sunshine.RelationshipRecord[]
+      }
+    }
+  }
 
   export namespace PaginatedResults {
     interface _ {
@@ -613,6 +647,10 @@ namespace Zendesk {
       groups: Zendesk.Group[]
     }
 
+    export interface GroupMemberships extends _ {
+      group_memberships: Zendesk.GroupMembership[]
+    }
+
     export interface Views extends _ {
       views: Zendesk.View[]
     }
@@ -626,8 +664,8 @@ namespace Zendesk {
     }
 
     export namespace Sunshine {
-      export interface ObjectTypes {
-        data: Zendesk.Sunshine.ObjectType<any>[] // TODO: accept an array of schemas?
+      export interface ObjectTypes<Schema> {
+        data: Zendesk.Sunshine.ObjectType<Schema>[]
       }
 
       export interface ObjectRecords<Attributes> {
@@ -645,6 +683,24 @@ namespace Zendesk {
   }
 
   export namespace SingleResults {
+    export namespace Sunshine {
+      export interface ObjectType<Schema> {
+        data: Zendesk.Sunshine.ObjectType<Schema>
+      }
+
+      export interface ObjectRecord<Attributes> {
+        data: Zendesk.Sunshine.ObjectRecord<Attributes>
+      }
+
+      export interface RelationshipType {
+        data: Zendesk.Sunshine.RelationshipType
+      }
+
+      export interface RelationshipRecord {
+        data: Zendesk.Sunshine.RelationshipRecord
+      }
+    }
+
     export interface Ticket {
       ticket: Zendesk.Ticket
     }
@@ -679,6 +735,18 @@ namespace Zendesk {
 
     export interface User {
       user: Zendesk.User
+    }
+
+    export interface Macro {
+      macro: Zendesk.Macro
+    }
+
+    export interface Group {
+      group: Zendesk.Group
+    }
+
+    export interface GroupMembership {
+      group_membership: Zendesk.GroupMembership
     }
 
     export interface UserField {
