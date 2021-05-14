@@ -6,10 +6,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const job_completion_1 = __importDefault(require("./job-completion"));
 // if not specific, what default name should we give users?
 const defaultNameFallback = 'Friend';
-exports.default = ({ api, retryRateLimitErrors }) => async ({ users, defaultName, }) => {
+exports.default = ({ api, retryRateLimitErrors }) => async ({ users, defaultName }) => {
+    // we should never attempt to pass empty "name"s, because it will fail for existing users,
+    // and the fallback name will also fail because the user already exists during the /users/create_many
+    const usersWithEmptyNamesRemoved = users.map(({ name, ...user }) => {
+        if (name)
+            user.name = name;
+        return user;
+    });
     // attempt to create or update the users
     const createOrUpdateRes = await job_completion_1.default({ api, retryRateLimitErrors })('/users/create_or_update_many', {
-        body: JSON.stringify({ users }),
+        body: JSON.stringify({ users: usersWithEmptyNamesRemoved }),
         method: 'POST',
     });
     const results = createOrUpdateRes.body.job_status.results;

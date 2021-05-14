@@ -3,7 +3,7 @@ import { zendeskAPI } from './_helpers'
 
 it('creates or updates many users without names', async () => {
   const res = await createOrUpdateManyUsers({ api: zendeskAPI })({
-    users: [{ email: 'testingcreateorupdatemany4@indigov.us' }],
+    users: [{ email: 'testingcreateorupdatemany4@indigov.us', name: '' }],
   })
   expect(res).toBeTruthy()
 }, 60000)
