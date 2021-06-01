@@ -526,6 +526,10 @@ namespace Zendesk {
     intervals?: Array<{ start_time?: number; end_time?: number }>
   }
 
+  export interface Delete {
+    status?: string
+  }
+
   export namespace Sunshine {
     export interface ObjectType<Schema> {
       key?: string
