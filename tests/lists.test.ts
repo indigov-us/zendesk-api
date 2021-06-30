@@ -20,3 +20,8 @@ test('get ticket comments', async () => {
   const res = await zendeskAPI<Zendesk.ListResults.Comments>('/tickets/1/comments')
   expect(res.body.comments.length).toBeGreaterThanOrEqual(0)
 })
+
+test('get trigger categories', async () => {
+  const res = await zendeskAPI<Zendesk.ListResults.TriggerCategories>('/trigger_categories')
+  expect(res.body.trigger_categories.length).toBeGreaterThanOrEqual(0)
+})

@@ -2,7 +2,7 @@ import { zendeskAPI } from './_helpers'
 import { Zendesk } from '../src'
 
 test('object types and records', async () => {
-  const typeRes = await zendeskAPI<Zendesk.PaginatedResults.Sunshine.ObjectTypes>('/sunshine/objects/types')
+  const typeRes = await zendeskAPI<Zendesk.PaginatedResults.Sunshine.ObjectTypes<any>>('/sunshine/objects/types')
   expect(typeRes.body.data.length).toBeGreaterThan(1)
 
   const objectType = typeRes.body.data[0].key

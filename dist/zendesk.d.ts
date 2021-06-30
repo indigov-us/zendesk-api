@@ -37,7 +37,7 @@ declare namespace Zendesk {
         prev_page: string;
         results: ((User & {
             result_type: 'user';
-        }) & (Ticket & {
+        }) | (Ticket & {
             result_type: 'ticket';
         }))[];
     }
@@ -186,6 +186,13 @@ declare namespace Zendesk {
         description?: string;
         position?: number;
         raw_title?: string;
+    }
+    export interface TriggerCategory {
+        id?: string;
+        name?: string;
+        position?: number;
+        created_at?: string;
+        updated_at?: string;
     }
     export interface Action {
         field?: string;
@@ -695,6 +702,9 @@ declare namespace Zendesk {
         interface Trigger {
             trigger: Zendesk.Trigger;
         }
+        interface TriggerCategory {
+            trigger_category: Zendesk.TriggerCategory;
+        }
         interface Automation {
             automation: Zendesk.Automation;
         }
@@ -772,6 +782,9 @@ declare namespace Zendesk {
         }
         interface Comments {
             comments: Zendesk.Comment[];
+        }
+        interface TriggerCategories {
+            trigger_categories: Zendesk.TriggerCategory[];
         }
     }
     export namespace IncrementalResults {

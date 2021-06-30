@@ -67,3 +67,8 @@ test('get a schedule', async () => {
   const res = await zendeskAPI<Zendesk.SingleResults.Schedule>('/business_hours/schedules/360000312914')
   expect(res.body.schedule).toBeTruthy()
 }, 20000)
+
+test('get a trigger category', async () => {
+  const res = await zendeskAPI<Zendesk.SingleResults.TriggerCategory>('/trigger_categories/1500000494561')
+  expect(res.body.trigger_category).toBeTruthy()
+})

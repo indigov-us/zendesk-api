@@ -38,7 +38,7 @@ namespace Zendesk {
     count: number
     next_page: string
     prev_page: string
-    results: ((User & { result_type: 'user' }) & (Ticket & { result_type: 'ticket' }))[]
+    results: ((User & { result_type: 'user' }) | (Ticket & { result_type: 'ticket' }))[]
   }
 
   export interface Ticket {
@@ -201,6 +201,14 @@ namespace Zendesk {
     description?: string
     position?: number
     raw_title?: string
+  }
+
+  export interface TriggerCategory {
+    id?: string
+    name?: string
+    position?: number
+    created_at?: string
+    updated_at?: string
   }
 
   export interface Action {
@@ -729,6 +737,10 @@ namespace Zendesk {
       trigger: Zendesk.Trigger
     }
 
+    export interface TriggerCategory {
+      trigger_category: Zendesk.TriggerCategory
+    }
+
     export interface Automation {
       automation: Zendesk.Automation
     }
@@ -830,6 +842,10 @@ namespace Zendesk {
 
     export interface Comments {
       comments: Zendesk.Comment[]
+    }
+
+    export interface TriggerCategories {
+      trigger_categories: Zendesk.TriggerCategory[]
     }
   }
 
