@@ -19,7 +19,11 @@ export interface Result<BodyType> {
     retryAfter: number | null;
 }
 export declare type FetchMethod = (<BodyType>(path: string, init?: RequestInit) => Promise<Result<BodyType>>) & {
+    getCreds: () => Promise<{
+        email: string;
+        token: string;
+        base64Token: string;
+    }>;
     findUserByEmail: ReturnType<typeof findUserByEmail>;
-    getBase64Token: Promise<string>;
 };
 export declare const createClient: (args: AuthProps, opts?: ConstructorOpts | undefined) => FetchMethod;

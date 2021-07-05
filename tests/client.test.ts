@@ -1,4 +1,3 @@
-import btoa from 'btoa-lite'
 import FormData from 'form-data'
 import { createReadStream, readFileSync } from 'fs'
 
@@ -15,7 +14,7 @@ test('accepts full urls as a path', async () => {
 test('auths with base64 tokens', async () => {
   const client = createClient({
     subdomain: process.env.SUBDOMAIN as string,
-    base64Token: btoa(`${process.env.EMAIL}/token:${process.env.TOKEN}`),
+    base64Token: Buffer.from(`${process.env.EMAIL}/token:${process.env.TOKEN}`).toString('base64'),
   })
   const res = await client<Zendesk.PaginatedResults.Tickets>('/tickets.json')
   expect(res.body.tickets.length).toBeGreaterThanOrEqual(1)
@@ -51,6 +50,9 @@ test('returns parseable JSON when uploading binary data', async () => {
   expect(res.body.upload.token).toBeTruthy()
 }, 10000)
 
-test('allow access to underlying base64Token', async () => {
-  expect(await zendeskAPI.getBase64Token).toBeTruthy()
+test('getCreds', async () => {
+  const { email, token, base64Token } = await zendeskAPI.getCreds()
+  expect(email).toBeTruthy()
+  expect(token).toBeTruthy()
+  expect(base64Token).toBeTruthy()
 })

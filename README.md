@@ -79,4 +79,7 @@ await jobCompletion({ retryRateLimitErrors: true })('/thejob')
 
 // there are helper methods available directly on the function itself
 const user = await api.findUserByEmail('user@domain.com')
+
+// you can access the underlying credentials
+const { email, token, base64Token } = await api.getCreds()
 ```

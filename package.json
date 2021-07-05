@@ -1,6 +1,6 @@
 {
   "name": "@indigov/zendesk-api",
-  "version": "0.0.74",
+  "version": "0.0.75",
   "description": "The official Indigov wrapper for the Zendesk API",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -14,7 +14,6 @@
   "author": "@e10jc",
   "license": "ISC",
   "devDependencies": {
-    "@types/btoa-lite": "^1.0.0",
     "@types/jest": "^24.9.1",
     "@types/node": "^13.5.0",
     "@types/node-fetch": "^2.5.7",
@@ -27,7 +26,6 @@
   },
   "dependencies": {
     "aws-sdk": "^2.809.0",
-    "btoa-lite": "^1.0.0",
     "form-data": "^3.0.0",
     "node-fetch": "^2.6.1",
     "p-queue": "^6.4.0"

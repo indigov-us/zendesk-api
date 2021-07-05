@@ -11,36 +11,57 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const ssm_1 = __importDefault(require("aws-sdk/clients/ssm"));
-const btoa_lite_1 = __importDefault(require("btoa-lite"));
 const form_data_1 = __importDefault(require("form-data"));
 const node_fetch_1 = __importDefault(require("node-fetch"));
 const Errors = __importStar(require("./errors"));
 const find_user_by_email_1 = __importDefault(require("./find-user-by-email"));
+const credsToBase64Token = (email, token) => Buffer.from(`${email}/token:${token}`).toString('base64');
+const credsFromBase64Token = (base64Token) => Buffer.from(base64Token, 'base64').toString().split('/token:');
 exports.createClient = (args, opts) => {
     const { subdomain } = args;
-    // auth needs to be a base64 value
-    // it can be supplied directly, or it can be generated from email+token,
-    // or email+token can be retrieved from parameter store
-    const getBase64Token = (async () => {
+    // generate and save creds once
+    let email;
+    let token;
+    let base64Token;
+    const generateCredsPromise = (async () => {
+        // auth needs to be a base64 value
+        // it can be supplied directly, or it can be generated from email+token,
+        // or email+token can be retrieved from parameter store
         var _a, _b;
         // if creds were explicitly provided, use them
-        if (args.base64Token)
-            return args.base64Token;
+        if (args.base64Token) {
+            const [email, token] = credsFromBase64Token(args.base64Token);
+            return { email, token, base64Token: args.base64Token };
+        }
         // if email and token were provided, use them
-        else if (args.email && args.token)
-            return btoa_lite_1.default(`${args.email}/token:${args.token}`);
+        if (args.email && args.token) {
+            return {
+                email: args.email,
+                token: args.token,
+                base64Token: credsToBase64Token(args.email, args.token),
+            };
+        }
         // if a function to fetch email+token from AWS was provided, try that
-        else if (args.getAwsParameterStoreName) {
+        if (args.getAwsParameterStoreName) {
             const parameterName = args.getAwsParameterStoreName(subdomain);
             // Use custom AWS region if provided
             const ssm = new ssm_1.default({ region: args.awsRegion });
             const { Parameter } = await ssm.getParameter({ Name: parameterName }).promise();
             const [token, email] = ((_b = (_a = Parameter) === null || _a === void 0 ? void 0 : _a.Value) === null || _b === void 0 ? void 0 : _b.split(',')) || [];
-            return btoa_lite_1.default(`${email}/token:${token}`);
+            return {
+                email,
+                token,
+                base64Token: credsToBase64Token(email, token),
+            };
         }
         // if we are here, there is a problem
-        throw new Error('Unable to generate base64 token');
-    })();
+        throw new Error('Unable to generate creds');
+    })().then((creds) => {
+        // set the cached creds after the promise resolves
+        email = creds.email;
+        token = creds.token;
+        base64Token = creds.base64Token;
+    });
     const fetchMethod = async (path, init) => {
         var _a, _b, _c, _d, _e, _f, _g;
         const url = (() => {
@@ -54,11 +75,13 @@ exports.createClient = (args, opts) => {
             const message = `[${method}] ${url} ${init ? init.body : ''}`;
             ((_b = opts) === null || _b === void 0 ? void 0 : _b.logger) ? opts.logger(message) : console.log(message);
         }
+        // wait for the creds promise to resolve
+        await generateCredsPromise;
         const res = await node_fetch_1.default(url, {
             ...init,
             headers: {
                 // all requests should have Authorization header
-                Authorization: `Basic ${await getBase64Token}`,
+                Authorization: `Basic ${base64Token}`,
                 // all requests return json
                 Accept: 'application/json',
                 // only add JSON content-type header if we are not uploading a file
@@ -125,11 +148,19 @@ exports.createClient = (args, opts) => {
     // add supplementary functions on top of the main fetchMethod
     // TODO: move other methods like fastPaginate to below?
     Object.defineProperties(fetchMethod, {
+        getCreds: {
+            value: async () => {
+                // wait for the creds promise to resolve
+                await generateCredsPromise;
+                return {
+                    email,
+                    token,
+                    base64Token,
+                };
+            },
+        },
         findUserByEmail: {
             value: find_user_by_email_1.default(fetchMethod),
-        },
-        getBase64Token: {
-            value: getBase64Token,
         },
     });
     return fetchMethod;
