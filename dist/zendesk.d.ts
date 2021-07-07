@@ -177,6 +177,7 @@ declare namespace Zendesk {
     export interface Trigger {
         url?: string;
         id?: number;
+        category_id?: string;
         title?: string;
         active?: boolean;
         updated_at?: string;
