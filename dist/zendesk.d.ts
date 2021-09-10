@@ -98,6 +98,7 @@ declare namespace Zendesk {
             default?: boolean;
         }[];
         tag?: string;
+        required?: boolean;
         type?: 'text' | 'textarea' | 'checkbox' | 'date' | 'integer' | 'decimal' | 'regexp' | 'partialcreditcard' | 'multiselect' | 'tagger';
     }
     export interface TicketForm {
@@ -158,6 +159,22 @@ declare namespace Zendesk {
         content_url?: string;
         content_type?: string;
         size?: number;
+    }
+    export interface Organization {
+        created_at?: string;
+        details?: string;
+        domain_names?: string[];
+        external_id?: string;
+        group_id?: number;
+        id?: number;
+        name?: string;
+        notes?: string;
+        organization_fields?: Record<string, string | number | boolean>;
+        shared_comments?: boolean;
+        shared_tickets?: boolean;
+        tags?: string[];
+        updated_at?: string;
+        url?: string;
     }
     export interface Target {
         url?: string;
@@ -624,6 +641,9 @@ declare namespace Zendesk {
         export interface Triggers extends _ {
             triggers: Zendesk.Trigger[];
         }
+        export interface Organizations extends _ {
+            organizations: Zendesk.Organization[];
+        }
         export interface Automations extends _ {
             automations: Zendesk.Automation[];
         }
@@ -711,6 +731,9 @@ declare namespace Zendesk {
         }
         interface User {
             user: Zendesk.User;
+        }
+        interface Organization {
+            organization: Zendesk.Organization;
         }
         interface Macro {
             macro: Zendesk.Macro;

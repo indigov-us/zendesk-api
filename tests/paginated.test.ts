@@ -67,3 +67,8 @@ test('get a page of automations', async () => {
   const res = await zendeskAPI<Zendesk.PaginatedResults.Automations>('/automations')
   expect(res.body.automations.length).toBeGreaterThan(0)
 })
+
+test('get a page of organizations', async () => {
+  const res = await zendeskAPI<Zendesk.PaginatedResults.Organizations>('/organizations')
+  expect(res.body.organizations.length).toBeGreaterThan(0)
+})

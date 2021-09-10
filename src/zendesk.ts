@@ -95,6 +95,7 @@ namespace Zendesk {
       default?: boolean
     }[]
     tag?: string
+    required?: boolean
     type?:
       | 'text'
       | 'textarea'
@@ -171,6 +172,23 @@ namespace Zendesk {
     content_url?: string
     content_type?: string
     size?: number
+  }
+
+  export interface Organization {
+    created_at?: string
+    details?: string
+    domain_names?: string[]
+    external_id?: string
+    group_id?: number
+    id?: number
+    name?: string
+    notes?: string
+    organization_fields?: Record<string, string | number | boolean>
+    shared_comments?: boolean
+    shared_tickets?: boolean
+    tags?: string[]
+    updated_at?: string
+    url?: string
   }
 
   export interface Target {
@@ -636,6 +654,10 @@ namespace Zendesk {
       triggers: Zendesk.Trigger[]
     }
 
+    export interface Organizations extends _ {
+      organizations: Zendesk.Organization[]
+    }
+
     export interface Automations extends _ {
       automations: Zendesk.Automation[]
     }
@@ -748,6 +770,10 @@ namespace Zendesk {
 
     export interface User {
       user: Zendesk.User
+    }
+
+    export interface Organization {
+      organization: Zendesk.Organization
     }
 
     export interface Macro {

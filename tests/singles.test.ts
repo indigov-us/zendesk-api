@@ -72,3 +72,8 @@ test('get a trigger category', async () => {
   const res = await zendeskAPI<Zendesk.SingleResults.TriggerCategory>('/trigger_categories/1500000494561')
   expect(res.body.trigger_category).toBeTruthy()
 })
+
+test('get an organization', async () => {
+  const res = await zendeskAPI<Zendesk.SingleResults.Organization>('/organizations/370291820573')
+  expect(res.body.organization).toBeTruthy()
+})
