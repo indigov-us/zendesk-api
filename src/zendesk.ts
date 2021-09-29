@@ -208,18 +208,18 @@ namespace Zendesk {
   }
 
   export interface Webhook {
-    created_at: string
-    created_by: string
-    description: string
-    endpoint: string
-    http_method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
-    id: string
-    name: string
-    request_format: 'json' | 'xml' | 'form_encoded'
-    status: 'active' | 'inactive'
-    subscriptions: string[]
-    updated_at: string
-    updated_by: string
+    created_at?: string
+    created_by?: string
+    description?: string
+    endpoint?: string
+    http_method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
+    id?: string
+    name?: string
+    request_format?: 'json' | 'xml' | 'form_encoded'
+    status?: 'active' | 'inactive'
+    subscriptions?: string[]
+    updated_at?: string
+    updated_by?: string
   }
 
   export interface Trigger {
