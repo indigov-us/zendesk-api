@@ -77,3 +77,8 @@ test('get an organization', async () => {
   const res = await zendeskAPI<Zendesk.SingleResults.Organization>('/organizations/370291820573')
   expect(res.body.organization).toBeTruthy()
 })
+
+test.skip('get a webhook', async () => {
+  const res = await zendeskAPI<Zendesk.SingleResults.Webhook>('/webhooks/1')
+  expect(res.body.webhook).toBeTruthy()
+})

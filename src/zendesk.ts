@@ -207,6 +207,21 @@ namespace Zendesk {
     email?: string
   }
 
+  export interface Webhook {
+    created_at: string
+    created_by: string
+    description: string
+    endpoint: string
+    http_method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
+    id: string
+    name: string
+    request_format: 'json' | 'xml' | 'form_encoded'
+    status: 'active' | 'inactive'
+    subscriptions: string[]
+    updated_at: string
+    updated_by: string
+  }
+
   export interface Trigger {
     url?: string
     id?: number
@@ -848,6 +863,10 @@ namespace Zendesk {
     export interface Schedule {
       schedule: Zendesk.Schedule
     }
+
+    export interface Webhook {
+      webhook: Zendesk.Webhook
+    }
   }
 
   export namespace ListResults {
@@ -873,6 +892,10 @@ namespace Zendesk {
 
     export interface TriggerCategories {
       trigger_categories: Zendesk.TriggerCategory[]
+    }
+
+    export interface Webhooks {
+      webhooks: Zendesk.Webhook[]
     }
   }
 

@@ -25,3 +25,8 @@ test('get trigger categories', async () => {
   const res = await zendeskAPI<Zendesk.ListResults.TriggerCategories>('/trigger_categories')
   expect(res.body.trigger_categories.length).toBeGreaterThanOrEqual(0)
 })
+
+test('get webhooks', async () => {
+  const res = await zendeskAPI<Zendesk.ListResults.Webhooks>('/webhooks')
+  expect(res.body.webhooks.length).toBeGreaterThanOrEqual(0)
+})
