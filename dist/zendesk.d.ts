@@ -192,6 +192,15 @@ declare namespace Zendesk {
         email?: string;
     }
     export interface Webhook {
+        authentication?: {
+            type?: 'basic_auth' | 'bearer_token';
+            data?: {
+                username?: string;
+                password?: string;
+                token?: string;
+            };
+            add_position?: 'header';
+        };
         created_at?: string;
         created_by?: string;
         description?: string;
