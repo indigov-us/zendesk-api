@@ -452,6 +452,7 @@ declare namespace Zendesk {
         total?: number;
         url?: string;
     }
+    export type ViewColumns = ['assigned', 'assignee', 'due_date', 'group', 'nice_id', 'updated', 'updated_assignee', 'updated_assignee', 'updated_requester', 'updated_by_type', 'organization', 'priority', 'created', 'requester', 'locale_id', 'satisfaction_score', 'solved', 'status', 'description', 'submitter', 'ticket_form', 'type', 'brand'];
     export interface View {
         url?: string;
         id?: number;
@@ -461,20 +462,17 @@ declare namespace Zendesk {
         created_at?: string;
         position?: number;
         execution?: {
-            group_by?: string | null;
-            group_order?: string;
-            sort_by?: string;
-            sort_order?: string;
+            group_by?: ViewColumns[number] | null;
+            group_order?: 'asc' | 'desc';
+            sort_by?: ViewColumns[number] | null;
+            sort_order?: 'asc' | 'desc';
             group?: string | null;
             sort?: {
                 id?: string;
                 title?: string;
-                order?: string;
+                order?: 'asc' | 'desc';
             };
-            columns?: Array<{
-                id?: string;
-                title?: string;
-            }>;
+            columns?: ViewColumns[number][] | null;
             fields?: Array<{
                 id?: string;
                 title?: string;
@@ -485,6 +483,13 @@ declare namespace Zendesk {
             }>;
         };
         conditions?: TicketConditions;
+        output?: {
+            columns: ViewColumns[number][] | null;
+            group_by: ViewColumns[number] | null;
+            group_order: 'asc' | 'desc';
+            sort_by: ViewColumns[number] | null;
+            sort_order: 'asc' | 'desc';
+        };
         restriction?: string | null;
         watchable?: boolean;
         raw_title?: string;
