@@ -511,11 +511,11 @@ namespace Zendesk {
     }
     conditions?: TicketConditions
     output?: {
-      columns: (ViewColumns[number] | string)[] | null
-      group_by: ViewColumns[number] | string | null
-      group_order: 'asc' | 'desc'
-      sort_by: ViewColumns[number] | string | null
-      sort_order: 'asc' | 'desc'
+      columns?: (ViewColumns[number] | string)[] | null
+      group_by?: ViewColumns[number] | string | null
+      group_order?: 'asc' | 'desc'
+      sort_by?: ViewColumns[number] | string | null
+      sort_order?: 'asc' | 'desc'
     }
     restriction?: string | null
     watchable?: boolean
