@@ -462,9 +462,9 @@ declare namespace Zendesk {
         created_at?: string;
         position?: number;
         execution?: {
-            group_by?: ViewColumns[number] | null;
+            group_by?: ViewColumns[number] | string | null;
             group_order?: 'asc' | 'desc';
-            sort_by?: ViewColumns[number] | null;
+            sort_by?: ViewColumns[number] | string | null;
             sort_order?: 'asc' | 'desc';
             group?: string | null;
             sort?: {
@@ -472,7 +472,7 @@ declare namespace Zendesk {
                 title?: string;
                 order?: 'asc' | 'desc';
             };
-            columns?: ViewColumns[number][] | null;
+            columns?: (ViewColumns[number] | string)[] | null;
             fields?: Array<{
                 id?: string;
                 title?: string;
@@ -484,10 +484,10 @@ declare namespace Zendesk {
         };
         conditions?: TicketConditions;
         output?: {
-            columns: ViewColumns[number][] | null;
-            group_by: ViewColumns[number] | null;
+            columns: (ViewColumns[number] | string)[] | null;
+            group_by: ViewColumns[number] | string | null;
             group_order: 'asc' | 'desc';
-            sort_by: ViewColumns[number] | null;
+            sort_by: ViewColumns[number] | string | null;
             sort_order: 'asc' | 'desc';
         };
         restriction?: string | null;
