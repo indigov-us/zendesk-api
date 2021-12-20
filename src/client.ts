@@ -17,6 +17,7 @@ export interface AuthProps {
 
 export interface ConstructorOpts {
   log?: boolean
+  logFull?: boolean
   logger?: (message: string) => void
 }
 
@@ -100,7 +101,7 @@ export const createClient = (args: AuthProps, opts?: ConstructorOpts) => {
     const method = init ? init.method || 'GET' : 'GET'
 
     if (opts?.log) {
-      const message = `[${method}] ${url}`
+      const message = `[${method}] ${url} ${opts?.logFull && init ? init.body : ''}`
       opts?.logger ? opts.logger(message) : console.log(message)
     }
 
