@@ -100,7 +100,7 @@ export const createClient = (args: AuthProps, opts?: ConstructorOpts) => {
     const method = init ? init.method || 'GET' : 'GET'
 
     if (opts?.log) {
-      const message = `[${method}] ${url} ${init ? init.body : ''}`
+      const message = `[${method}] ${url}`
       opts?.logger ? opts.logger(message) : console.log(message)
     }
 
