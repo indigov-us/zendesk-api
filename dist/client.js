@@ -1,15 +1,28 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.createClient = void 0;
 const ssm_1 = __importDefault(require("aws-sdk/clients/ssm"));
 const form_data_1 = __importDefault(require("form-data"));
 const node_fetch_1 = __importDefault(require("node-fetch"));
@@ -27,7 +40,7 @@ exports.createClient = (args, opts) => {
         // auth needs to be a base64 value
         // it can be supplied directly, or it can be generated from email+token,
         // or email+token can be retrieved from parameter store
-        var _a, _b;
+        var _a;
         // if creds were explicitly provided, use them
         if (args.base64Token) {
             const [email, token] = credsFromBase64Token(args.base64Token);
@@ -47,7 +60,7 @@ exports.createClient = (args, opts) => {
             // Use custom AWS region if provided
             const ssm = new ssm_1.default({ region: args.awsRegion });
             const { Parameter } = await ssm.getParameter({ Name: parameterName }).promise();
-            const [token, email] = ((_b = (_a = Parameter) === null || _a === void 0 ? void 0 : _a.Value) === null || _b === void 0 ? void 0 : _b.split(',')) || [];
+            const [token, email] = ((_a = Parameter === null || Parameter === void 0 ? void 0 : Parameter.Value) === null || _a === void 0 ? void 0 : _a.split(',')) || [];
             return {
                 email,
                 token,
@@ -63,7 +76,6 @@ exports.createClient = (args, opts) => {
         base64Token = creds.base64Token;
     });
     const fetchMethod = async (path, init) => {
-        var _a, _b, _c, _d, _e, _f, _g;
         const url = (() => {
             if (path.startsWith('http'))
                 return path;
@@ -71,9 +83,9 @@ exports.createClient = (args, opts) => {
             return `https://${subdomain}.zendesk.com/api${pathPrefix}${path}`;
         })();
         const method = init ? init.method || 'GET' : 'GET';
-        if ((_a = opts) === null || _a === void 0 ? void 0 : _a.log) {
-            const message = `[${method}] ${url} ${init ? init.body : ''}`;
-            ((_b = opts) === null || _b === void 0 ? void 0 : _b.logger) ? opts.logger(message) : console.log(message);
+        if (opts === null || opts === void 0 ? void 0 : opts.log) {
+            const message = `[${method}] ${url} ${(opts === null || opts === void 0 ? void 0 : opts.logFull) && init ? init.body : ''}`;
+            (opts === null || opts === void 0 ? void 0 : opts.logger) ? opts.logger(message) : console.log(message);
         }
         // wait for the creds promise to resolve
         await generateCredsPromise;
@@ -86,11 +98,11 @@ exports.createClient = (args, opts) => {
                 Accept: 'application/json',
                 // only add JSON content-type header if we are not uploading a file
                 // because node-fetch will calculate multipart boundary automatically
-                ...(!(((_c = init) === null || _c === void 0 ? void 0 : _c.body) instanceof form_data_1.default) && {
+                ...(!((init === null || init === void 0 ? void 0 : init.body) instanceof form_data_1.default) && {
                     'Content-Type': 'application/json',
                 }),
                 // allow rest of the headers to override
-                ...(_d = init) === null || _d === void 0 ? void 0 : _d.headers,
+                ...init === null || init === void 0 ? void 0 : init.headers,
             },
         });
         // localize the response headers for processing
@@ -102,15 +114,15 @@ exports.createClient = (args, opts) => {
         ].map((h) => res.headers.get(h));
         let body = await res.text();
         // will typically be "application/json; charset=UTF-8"
-        if ((_e = contentType) === null || _e === void 0 ? void 0 : _e.includes('application/json')) {
+        if (contentType === null || contentType === void 0 ? void 0 : contentType.includes('application/json')) {
             try {
                 body = JSON.parse(body);
             }
             catch (e) {
                 // in practice, zendesk will return invalid JSON even though the header is correct
                 // if this happens, we will just leave the string body as-is
-                if ((_f = opts) === null || _f === void 0 ? void 0 : _f.log) {
-                    ((_g = opts) === null || _g === void 0 ? void 0 : _g.logger) ? opts.logger(e) : console.error(e);
+                if (opts === null || opts === void 0 ? void 0 : opts.log) {
+                    (opts === null || opts === void 0 ? void 0 : opts.logger) ? opts.logger(e) : console.error(e);
                 }
             }
         }

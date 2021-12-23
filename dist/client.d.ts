@@ -9,7 +9,10 @@ export interface AuthProps {
     awsRegion?: string;
 }
 export interface ConstructorOpts {
+    /** If true, will log every request minus the body */
     log?: boolean;
+    /** If true, will log every request body */
+    logFull?: boolean;
     logger?: (message: string) => void;
 }
 export interface Result<BodyType> {

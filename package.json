@@ -1,6 +1,6 @@
 {
   "name": "@indigov/zendesk-api",
-  "version": "0.0.83",
+  "version": "0.0.84",
   "description": "The official Indigov wrapper for the Zendesk API",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -29,5 +29,8 @@
     "form-data": "^3.0.0",
     "node-fetch": "^2.6.1",
     "p-queue": "^6.4.0"
+  },
+  "volta": {
+    "node": "16.13.1"
   }
 }
