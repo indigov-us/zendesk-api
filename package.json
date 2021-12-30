@@ -14,13 +14,13 @@
   "author": "@e10jc",
   "license": "ISC",
   "devDependencies": {
-    "@types/jest": "^24.9.1",
+    "@types/jest": "^27.0.3",
     "@types/node": "^13.5.0",
     "@types/node-fetch": "^2.5.7",
     "@types/p-queue": "^3.2.1",
     "dotenv": "^8.2.0",
-    "jest": "^25.1.0",
-    "ts-jest": "^25.0.0",
+    "jest": "^27.4.5",
+    "ts-jest": "^27.1.2",
     "ts-node": "^9.1.1",
     "typescript": "^4.5.4"
   },
