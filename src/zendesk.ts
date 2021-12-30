@@ -646,6 +646,7 @@ namespace Zendesk {
       updated_at?: string
     }
   }
+
   export namespace CursorResults {
     export namespace Sunshine {
       interface _ {
@@ -666,6 +667,46 @@ namespace Zendesk {
       export interface RelationshipRecords extends _ {
         data: Zendesk.Sunshine.RelationshipRecord[]
       }
+    }
+
+    export interface _ {
+      meta: {
+        has_more: boolean
+        after_cursor: string
+        before_cursor: string
+      }
+      links: {
+        next: string
+        prev: string
+      }
+    }
+
+    export interface Tickets extends _ {
+      tickets: Zendesk.Ticket[]
+    }
+
+    export interface Users extends _ {
+      users: Zendesk.User[]
+    }
+
+    export interface Organizations extends _ {
+      organizations: Zendesk.Organization[]
+    }
+
+    export interface Macros extends _ {
+      macros: Zendesk.Macro[]
+    }
+
+    export interface Views extends _ {
+      views: Zendesk.View[]
+    }
+
+    export interface Triggers extends _ {
+      triggers: Zendesk.Trigger[]
+    }
+
+    export interface Automations extends _ {
+      automations: Zendesk.Automation[]
     }
   }
 

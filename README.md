@@ -80,6 +80,9 @@ await jobCompletion({ retryRateLimitErrors: true })('/thejob')
 // there are helper methods available directly on the function itself
 const user = await api.findUserByEmail('user@domain.com')
 
+// there is a helper method to fetch all objects via cursor pagination
+const users = await zendeskAPI.fetchAll<Zendesk.User>('users', '/users')
+
 // you can access the underlying credentials
 const { email, token, base64Token } = await api.getCreds()
 ```

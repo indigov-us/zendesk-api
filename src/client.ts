@@ -4,6 +4,7 @@ import fetch, { RequestInit } from 'node-fetch'
 
 import * as Errors from './errors'
 
+import fetchAll from './fetch-all'
 import findUserByEmail from './find-user-by-email'
 
 export interface AuthProps {
@@ -36,6 +37,7 @@ export type FetchMethod = (<BodyType>(path: string, init?: RequestInit) => Promi
     token: string
     base64Token: string
   }>
+  fetchAll: ReturnType<typeof fetchAll>
   findUserByEmail: ReturnType<typeof findUserByEmail>
 }
 
@@ -198,6 +200,9 @@ export const createClient = (args: AuthProps, opts?: ConstructorOpts) => {
           base64Token,
         }
       },
+    },
+    fetchAll: {
+      value: fetchAll(fetchMethod as FetchMethod),
     },
     findUserByEmail: {
       value: findUserByEmail(fetchMethod as FetchMethod),

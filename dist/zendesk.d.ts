@@ -659,6 +659,38 @@ declare namespace Zendesk {
             }
             export {};
         }
+        interface _ {
+            meta: {
+                has_more: boolean;
+                after_cursor: string;
+                before_cursor: string;
+            };
+            links: {
+                next: string;
+                prev: string;
+            };
+        }
+        interface Tickets extends _ {
+            tickets: Zendesk.Ticket[];
+        }
+        interface Users extends _ {
+            users: Zendesk.User[];
+        }
+        interface Organizations extends _ {
+            organizations: Zendesk.Organization[];
+        }
+        interface Macros extends _ {
+            macros: Zendesk.Macro[];
+        }
+        interface Views extends _ {
+            views: Zendesk.View[];
+        }
+        interface Triggers extends _ {
+            triggers: Zendesk.Trigger[];
+        }
+        interface Automations extends _ {
+            automations: Zendesk.Automation[];
+        }
     }
     export namespace PaginatedResults {
         interface _ {
