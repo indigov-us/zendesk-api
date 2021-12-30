@@ -22,7 +22,7 @@ exports.default = ({ api, concurrency, onPage, retryRateLimitErrors, startPage, 
                 if (!keepLooping)
                     return;
                 const pathWithPage = path.includes('?') ? `${path}&page=${currentPage}` : `${path}?page=${currentPage}`;
-                const res = await retry_1.default(() => api(pathWithPage, init), {
+                const res = await (0, retry_1.default)(() => api(pathWithPage, init), {
                     // retrying 1 time is the same as not retrying at all
                     maxNumAttempts: retryRateLimitErrors ? undefined : 1,
                 });

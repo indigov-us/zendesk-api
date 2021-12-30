@@ -14,7 +14,7 @@ var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
 };
@@ -30,7 +30,7 @@ const Errors = __importStar(require("./errors"));
 const find_user_by_email_1 = __importDefault(require("./find-user-by-email"));
 const credsToBase64Token = (email, token) => Buffer.from(`${email}/token:${token}`).toString('base64');
 const credsFromBase64Token = (base64Token) => Buffer.from(base64Token, 'base64').toString().split('/token:');
-exports.createClient = (args, opts) => {
+const createClient = (args, opts) => {
     const { subdomain } = args;
     // generate and save creds once
     let email;
@@ -89,7 +89,7 @@ exports.createClient = (args, opts) => {
         }
         // wait for the creds promise to resolve
         await generateCredsPromise;
-        const res = await node_fetch_1.default(url, {
+        const res = await (0, node_fetch_1.default)(url, {
             ...init,
             headers: {
                 // all requests should have Authorization header
@@ -172,9 +172,10 @@ exports.createClient = (args, opts) => {
             },
         },
         findUserByEmail: {
-            value: find_user_by_email_1.default(fetchMethod),
+            value: (0, find_user_by_email_1.default)(fetchMethod),
         },
     });
     return fetchMethod;
 };
+exports.createClient = createClient;
 //# sourceMappingURL=client.js.map

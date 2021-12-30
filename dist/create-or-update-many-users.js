@@ -15,7 +15,7 @@ exports.default = ({ api, retryRateLimitErrors }) => async ({ users, defaultName
         return user;
     });
     // attempt to create or update the users
-    const createOrUpdateRes = await job_completion_1.default({ api, retryRateLimitErrors })('/users/create_or_update_many', {
+    const createOrUpdateRes = await (0, job_completion_1.default)({ api, retryRateLimitErrors })('/users/create_or_update_many', {
         body: JSON.stringify({ users: usersWithEmptyNamesRemoved }),
         method: 'POST',
     });
@@ -25,7 +25,7 @@ exports.default = ({ api, retryRateLimitErrors }) => async ({ users, defaultName
     // retry the failures using the create_many endpoint and a default name
     if (failures.length) {
         const name = defaultName || defaultNameFallback;
-        await job_completion_1.default({ api, retryRateLimitErrors })('/users/create_many', {
+        await (0, job_completion_1.default)({ api, retryRateLimitErrors })('/users/create_many', {
             body: JSON.stringify({ users: failures.map((u) => ({ ...u, name })) }),
             method: 'POST',
         });

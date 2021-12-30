@@ -452,7 +452,31 @@ declare namespace Zendesk {
         total?: number;
         url?: string;
     }
-    export type ViewColumns = ['assigned', 'assignee', 'due_date', 'group', 'nice_id', 'updated', 'updated_assignee', 'updated_assignee', 'updated_requester', 'updated_by_type', 'organization', 'priority', 'created', 'requester', 'locale_id', 'satisfaction_score', 'solved', 'status', 'description', 'submitter', 'ticket_form', 'type', 'brand'];
+    export type ViewColumns = [
+        'assigned',
+        'assignee',
+        'due_date',
+        'group',
+        'nice_id',
+        'updated',
+        'updated_assignee',
+        'updated_assignee',
+        'updated_requester',
+        'updated_by_type',
+        'organization',
+        'priority',
+        'created',
+        'requester',
+        'locale_id',
+        'satisfaction_score',
+        'solved',
+        'status',
+        'description',
+        'submitter',
+        'ticket_form',
+        'type',
+        'brand'
+    ];
     export interface View {
         url?: string;
         id?: number;

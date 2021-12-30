@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const _1 = __importDefault(require("./"));
 const main = async () => {
-    const api = _1.default({
+    const api = (0, _1.default)({
         subdomain: 'something',
         getAwsParameterStoreName: (subdomain) => `/ZendeskAPITokens/prod/${subdomain}`,
     }, {

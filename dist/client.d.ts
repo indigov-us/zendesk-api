@@ -13,7 +13,7 @@ export interface ConstructorOpts {
     log?: boolean;
     /** If true, will log every request body */
     logFull?: boolean;
-    logger?: (message: string) => void;
+    logger?: (message: unknown) => void;
 }
 export interface Result<BodyType> {
     body: BodyType;
