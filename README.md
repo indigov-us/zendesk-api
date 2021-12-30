@@ -81,7 +81,13 @@ await jobCompletion({ retryRateLimitErrors: true })('/thejob')
 const user = await api.findUserByEmail('user@domain.com')
 
 // there is a helper method to fetch all objects via cursor pagination
-const users = await zendeskAPI.fetchAll<Zendesk.User>('users', '/users')
+await zendeskAPI.fetchAll<Zendesk.User>({
+  path: '/users?role=agent',
+  bodyKey: 'users',
+  onPage: async (users) => {
+    // do something with a page of users here
+  },
+})
 
 // you can access the underlying credentials
 const { email, token, base64Token } = await api.getCreds()
