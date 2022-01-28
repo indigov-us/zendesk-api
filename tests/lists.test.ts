@@ -30,3 +30,8 @@ test('get webhooks', async () => {
   const res = await zendeskAPI<Zendesk.ListResults.Webhooks>('/webhooks')
   expect(res.body.webhooks.length).toBeGreaterThanOrEqual(0)
 })
+
+test('get brands', async () => {
+  const res = await zendeskAPI<Zendesk.ListResults.Brands>('/brands')
+  expect(res.body.brands.length).toBeGreaterThanOrEqual(0)
+})

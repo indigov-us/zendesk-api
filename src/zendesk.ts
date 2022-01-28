@@ -460,6 +460,25 @@ namespace Zendesk {
     url?: string
   }
 
+  export interface Brand {
+    url?: string
+    id?: number
+    name?: string
+    brand_url?: string
+    subdomain?: string
+    has_help_center?: boolean
+    help_center_state?: 'enabled' | 'disabled' | 'restricted'
+    active?: boolean
+    default?: boolean
+    is_deleted?: boolean
+    logo?: Attachment
+    ticket_form_ids?: number[]
+    signature_template?: string
+    created_at?: string
+    updated_at?: string
+    host_mapping?: string
+  }
+
   export type ViewColumns = [
     'assigned',
     'assignee',
@@ -830,6 +849,10 @@ namespace Zendesk {
       }
     }
 
+    export interface Brand {
+      brand: Zendesk.Brand
+    }
+
     export interface Ticket {
       ticket: Zendesk.Ticket
     }
@@ -963,6 +986,10 @@ namespace Zendesk {
 
     export interface AppRequirements {
       requirements: Zendesk.AppRequirement[]
+    }
+
+    export interface Brands {
+      brands: Zendesk.Brand[]
     }
 
     export interface Schedules {

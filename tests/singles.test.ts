@@ -82,3 +82,8 @@ test.skip('get a webhook', async () => {
   const res = await zendeskAPI<Zendesk.SingleResults.Webhook>('/webhooks/1')
   expect(res.body.webhook).toBeTruthy()
 })
+
+test('get a brand', async () => {
+  const res = await zendeskAPI<Zendesk.SingleResults.Brand>('/brands/360003617753')
+  expect(res.body.brand).toBeTruthy()
+})
