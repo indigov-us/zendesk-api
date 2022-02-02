@@ -452,6 +452,24 @@ declare namespace Zendesk {
         total?: number;
         url?: string;
     }
+    export interface Brand {
+        url?: string;
+        id?: number;
+        name?: string;
+        brand_url?: string;
+        subdomain?: string;
+        has_help_center?: boolean;
+        help_center_state?: 'enabled' | 'disabled' | 'restricted';
+        active?: boolean;
+        default?: boolean;
+        is_deleted?: boolean;
+        logo?: Attachment;
+        ticket_form_ids?: number[];
+        signature_template?: string;
+        created_at?: string;
+        updated_at?: string;
+        host_mapping?: string;
+    }
     export type ViewColumns = [
         'assigned',
         'assignee',
@@ -786,6 +804,9 @@ declare namespace Zendesk {
                 data: Zendesk.Sunshine.RelationshipRecord;
             }
         }
+        interface Brand {
+            brand: Zendesk.Brand;
+        }
         interface Ticket {
             ticket: Zendesk.Ticket;
         }
@@ -887,6 +908,9 @@ declare namespace Zendesk {
         }
         interface AppRequirements {
             requirements: Zendesk.AppRequirement[];
+        }
+        interface Brands {
+            brands: Zendesk.Brand[];
         }
         interface Schedules {
             schedules: Zendesk.Schedule[];
