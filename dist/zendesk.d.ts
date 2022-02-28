@@ -71,6 +71,7 @@ declare namespace Zendesk {
         ticket_form_id?: number;
         email_cc_ids?: string[];
         collaborator_ids?: string[];
+        comment?: Comment;
     }
     export interface Metadata {
         system?: object;
