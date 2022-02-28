@@ -142,6 +142,7 @@ namespace Zendesk {
     via?: Via
     created_at?: string
     metadata?: Metadata
+    uploads?: string[]
   }
 
   export interface Attachment {
