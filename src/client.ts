@@ -5,6 +5,7 @@ import fetch, { RequestInit } from 'node-fetch'
 import * as Errors from './errors'
 
 import fetchAll from './fetch-all'
+import { fetchAllIncrementalTickets, fetchAllIncrementalUsers } from './fetch-all-incremental'
 import findUserByEmail from './find-user-by-email'
 
 export interface AuthProps {
@@ -38,6 +39,8 @@ export type FetchMethod = (<BodyType>(path: string, init?: RequestInit) => Promi
     base64Token: string
   }>
   fetchAll: ReturnType<typeof fetchAll>
+  fetchAllIncrementalTickets: ReturnType<typeof fetchAllIncrementalTickets>
+  fetchAllIncrementalUsers: ReturnType<typeof fetchAllIncrementalUsers>
   findUserByEmail: ReturnType<typeof findUserByEmail>
 }
 
@@ -203,6 +206,12 @@ export const createClient = (args: AuthProps, opts?: ConstructorOpts) => {
     },
     fetchAll: {
       value: fetchAll(fetchMethod as FetchMethod),
+    },
+    fetchAllIncrementalTickets: {
+      value: fetchAllIncrementalTickets(fetchMethod as FetchMethod),
+    },
+    fetchAllIncrementalUsers: {
+      value: fetchAllIncrementalUsers(fetchMethod as FetchMethod),
     },
     findUserByEmail: {
       value: findUserByEmail(fetchMethod as FetchMethod),

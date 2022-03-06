@@ -28,6 +28,7 @@ const form_data_1 = __importDefault(require("form-data"));
 const node_fetch_1 = __importDefault(require("node-fetch"));
 const Errors = __importStar(require("./errors"));
 const fetch_all_1 = __importDefault(require("./fetch-all"));
+const fetch_all_incremental_1 = require("./fetch-all-incremental");
 const find_user_by_email_1 = __importDefault(require("./find-user-by-email"));
 const credsToBase64Token = (email, token) => Buffer.from(`${email}/token:${token}`).toString('base64');
 const credsFromBase64Token = (base64Token) => Buffer.from(base64Token, 'base64').toString().split('/token:');
@@ -174,6 +175,12 @@ const createClient = (args, opts) => {
         },
         fetchAll: {
             value: (0, fetch_all_1.default)(fetchMethod),
+        },
+        fetchAllIncrementalTickets: {
+            value: (0, fetch_all_incremental_1.fetchAllIncrementalTickets)(fetchMethod),
+        },
+        fetchAllIncrementalUsers: {
+            value: (0, fetch_all_incremental_1.fetchAllIncrementalUsers)(fetchMethod),
         },
         findUserByEmail: {
             value: (0, find_user_by_email_1.default)(fetchMethod),

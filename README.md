@@ -89,6 +89,21 @@ await zendeskAPI.fetchAll<Zendesk.User>({
   },
 })
 
+// there are helper methods to fetch all tickets or users between a start and end date (optional) using the incremental API
+await zendeskAPI.fetchAllIncrementalTickets({
+  startDate: '2022-01-01',
+  endDate: '2022-02-03',
+  onPage: async (tickets) => {
+    // do something with a page of tickets here
+  },
+})
+await zendeskAPI.fetchAllIncrementalUsers({
+  startDate: '2022-01-01',
+  onPage: async (users) => {
+    // do something with a page of users here
+  },
+})
+
 // you can access the underlying credentials
 const { email, token, base64Token } = await api.getCreds()
 ```

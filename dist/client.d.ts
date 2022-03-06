@@ -1,5 +1,6 @@
 import { RequestInit } from 'node-fetch';
 import fetchAll from './fetch-all';
+import { fetchAllIncrementalTickets, fetchAllIncrementalUsers } from './fetch-all-incremental';
 import findUserByEmail from './find-user-by-email';
 export interface AuthProps {
     subdomain: string;
@@ -29,6 +30,8 @@ export declare type FetchMethod = (<BodyType>(path: string, init?: RequestInit) 
         base64Token: string;
     }>;
     fetchAll: ReturnType<typeof fetchAll>;
+    fetchAllIncrementalTickets: ReturnType<typeof fetchAllIncrementalTickets>;
+    fetchAllIncrementalUsers: ReturnType<typeof fetchAllIncrementalUsers>;
     findUserByEmail: ReturnType<typeof findUserByEmail>;
 };
 export declare const createClient: (args: AuthProps, opts?: ConstructorOpts | undefined) => FetchMethod;
