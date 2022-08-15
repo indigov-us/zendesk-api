@@ -146,7 +146,7 @@ const createClient = (args, opts) => {
             case 422:
                 throw new Errors.Unprocessable(body);
             case 429:
-                throw new Errors.RateLimit({ body, retryAfter, rateLimitRemaining, rateLimit });
+                throw new Errors.RateLimit({ ...body, retryAfter, rateLimitRemaining, rateLimit });
         }
         // check for any other error statuses
         if (res.status >= 400 && res.status < 600) {

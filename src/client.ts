@@ -174,7 +174,7 @@ export const createClient = (args: AuthProps, opts?: ConstructorOpts) => {
       case 422:
         throw new Errors.Unprocessable(body)
       case 429:
-        throw new Errors.RateLimit({ body, retryAfter, rateLimitRemaining, rateLimit })
+        throw new Errors.RateLimit({ ...body, retryAfter, rateLimitRemaining, rateLimit })
     }
 
     // check for any other error statuses
