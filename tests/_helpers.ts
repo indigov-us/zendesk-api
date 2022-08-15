@@ -1,6 +1,5 @@
 import createClient from '../src'
 
-console.log('process.env.TOKEN', process.env.TOKEN)
 export const zendeskAPI = createClient(
   {
     subdomain: process.env.SUBDOMAIN as string,
