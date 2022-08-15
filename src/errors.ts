@@ -37,4 +37,7 @@ export class Permission extends DynamicPropsError {
 
 export class RateLimit extends DynamicPropsError {
   error: string
+  rateLimit?: number
+  rateLimitRemaining?: number
+  retryAfter?: number
 }
