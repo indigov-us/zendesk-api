@@ -41,3 +41,7 @@ export class RateLimit extends DynamicPropsError {
   rateLimitRemaining?: number
   retryAfter?: number
 }
+
+export class UnknownApiError extends DynamicPropsError {
+  error: string
+}

@@ -150,7 +150,7 @@ const createClient = (args, opts) => {
         }
         // check for any other error statuses
         if (res.status >= 400 && res.status < 600) {
-            throw new Error(body);
+            throw new Errors.UnknownApiError(body);
         }
         return {
             body,

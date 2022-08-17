@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RateLimit = exports.Permission = exports.Unprocessable = exports.NotFound = exports.Authentication = exports.BadRequestError = void 0;
+exports.UnknownApiError = exports.RateLimit = exports.Permission = exports.Unprocessable = exports.NotFound = exports.Authentication = exports.BadRequestError = void 0;
 // this generic error class will dynamically set all of the body properties on the Error instance itself
 // use it by extending and strongly-typing the expected properties on the extended class
 class DynamicPropsError extends Error {
@@ -32,4 +32,7 @@ exports.Permission = Permission;
 class RateLimit extends DynamicPropsError {
 }
 exports.RateLimit = RateLimit;
+class UnknownApiError extends DynamicPropsError {
+}
+exports.UnknownApiError = UnknownApiError;
 //# sourceMappingURL=errors.js.map
