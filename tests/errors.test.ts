@@ -40,5 +40,5 @@ test('throw bad request error', async () => {
         },
       }),
     })
-  ).rejects.toThrowError(Errors.BadRequestError)
+  ).rejects.toThrowError(Errors.Unprocessable)
 })
