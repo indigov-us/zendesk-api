@@ -12,10 +12,10 @@ test('fetchAllIncrementalTickets', async () => {
 
 test('fetchAllIncrementalUsers', async () => {
   await zendeskAPI.fetchAllIncrementalUsers({
-    startDate: '2022-02-01',
-    endDate: '2022-02-03',
+    startDate: '2022-08-01',
+    endDate: '2022-08-03',
     onPage: async (users) => {
-      expect(users[0].updated_at?.includes('2022-02-01')).toBeTruthy()
+      expect(users[0].updated_at?.includes('2022-08-01')).toBeTruthy()
       expect(users.length).toBeGreaterThanOrEqual(1)
     },
   })
