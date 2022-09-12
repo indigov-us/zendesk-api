@@ -8,7 +8,7 @@ test('fetchAllIncrementalTickets', async () => {
       expect(tickets.length).toBeGreaterThanOrEqual(1)
     },
   })
-})
+}, 10000)
 
 test('fetchAllIncrementalUsers', async () => {
   await zendeskAPI.fetchAllIncrementalUsers({
@@ -19,4 +19,4 @@ test('fetchAllIncrementalUsers', async () => {
       expect(users.length).toBeGreaterThanOrEqual(1)
     },
   })
-})
+}, 10000)
