@@ -140,6 +140,13 @@ export const createClient = (args: AuthProps, opts?: ConstructorOpts) => {
       'content-type',
     ].map((h) => res.headers.get(h))
 
+    // rate limit headers can be helpful in optimizing usage
+    const rateLimit = rateLimitHeader ? parseInt(rateLimitHeader, 10) : null
+    const rateLimitRemaining = rateLimitRemainingHeader ? parseInt(rateLimitRemainingHeader, 10) : null
+
+    // sometimes zendesk will return a 'Retry-After' header, which is in seconds
+    const retryAfter = retryAfterHeader ? parseInt(retryAfterHeader, 10) : null
+
     let body: string | any = await res.text()
     // will typically be "application/json; charset=UTF-8"
     if (contentType?.includes('application/json')) {
@@ -167,20 +174,13 @@ export const createClient = (args: AuthProps, opts?: ConstructorOpts) => {
       case 422:
         throw new Errors.Unprocessable(body)
       case 429:
-        throw new Errors.RateLimit(body)
+        throw new Errors.RateLimit({ ...body, retryAfter, rateLimitRemaining, rateLimit })
     }
 
     // check for any other error statuses
     if (res.status >= 400 && res.status < 600) {
-      throw new Error(body)
+      throw new Errors.UnknownApiError(body)
     }
-
-    // rate limit headers can be helpful in optimizing usage
-    const rateLimit = rateLimitHeader ? parseInt(rateLimitHeader, 10) : null
-    const rateLimitRemaining = rateLimitRemainingHeader ? parseInt(rateLimitRemainingHeader, 10) : null
-
-    // sometimes zendesk will return a 'Retry-After' header, which is in seconds
-    const retryAfter = retryAfterHeader ? parseInt(retryAfterHeader, 10) : null
 
     return {
       body,

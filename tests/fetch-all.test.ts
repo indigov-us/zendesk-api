@@ -9,4 +9,4 @@ test('fetchAll', async () => {
       expect(users.length).toBeGreaterThanOrEqual(1)
     },
   })
-})
+}, 10000)

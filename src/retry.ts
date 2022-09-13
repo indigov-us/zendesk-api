@@ -1,4 +1,5 @@
 import { Result } from './client'
+import * as Errors from './errors'
 import { RateLimit } from './errors'
 
 export default async <ResultType>(
@@ -7,6 +8,7 @@ export default async <ResultType>(
     maxNumAttempts,
     retryDelay = 1000,
     shouldLog,
+    errorTypesToRetry = [RateLimit],
   }: {
     /** How many attempts before finally throwing an error? */
     maxNumAttempts?: number
@@ -14,6 +16,7 @@ export default async <ResultType>(
     retryDelay?: number
     /** Write a log line on rate limited? */
     shouldLog?: boolean
+    errorTypesToRetry?: 'all' | (typeof Errors.UnknownApiError | typeof Errors.RateLimit)[]
   } = {}
 ) => {
   let numAttempts = 0
@@ -25,11 +28,24 @@ export default async <ResultType>(
       numAttempts++
       res = await fn()
     } catch (e) {
-      // if it is not a rate limit error, or we have tried enough times, throw it
-      if (!(e instanceof RateLimit) || (maxNumAttempts && numAttempts >= maxNumAttempts)) throw e
-      // otherwise delay and keep looping
-      if (shouldLog) console.log(`Rate limited, retrying in ${retryDelay / 1000}s...`)
-      await new Promise((resolve) => setTimeout(resolve, retryDelay))
+      const errorShouldBeRetried = errorTypesToRetry === 'all' || errorTypesToRetry.some((type) => e instanceof type)
+
+      if (!errorShouldBeRetried) {
+        throw e
+      }
+
+      // if it's a rate limit error and we've retried too many times, throw the error
+      if (maxNumAttempts && numAttempts >= maxNumAttempts) {
+        if (shouldLog) console.log(`Call failed and exceeded max number of attempts.`)
+        throw e
+      }
+
+      // Multiplying with 1100 instead of 1000 to account for small differences in timing.
+      const retryAfter = e instanceof Errors.RateLimit && e.retryAfter ? e.retryAfter * 1100 : retryDelay
+
+      if (shouldLog) console.log(`Request failed, retrying in ${retryAfter / 1000}s...`)
+
+      await new Promise((resolve) => setTimeout(resolve, retryAfter))
     }
   }
 
