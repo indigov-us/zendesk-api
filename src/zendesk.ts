@@ -60,12 +60,17 @@ namespace Zendesk {
     group_id?: number
     is_public?: boolean
     tags?: string[]
+    // Used only in /update_many PUT requests
+    additional_tags?: string[]
+    remove_tags?: string[]
     custom_fields?: { id: number; value: unknown }[]
     fields?: { id: number; value: unknown }[]
     ticket_form_id?: number
     email_cc_ids?: string[]
     collaborator_ids?: string[]
+    follower_ids?: string[]
     comment?: Comment
+    macro_ids?: number[]
   }
 
   export interface Metadata {

@@ -60,6 +60,8 @@ declare namespace Zendesk {
         group_id?: number;
         is_public?: boolean;
         tags?: string[];
+        additional_tags?: string[];
+        remove_tags?: string[];
         custom_fields?: {
             id: number;
             value: unknown;
@@ -71,7 +73,9 @@ declare namespace Zendesk {
         ticket_form_id?: number;
         email_cc_ids?: string[];
         collaborator_ids?: string[];
+        follower_ids?: string[];
         comment?: Comment;
+        macro_ids?: number[];
     }
     export interface Metadata {
         system?: object;
