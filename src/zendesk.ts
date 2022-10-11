@@ -62,7 +62,6 @@ namespace Zendesk {
     tags?: string[]
     // Used only in /update_many PUT requests
     additional_tags?: string[]
-    // Used only in /update_many PUT requests
     remove_tags?: string[]
     custom_fields?: { id: number; value: unknown }[]
     fields?: { id: number; value: unknown }[]
