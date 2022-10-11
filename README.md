@@ -107,3 +107,7 @@ await zendeskAPI.fetchAllIncrementalUsers({
 // you can access the underlying credentials
 const { email, token, base64Token } = await api.getCreds()
 ```
+
+## Publishing
+
+Simply run `npm publish` and follow the prompts. **IMPORTANT** Do not run `yarn publish`, it is not compatible and will not include all files.
