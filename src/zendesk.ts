@@ -543,7 +543,11 @@ namespace Zendesk {
       sort_by?: ViewColumns[number] | string | null
       sort_order?: 'asc' | 'desc'
     }
-    restriction?: string | null
+    restriction?: {
+      type?: 'User' | 'Group'
+      id?: string
+      ids?: string
+    }
     watchable?: boolean
     raw_title?: string
   }
