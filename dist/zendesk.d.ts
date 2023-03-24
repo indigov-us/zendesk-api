@@ -76,6 +76,9 @@ declare namespace Zendesk {
         follower_ids?: string[];
         comment?: Comment;
         macro_ids?: number[];
+        upload?: {
+            token?: string;
+        };
     }
     export interface Metadata {
         system?: object;
