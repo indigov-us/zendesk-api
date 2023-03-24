@@ -71,6 +71,9 @@ namespace Zendesk {
     follower_ids?: string[]
     comment?: Comment
     macro_ids?: number[]
+    upload?: {
+      token?: string // Used when uploading attachments from macros
+    }
   }
 
   export interface Metadata {
