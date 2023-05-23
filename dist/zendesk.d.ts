@@ -92,6 +92,16 @@ declare namespace Zendesk {
             rel?: string;
         };
     }
+    export interface CustomTicketStatus {
+        id?: string;
+        status_category: 'new' | 'open' | 'pending' | 'hold' | 'solved';
+        agent_label: string;
+        description: string;
+        end_user_description: string;
+        end_user_label: string;
+        active?: boolean;
+        default?: boolean;
+    }
     export interface TicketField {
         id?: number;
         title?: string;
