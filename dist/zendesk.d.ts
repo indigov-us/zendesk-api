@@ -136,6 +136,20 @@ declare namespace Zendesk {
         via?: Via;
         events?: object[];
     }
+    export interface AuditLog {
+        url: string;
+        id: number;
+        action_label: string;
+        actor_id: number;
+        source_id: number;
+        source_type: string;
+        source_label: string;
+        action: string;
+        change_description: string;
+        ip_address?: string;
+        created_at?: string;
+        actor_name: string;
+    }
     export interface Comment {
         id?: number;
         type?: 'Comment' | 'VoiceComment';
@@ -711,26 +725,62 @@ declare namespace Zendesk {
                 prev: string;
             };
         }
+        interface AuditLogs extends _ {
+            audit_logs: Zendesk.AuditLog[];
+        }
         interface Tickets extends _ {
             tickets: Zendesk.Ticket[];
         }
-        interface Users extends _ {
-            users: Zendesk.User[];
+        interface TicketAudits extends _ {
+            audits: Zendesk.TicketAudit[];
         }
-        interface Organizations extends _ {
-            organizations: Zendesk.Organization[];
+        interface Tickets extends _ {
+            tickets: Zendesk.Ticket[];
         }
-        interface Macros extends _ {
-            macros: Zendesk.Macro[];
+        interface TicketFields extends _ {
+            ticket_fields: Zendesk.TicketField[];
         }
-        interface Views extends _ {
-            views: Zendesk.View[];
+        interface TicketForms extends _ {
+            ticket_forms: Zendesk.TicketForm[];
+        }
+        interface Identities extends _ {
+            identities: Zendesk.Identity[];
+        }
+        interface Targets extends _ {
+            targets: Zendesk.Target[];
         }
         interface Triggers extends _ {
             triggers: Zendesk.Trigger[];
         }
+        interface Organizations extends _ {
+            organizations: Zendesk.Organization[];
+        }
         interface Automations extends _ {
             automations: Zendesk.Automation[];
+        }
+        interface Users extends _ {
+            users: Zendesk.User[];
+        }
+        interface UserFields extends _ {
+            user_fields: Zendesk.UserField[];
+        }
+        interface Macros extends _ {
+            macros: Zendesk.Macro[];
+        }
+        interface Groups extends _ {
+            groups: Zendesk.Group[];
+        }
+        interface GroupMemberships extends _ {
+            group_memberships: Zendesk.GroupMembership[];
+        }
+        interface Views extends _ {
+            views: Zendesk.View[];
+        }
+        interface SideConversations extends _ {
+            side_conversations: Zendesk.SideConversation[];
+        }
+        interface SideConversationEvents extends _ {
+            events: Zendesk.SideConversationEvent[];
         }
     }
     export namespace PaginatedResults {

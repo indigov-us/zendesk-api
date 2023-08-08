@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const p_queue_1 = __importDefault(require("p-queue"));
 const retry_1 = __importDefault(require("./retry"));
 const defaultConcurrency = 5;
+/** @deprecated Use fetchAll instead */
 exports.default = ({ api, concurrency, onPage, retryRateLimitErrors, startPage, }) => async (path, init) => {
     const concurrencyWithFallback = concurrency || defaultConcurrency;
     const pQueue = new p_queue_1.default({ concurrency: concurrencyWithFallback });

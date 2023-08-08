@@ -7,4 +7,5 @@ declare const _default: <BodyType>({ api, concurrency, onPage, retryRateLimitErr
     onPage: (res: Result<BodyType>) => Promise<boolean>;
     startPage?: number | undefined;
 }) => (path: string, init?: RequestInit | undefined) => Promise<void>;
+/** @deprecated Use fetchAll instead */
 export default _default;
