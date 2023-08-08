@@ -108,6 +108,25 @@ await zendeskAPI.fetchAllIncrementalUsers({
 const { email, token, base64Token } = await api.getCreds()
 ```
 
+## Development
+
+## Setup
+
+Set up .env 
+
+```
+cp .env.example .env
+```
+Edit _.env_ to fill out missing data
+
+### Testing
+These are end to end tests against whatever account is configured in your _.env_. Expect them to fail if .env and the zendesk instance are not correctly configured. 
+
+```
+yarn test
+```
+
+
 ## Publishing
 
 Simply run `npm publish` and follow the prompts. **IMPORTANT** Do not run `yarn publish`, it is not compatible and will not include all files.

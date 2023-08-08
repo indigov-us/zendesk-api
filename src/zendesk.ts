@@ -148,6 +148,21 @@ namespace Zendesk {
     events?: object[]
   }
 
+  export interface AuditLog {
+    url: string
+    id: number
+    action_label: string
+    actor_id: number
+    source_id: number
+    source_type: string
+    source_label: string
+    action: string
+    change_description: string
+    ip_address?: string
+    created_at?: string
+    actor_name: string
+  }
+
   export interface Comment {
     id?: number
     type?: 'Comment' | 'VoiceComment'
@@ -725,32 +740,80 @@ namespace Zendesk {
       }
     }
 
+    export interface AuditLogs extends _ {
+      audit_logs: Zendesk.AuditLog[]
+    }
+
     export interface Tickets extends _ {
       tickets: Zendesk.Ticket[]
     }
 
-    export interface Users extends _ {
-      users: Zendesk.User[]
+    export interface TicketAudits extends _ {
+      audits: Zendesk.TicketAudit[]
     }
 
-    export interface Organizations extends _ {
-      organizations: Zendesk.Organization[]
+    export interface Tickets extends _ {
+      tickets: Zendesk.Ticket[]
     }
 
-    export interface Macros extends _ {
-      macros: Zendesk.Macro[]
+    export interface TicketFields extends _ {
+      ticket_fields: Zendesk.TicketField[]
     }
 
-    export interface Views extends _ {
-      views: Zendesk.View[]
+    export interface TicketForms extends _ {
+      ticket_forms: Zendesk.TicketForm[]
+    }
+
+    export interface Identities extends _ {
+      identities: Zendesk.Identity[]
+    }
+
+    export interface Targets extends _ {
+      targets: Zendesk.Target[]
     }
 
     export interface Triggers extends _ {
       triggers: Zendesk.Trigger[]
     }
 
+    export interface Organizations extends _ {
+      organizations: Zendesk.Organization[]
+    }
+
     export interface Automations extends _ {
       automations: Zendesk.Automation[]
+    }
+
+    export interface Users extends _ {
+      users: Zendesk.User[]
+    }
+
+    export interface UserFields extends _ {
+      user_fields: Zendesk.UserField[]
+    }
+
+    export interface Macros extends _ {
+      macros: Zendesk.Macro[]
+    }
+
+    export interface Groups extends _ {
+      groups: Zendesk.Group[]
+    }
+
+    export interface GroupMemberships extends _ {
+      group_memberships: Zendesk.GroupMembership[]
+    }
+
+    export interface Views extends _ {
+      views: Zendesk.View[]
+    }
+
+    export interface SideConversations extends _ {
+      side_conversations: Zendesk.SideConversation[]
+    }
+
+    export interface SideConversationEvents extends _ {
+      events: Zendesk.SideConversationEvent[]
     }
   }
 

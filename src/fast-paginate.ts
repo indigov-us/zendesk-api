@@ -6,6 +6,7 @@ import retry from './retry'
 
 const defaultConcurrency = 5
 
+/** @deprecated Use fetchAll instead */
 export default <BodyType>({
   api,
   concurrency,
