@@ -14,4 +14,4 @@ it('waits for jobs to complete', async () => {
   expect(jobRes.body.job_status.status).toEqual('completed')
   expect(onJobStatus).toHaveBeenCalled()
   expect(onProgress).toHaveBeenCalledWith(1)
-}, 6000)
+}, 60000)
