@@ -313,6 +313,10 @@ declare namespace Zendesk {
         created_at?: string;
         updated_at?: string;
         role?: 'end-user' | 'agent' | 'admin';
+        role_type?: number;
+        custom_role_id?: number;
+        last_login_at?: string;
+        suspended?: boolean;
     }
     export interface CustomRole {
         id?: number;
