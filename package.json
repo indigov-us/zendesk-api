@@ -1,6 +1,6 @@
 {
   "name": "@indigov/zendesk-api",
-  "version": "0.0.102",
+  "version": "0.0.107",
   "description": "The official Indigov wrapper for the Zendesk API",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -8,8 +8,8 @@
   "scripts": {
     "test": "jest --verbose",
     "sandbox": "ts-node -r dotenv/config src/sandbox.ts",
-    "build": "tsc",
-    "prepublish": "tsc"
+    "build": "npx tsc",
+    "prepublish": "npx tsc"
   },
   "author": "@e10jc",
   "license": "ISC",
