@@ -55,7 +55,7 @@ namespace Zendesk {
     status?: 'new' | 'open' | 'pending' | 'hold' | 'solved' | 'closed'
     requester_id?: number
     submitter_id?: number
-    assignee_id?: number
+    assignee_id?: number | null
     organization_id?: number
     group_id?: number
     is_public?: boolean
